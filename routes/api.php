@@ -17,9 +17,7 @@ use App\Http\Controllers\Api\BusController;
 
 Route::middleware(['auth:api'])->group(function(){
 
-    Route::resource('busses', BusController::class );
-
-
+    Route::resource('buses', BusController::class );
 
 });
 
