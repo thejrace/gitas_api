@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BusController;
+use App\Http\Controllers\Api\UserBusController;
+
 
 
 /*
@@ -18,6 +20,7 @@ use App\Http\Controllers\Api\BusController;
 Route::middleware(['auth:api'])->group(function(){
 
     Route::resource('buses', BusController::class );
+    Route::resource('user_buses', UserBusController::class );
 
 });
 

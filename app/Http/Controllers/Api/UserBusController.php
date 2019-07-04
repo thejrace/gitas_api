@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Bus;
+use App\Http\Requests\UserBusFormRequest;
+use App\Http\Resources\UserBusResource;
+use App\UserBus;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BusResource;
-use App\Http\Requests\BusFormStoreRequest;
-use App\Http\Requests\BusFormUpdateRequest;
 
-
-class BusController extends Controller
+class UserBusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +16,7 @@ class BusController extends Controller
      */
     public function index()
     {
-        return BusResource::collection(Bus::all());
+        return UserBusResource::collection(UserBus::all());
     }
 
     /**
@@ -27,10 +25,10 @@ class BusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BusFormStoreRequest $request)
+    public function store(UserBusFormRequest $request)
     {
-        $bus = Bus::create( $request->all() );
-        return new BusResource($bus);
+        $userBus = UserBus::create($request->all());
+        return new UserBusResource($userBus);
     }
 
     /**
@@ -41,8 +39,8 @@ class BusController extends Controller
      */
     public function show($id)
     {
-        $bus = Bus::find($id);
-        return new BusResource($bus);
+        $userBus = UserBus::findOrFail($id);
+        return new UserBusResource($userBus);
     }
 
     /**
@@ -52,11 +50,11 @@ class BusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BusFormUpdateRequest $request, $id)
+    public function update(UserBusFormRequest $request, $id)
     {
-        $bus = Bus::findOrFail($id);
-        $bus->update($request->all());
-        return new BusResource($bus);
+        $userBus = UserBus::findOrFail($id);
+        $userBus->update($request->all());
+        return new UserBusResource($userBus);
     }
 
     /**
@@ -67,7 +65,7 @@ class BusController extends Controller
      */
     public function destroy($id)
     {
-        $bus = Bus::findOrFail($id);
-        $bus->delete();
+        $userBus = UserBus::findOrFail($id);
+        $userBus->delete();
     }
 }
