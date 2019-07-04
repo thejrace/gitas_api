@@ -1,0 +1,13 @@
++--------+-----------+------------------------+----------------+------------------------------------------------+--------------+
+| Domain | Method    | URI                    | Name           | Action                                         | Middleware   |
++--------+-----------+------------------------+----------------+------------------------------------------------+--------------+
+|        | GET|HEAD  | /                      |                | App\Http\Controllers\MainController@index      | web          |
+|        | GET|HEAD  | api/busses             | busses.index   | App\Http\Controllers\Api\BusController@index   | api,auth:api |
+|        | POST      | api/busses             | busses.store   | App\Http\Controllers\Api\BusController@store   | api,auth:api |
+|        | GET|HEAD  | api/busses/create      | busses.create  | App\Http\Controllers\Api\BusController@create  | api,auth:api |
+|        | GET|HEAD  | api/busses/{buss}      | busses.show    | App\Http\Controllers\Api\BusController@show    | api,auth:api |
+|        | PUT|PATCH | api/busses/{buss}      | busses.update  | App\Http\Controllers\Api\BusController@update  | api,auth:api |
+|        | DELETE    | api/busses/{buss}      | busses.destroy | App\Http\Controllers\Api\BusController@destroy | api,auth:api |
+|        | GET|HEAD  | api/busses/{buss}/edit | busses.edit    | App\Http\Controllers\Api\BusController@edit    | api,auth:api |
+|        | GET|HEAD  | api/user               |                | Closure                                        | api,auth:api |
++--------+-----------+------------------------+----------------+------------------------------------------------+--------------+
