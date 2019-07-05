@@ -37,6 +37,6 @@ class EmploymentStatusController extends Controller
     public function destroy($id)
     {
         $employementStatus = EmploymentStatus::findOrFail($id);
-        $employementStatus::delete();
+        $employementStatus->delete();
     }
 }

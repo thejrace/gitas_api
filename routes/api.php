@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserBusDefinitionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\EmployeeRoleController;
 use App\Http\Controllers\Api\EmploymentStatusController;
+use App\Http\Controllers\Api\LoginController;
 
 
 
@@ -23,13 +24,16 @@ use App\Http\Controllers\Api\EmploymentStatusController;
 
 Route::middleware(['auth:api'])->group(function(){
 
+    Route::resource('users', UserController::class );
     Route::resource('buses', BusController::class );
     Route::resource('user_bus_definitions', UserBusDefinitionController::class );
-    Route::resource('users', UserController::class );
     Route::resource('employee_roles', EmployeeRoleController::class );
-    Route::resource('employement_status', EmploymentStatusController::class );
+    Route::resource('employment_statuses', EmploymentStatusController::class );
+
 
 });
+
+Route::post('login', [ LoginController::class, 'authenticate'] ); // retrieve api token
 
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
