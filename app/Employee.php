@@ -12,6 +12,6 @@ class Employee extends Model
         return $this->belongsTo(EmployeeRole::class);
     }
     public function employementStatus(){
-        return $this->belongsTo(EmployementStatus::class);
+        return $this->belongsTo(EmploymentStatus::class);
     }
 }

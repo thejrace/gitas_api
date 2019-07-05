@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployementStatus extends Model
+class FleetSync extends Model
 {
-    protected $guarded = [];
+    //
 }
