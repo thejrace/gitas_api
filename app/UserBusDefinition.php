@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserBus extends Model
+class UserBusDefinition extends Model
 {
 
     protected $guarded = [];

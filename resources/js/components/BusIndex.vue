@@ -56,7 +56,7 @@
 
         methods: {
             async fetch() {
-                const response = await window.axios.get('/api/busses');
+                const response = await window.axios.get('/api/buses');
 
                 this.items = response.data.data;
             }

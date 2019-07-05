@@ -24,8 +24,9 @@ class BusFormStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'active_plate' => 'required|min:5|max:20',
-            'official_plate' => 'required|min:5|max:20'
+            'active_plate'              => 'required|min:5|max:20',
+            'official_plate'            => 'required|min:5|max:20',
+            'define_to_user_default'    => 'numeric'
         ];
     }
 }

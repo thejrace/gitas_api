@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserBusesTable extends Migration
+class CreateEmployeeRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateUserBusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_buses', function (Blueprint $table) {
+        Schema::create('employee_roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('bus_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('bus_id')->references('id')->on('buses');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateUserBusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_buses');
+        Schema::dropIfExists('employee_roles');
     }
 }

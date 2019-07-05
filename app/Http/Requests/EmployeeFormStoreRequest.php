@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BusFormUpdateRequest extends FormRequest
+class EmployeeFormStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,11 @@ class BusFormUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'active_plate'              => 'min:5|max:20',
-            'official_plate'            => 'min:5|max:20',
-            'define_to_user_default'    => 'numeric'
+            'name'                  => 'required|min:6',
+            'email'                 => 'email',
+            'role'                  => 'numeric|gt:0',
+            'employement_status'    => 'numeric|gt:0',
+            'date_of_birth'         => 'date_format:Y-m-d'
         ];
     }
 }

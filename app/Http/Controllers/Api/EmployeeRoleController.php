@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\UserBusFormRequest;
-use App\Http\Resources\UserBusResource;
-use App\UserBus;
+use App\EmployeeRole;
+use App\Http\Requests\EmployeeRoleFormRequest;
+use App\Http\Resources\EmployeeRoleResource;
 use App\Http\Controllers\Controller;
 
-class UserBusController extends Controller
+class EmployeeRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class UserBusController extends Controller
      */
     public function index()
     {
-        return UserBusResource::collection(UserBus::all());
+        return EmployeeRoleResource::collection(EmployeeRole::all());
     }
 
     /**
@@ -25,10 +25,10 @@ class UserBusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserBusFormRequest $request)
+    public function store(EmployeeRoleFormRequest $request)
     {
-        $userBus = UserBus::create($request->all());
-        return new UserBusResource($userBus);
+        $employeeRole = EmployeeRole::create($request->all());
+        return new EmployeeRoleResource($employeeRole);
     }
 
     /**
@@ -39,8 +39,8 @@ class UserBusController extends Controller
      */
     public function show($id)
     {
-        $userBus = UserBus::findOrFail($id);
-        return new UserBusResource($userBus);
+        $employeeRole = EmployeeRole::findOrFail($id);
+        return new EmployeeRoleResource($employeeRole);
     }
 
     /**
@@ -50,11 +50,11 @@ class UserBusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserBusFormRequest $request, $id)
+    public function update(EmployeeRoleFormRequest $request, $id)
     {
-        $userBus = UserBus::findOrFail($id);
-        $userBus->update($request->all());
-        return new UserBusResource($userBus);
+        $employeeRole = EmployeeRole::findOrFail($id);
+        $employeeRole->update($request->all());
+        return new EmployeeRoleResource($employeeRole);
     }
 
     /**
@@ -65,7 +65,7 @@ class UserBusController extends Controller
      */
     public function destroy($id)
     {
-        $userBus = UserBus::findOrFail($id);
-        $userBus->delete();
+        $bus = EmployeeRole::findOrFail($id);
+        $bus->delete();
     }
 }

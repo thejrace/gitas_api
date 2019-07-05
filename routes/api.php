@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BusController;
-use App\Http\Controllers\Api\UserBusController;
+use App\Http\Controllers\Api\UserBusDefinitionController;
+use App\Http\Controllers\Api\UserController;
 
 
 
@@ -20,10 +21,11 @@ use App\Http\Controllers\Api\UserBusController;
 Route::middleware(['auth:api'])->group(function(){
 
     Route::resource('buses', BusController::class );
-    Route::resource('user_buses', UserBusController::class );
+    Route::resource('user_bus_definitions', UserBusDefinitionController::class );
+    Route::resource('users', UserController::class );
 
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
