@@ -22,19 +22,11 @@ use App\Http\Controllers\Api\LoginController;
 |
 */
 
-Route::middleware(['auth:api'])->group(function(){
+Route::middleware(['auth:api', 'role:admin'])->group(function(){
 
-    Route::resource('users', UserController::class );
-    Route::resource('buses', BusController::class );
-    Route::resource('user_bus_definitions', UserBusDefinitionController::class );
-    Route::resource('employee_roles', EmployeeRoleController::class );
-    Route::resource('employment_statuses', EmploymentStatusController::class );
-
+    Route::resource('users',                                        UserController::class );
+    Route::resource('buses',                                        BusController::class );
 
 });
 
 Route::post('login', [ LoginController::class, 'authenticate'] ); // retrieve api token
-
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/

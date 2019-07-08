@@ -13,11 +13,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create(array(
+        $root = User::create(array(
             "name"              => "Admin",
             "email"             => "admin@admin.com",
             "password"          => Hash::make("password"),
             "api_token"         => \Illuminate\Support\Str::random(60)
         ));
+        $root->assignRole('admin');
     }
 }

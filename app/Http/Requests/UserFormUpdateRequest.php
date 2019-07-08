@@ -26,9 +26,11 @@ class UserFormUpdateRequest extends FormRequest
     {
         $ignoreID = $this->get('id');
         return [
-            'name'          => 'min:20',
-            'email'         => [ 'email',  Rule::unique('users')->ignore($ignoreID) ],
-            'password'      => 'required'
+            'name'                  => 'min:20',
+            'email'                 => [ 'email',  Rule::unique('users')->ignore($ignoreID) ],
+            'password'              => 'required',
+            'date_of_birth'         => 'date_format:Y-m-d'
+
         ];
     }
 }
