@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserFormUpdateRequest extends FormRequest
+class AppModulePermissionUpdateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,10 @@ class UserFormUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $ignoreID = $this->get('id');
+        $appModuleID = $this->get('app_module_id');
         return [
-            'name'                  => 'filled|min:20',
-            'email'                 => [ 'filled',  Rule::unique('users')->ignore($ignoreID) ],
-            'date_of_birth'         => 'date_format:Y-m-d'
+            'name'                      => [ 'filled', Rule::unique('app_module_permissions')->where('app_module_id', $appModuleID) ],
+            'value_type'                => 'filled|numeric'
         ];
     }
 }

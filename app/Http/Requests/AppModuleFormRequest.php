@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UserFormUpdateRequest extends FormRequest
+class AppModuleFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +23,8 @@ class UserFormUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $ignoreID = $this->get('id');
         return [
-            'name'                  => 'filled|min:20',
-            'email'                 => [ 'filled',  Rule::unique('users')->ignore($ignoreID) ],
-            'date_of_birth'         => 'date_format:Y-m-d'
+            'name' => 'required|unique:app_modules'
         ];
     }
 }

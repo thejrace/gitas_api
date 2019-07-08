@@ -19,26 +19,26 @@ class BusController extends Controller
 
     public function store(BusFormStoreRequest $request)
     {
-        $bus = Bus::create( $request->all() );
-        return new BusResource($bus);
+        $model = Bus::create( $request->all() );
+        return new BusResource($model);
     }
 
     public function show($id)
     {
-        $bus = Bus::find($id);
-        return new BusResource($bus);
+        $model = Bus::find($id);
+        return new BusResource($model);
     }
 
     public function update(BusFormUpdateRequest $request, $id)
     {
-        $bus = Bus::findOrFail($id);
-        $bus->update($request->all());
-        return new BusResource($bus);
+        $model = Bus::findOrFail($id);
+        $model->update($request->all());
+        return new BusResource($model);
     }
 
     public function destroy($id)
     {
-        $bus = Bus::findOrFail($id);
-        $bus->delete();
+        $model = Bus::findOrFail($id);
+        $model->delete();
     }
 }

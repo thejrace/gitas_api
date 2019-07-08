@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\AppModuleController;
+use App\Http\Controllers\Api\AppModulePermissionController;
+use App\Http\Controllers\Api\AppModuleUserPermissionController;
 use App\Http\Controllers\Api\BusController;
 use App\Http\Controllers\Api\UserBusDefinitionController;
 use App\Http\Controllers\Api\UserController;
@@ -26,6 +28,9 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
 
     Route::resource('users',                                        UserController::class );
     Route::resource('buses',                                        BusController::class );
+    Route::resource('app_modules',                                  AppModuleController::class );
+    Route::resource('app_module_permissions',                       AppModulePermissionController::class );
+    Route::resource('app_module_user_permissions',                  AppModuleUserPermissionController::class );
 
 });
 
