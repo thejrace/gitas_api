@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\EmployeeRoleController;
 use App\Http\Controllers\Api\EmploymentStatusController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\UserPermissionController;
+use App\Http\Controllers\MainController;
 
 
 /*

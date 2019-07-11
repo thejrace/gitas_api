@@ -23,7 +23,7 @@ window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-const apiToken = '8QBkt1bUkpH0h7eSX6PdeSrBdLnQl4ZJfrDSnsmcqnJEGm3wWx5Q3GAjjMYf';
+const apiToken = 'tEZXkuGlRI9GKfMZVqpDndzO5uFxuxBR0nAHOFhYFrGKrvKf7AnIGo1qpX01';
 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken;
 
 /**

@@ -21,6 +21,8 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('bus-index', require('./components/BusIndex.vue').default);
+Vue.component('test-form', require('./components/TestForm.vue').default);
+Vue.component('my-vuetable', require('./components/MyVuetable.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
