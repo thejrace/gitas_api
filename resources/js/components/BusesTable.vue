@@ -34,9 +34,6 @@
             transform(data){
                 return this.vuetableTransformResponse(data);
             },
-            format(value){
-                return '0000-00-00 00:00:00'
-            },
             onFilterSet (filterText) {
                 this.moreParams = {
                     'filter': filterText
@@ -74,7 +71,6 @@
                     {
                         name: 'created_at',
                         title:'Eklenme',
-                        callback: 'format'
                     },
                 ],
                 moreParams: {}

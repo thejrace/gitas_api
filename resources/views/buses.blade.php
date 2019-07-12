@@ -1,0 +1,35 @@
+@php $page['buses'] = true;  @endphp
+@include('header')
+<div class="main">
+    <div class="main-inner">
+        <div class="container">
+            <div id="app">
+                <div class="row">
+                    <div class="span12">
+
+
+                        <div class="widget">
+                            <div class="widget-header">
+                                <i class="icon-truck"></i>
+                                <h3>Buses</h3>
+                            </div> <!-- /widget-header -->
+
+                            <div class="widget-content">
+                                <my-vuetable></my-vuetable>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /span6 -->
+
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /app -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /main-inner -->
+</div>
+
+@include('footer')

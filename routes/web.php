@@ -11,5 +11,9 @@
 |
 */
 
+use App\Http\Controllers\BusController;
 use App\Http\Controllers\MainController;
+
+
 Route::get('/',                                 [ MainController::class, 'index'] );
+Route::get('buses',                             [ BusController::class, 'index'] );

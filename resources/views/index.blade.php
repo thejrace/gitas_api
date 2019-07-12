@@ -15,9 +15,6 @@
         
     <div id="app">
         <test-form></test-form>
-
-        <bus-index></bus-index>
-
         <my-vuetable></my-vuetable>
 
     </div>
