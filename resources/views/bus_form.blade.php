@@ -9,11 +9,11 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-truck"></i>
-                                <h3>Buses</h3>
+                                <h3>Bus Form</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
-                                <buses-vuetable></buses-vuetable>
+                                <bus-form></bus-form>
                             </div>
                         </div>
                     </div>

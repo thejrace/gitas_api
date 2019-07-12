@@ -2,7 +2,7 @@
     <div>
         <vue-table-filter-bar></vue-table-filter-bar>
         <vuetable ref="vuetable"
-                  api-url="/api/buses/dataTables"
+                  api-url="buses/dataTables"
                   :fields="fields"
                   pagination-path="pagination"
                   :append-params="moreParams"
