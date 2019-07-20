@@ -23,8 +23,15 @@ window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-const apiToken = 'tEZXkuGlRI9GKfMZVqpDndzO5uFxuxBR0nAHOFhYFrGKrvKf7AnIGo1qpX01';
-window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken;
+
+let apiToken = document.head.querySelector('meta[name="api-token"]');
+
+if( apiToken ){
+    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken.content;
+} else {
+    console.error("Bearer token error!");
+}
+
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

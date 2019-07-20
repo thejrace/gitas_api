@@ -33,22 +33,19 @@ class BusController extends Controller
         return new BusResource($model);
     }
 
-    public function show($id)
+    public function show($model)
     {
-        $model = Bus::find($id);
         return new BusResource($model);
     }
 
-    public function update(BusFormUpdateRequest $request, $id)
+    public function update(BusFormUpdateRequest $request, $model)
     {
-        $model = Bus::findOrFail($id);
         $model->update($request->all());
         return new BusResource($model);
     }
 
-    public function destroy($id)
+    public function destroy($model)
     {
-        $model = Bus::findOrFail($id);
         $model->delete();
     }
 }

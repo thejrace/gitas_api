@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('bus-index', require('./components/BusIndex.vue').default);
 Vue.component('test-form', require('./components/TestForm.vue').default);
 Vue.component('bus-form', require('./components/BusForm.vue').default);
+Vue.component('login-form', require('./components/LoginForm.vue').default);
 Vue.component('my-vuetable', require('./components/MyVuetable.vue').default);
 Vue.component('buses-vuetable', require('./components/BusesTable.vue').default);
 Vue.component('vue-table-filter-bar', require('./components/VueTableFilterBar.vue').default);

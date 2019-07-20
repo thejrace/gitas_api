@@ -24,8 +24,8 @@ class BusFormUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'active_plate'              => 'min:5|max:20',
-            'official_plate'            => 'min:5|max:20',
+            'active_plate'              => 'required|min:5|max:20',
+            'official_plate'            => 'required|min:5|max:20',
             'define_to_user_default'    => 'numeric'
         ];
     }

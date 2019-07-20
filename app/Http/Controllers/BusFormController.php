@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Bus;
+use App\Http\Resources\BusResource;
 use Illuminate\Http\Request;
 
 class BusFormController extends Controller
@@ -17,9 +19,12 @@ class BusFormController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit( Bus $bus )
     {
-        //
+        return view('bus_form')->with([
+            'updateFlag' => true,
+            'dataId' => $bus->id
+        ]);
     }
 
     public function update(Request $request, $id)

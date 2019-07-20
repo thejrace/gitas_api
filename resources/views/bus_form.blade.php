@@ -13,7 +13,15 @@
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
+
+                            @if(isset($updateFlag))
+                                <bus-form data-id="{{ $dataId }}" update-flag></bus-form>
+                            @else
                                 <bus-form></bus-form>
+                            @endif
+
+
+
                             </div>
                         </div>
                     </div>

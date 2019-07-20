@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="login" @keydown="form.onKeydown($event)" class="form-horizontal" >
+    <form @submit.prevent="action" @keydown="form.onKeydown($event)" class="form-horizontal" >
         <div class="control-group">
             <label class="control-label" for="active_plate">Active Plate</label>
             <div class="controls">
@@ -12,7 +12,7 @@
         <div class="control-group">
             <label class="control-label" for="official_plate">Official Plate</label>
             <div class="controls">
-                <input v-model="form.official_plate" type="text" name="official_playte" id="official_plate">
+                <input v-model="form.official_plate" type="text" name="official_plate" id="official_plate">
                 <div class="alert alert-danger" v-if="form.errors.has('official_plate')">
                     {{ form.errors.get('official_plate') }}
                 </div>
@@ -32,6 +32,10 @@
     Vue.component(AlertError.name, AlertError);
 
     export default {
+        props: {
+            'updateFlag': Boolean,
+            'dataId' : String
+        },
         data () {
             return {
                 // Create a new form instance
@@ -42,12 +46,25 @@
                 })
             }
         },
-
         methods: {
-            login () {
-                // Submit the form via a POST request
-                this.form.post('/api/buses')
-                    .then(({ data }) => { console.log(data) })
+            action () {
+                if( this.$props.updateFlag ){
+                    this.form.put('/api/buses/'+this.$props.dataId)
+                        .then(({ data }) => { /*console.log(data)*/ })
+                } else {
+                    this.form.post('/api/buses')
+                        .then(({ data }) => { /*console.log(data)*/ })
+                }
+            },
+            async fetch() {
+                const response = await window.axios.get('/api/buses/'+this.$props.dataId);
+                this.form.active_plate = response.data.data[0].active_plate;
+                this.form.official_plate = response.data.data[0].official_plate;
+            }
+        },
+        mounted(){
+            if( this.$props.updateFlag ){
+                this.fetch();
             }
         }
     }

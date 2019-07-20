@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api-token" content="@php echo Auth::user()->api_token  @endphp">
 
     <link href="{{ URL::asset("css/template_includes/bootstrap.min.css") }}" rel="stylesheet">
     <link href="{{ URL::asset("css/template_includes/bootstrap-responsive.min.css") }}" rel="stylesheet">
@@ -33,7 +34,13 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
                                     class="icon-user"></i> Admin <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:;">Logout</a></li>
+                            <li>
+                                <form action="/logout" method="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <button type="submit">Logout</button>
+                                </form>
+
+                            </li>
                         </ul>
                     </li>
                 </ul>
