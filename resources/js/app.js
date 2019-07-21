@@ -25,9 +25,12 @@ Vue.component('test-form', require('./components/TestForm.vue').default);
 Vue.component('bus-form', require('./components/BusForm.vue').default);
 Vue.component('user-form', require('./components/UserForm.vue').default);
 Vue.component('login-form', require('./components/LoginForm.vue').default);
+Vue.component('app-module-form', require('./components/AppModuleForm.vue').default);
 Vue.component('my-vuetable', require('./components/MyVuetable.vue').default);
 Vue.component('buses-vuetable', require('./components/BusesTable.vue').default);
 Vue.component('users-vuetable', require('./components/UsersTable.vue').default);
+Vue.component('app-modules-vuetable', require('./components/AppModulesTable.vue').default);
+Vue.component('app-module-permissions-vuetable', require('./components/AppModulePermissionsTable.vue').default);
 Vue.component('vue-table-filter-bar', require('./components/VueTableFilterBar.vue').default);
 
 Vue.mixin({

@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class AppModuleFormRequest extends FormRequest
+class AppModuleFormUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +24,10 @@ class AppModuleFormRequest extends FormRequest
      */
     public function rules()
     {
+        $ignoreID = $this->route('app_module')->id;
         return [
-            'name' => 'required|unique:app_modules'
+            'name' => [ 'required', Rule::unique('app_modules')->ignore($ignoreID) ],
+            'permission_prefix' => [ 'required', Rule::unique('app_modules')->ignore($ignoreID) ]
         ];
     }
 }

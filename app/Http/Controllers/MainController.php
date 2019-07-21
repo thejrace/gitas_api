@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\AppModule;
 use App\Bus;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class MainController extends Controller
 {
@@ -14,11 +16,12 @@ class MainController extends Controller
 
     }
 
-    public function test( Request $request, $id ){
-        $model = Bus::findOrFail($id)->first();
+    public function test( Request $request, AppModule $model ){
 
-        return $model;
+        $query = Permission::query();
+        $query->where('name', 'LIKE', '%'.$model->permission_prefix.'%');
 
+        return $query->paginate(20);
     }
 
 }

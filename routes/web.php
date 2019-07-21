@@ -11,6 +11,9 @@
 |
 */
 
+use App\Http\Controllers\AppModuleController;
+use App\Http\Controllers\AppModuleFormController;
+use App\Http\Controllers\AppModulePermissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\BusFormController;
@@ -29,7 +32,7 @@ Route::post('logout',                                           [ LoginControlle
 Route::middleware(['auth'])->group(function(){
 
     Route::get('/',                                             [ MainController::class, 'index'] );
-    Route::get('/test/{bus}',                                   [ MainController::class, 'test'] );
+    Route::get('/test/{app_module}',                            [ MainController::class, 'test'] );
 
     Route::prefix('buses')->group(function(){
         Route::get('/',                                         [ BusController::class, 'index'] )->name('buses.index');
@@ -39,10 +42,17 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::prefix('app_modules')->group(function(){
-        Route::get('/',                                         [ BusController::class, 'index'] )->name('app_modules.index');
-        Route::get('dataTables',                                [ BusController::class, 'dataTables'] );
-        Route::get('form',                                      [ BusFormController::class, 'create'] )->name('app_modules.form');
-        Route::get('form/{app_module}',                                [ BusFormController::class, 'edit'] );
+        Route::get('/',                                         [ AppModuleController::class, 'index'] )->name('app_modules.index');
+        Route::get('dataTables',                                [ AppModuleController::class, 'dataTables'] );
+        Route::get('form',                                      [ AppModuleFormController::class, 'create'] )->name('app_modules.form');
+        Route::get('form/{app_module}',                         [ AppModuleFormController::class, 'edit'] );
+    });
+
+    Route::prefix('app_module_permissions')->group(function(){
+        Route::get('/{app_module}',                                         [ AppModulePermissionController::class, 'index'] )->name('app_module_permissions.index');
+        Route::get('dataTables/{app_module}',                                [ AppModulePermissionController::class, 'dataTables'] );
+        Route::get('form',                                      [ AppModuleFormController::class, 'create'] )->name('app_module_permissions.form');
+        Route::get('form/{app_module}',                         [ AppModuleFormController::class, 'edit'] );
     });
 
     Route::prefix('users')->group(function(){

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\AppModule;
-use App\Http\Requests\AppModuleFormRequest;
+use App\Http\Requests\AppModuleFormStoreRequest;
+use App\Http\Requests\AppModuleFormUpdateRequest;
 use App\Http\Resources\AppModuleResource;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SuccessJSONResponseResource;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -18,32 +20,31 @@ class AppModuleController extends Controller
         return AppModuleResource::collection(AppModule::all());
     }
 
-    public function store(AppModuleFormRequest $request)
+    public function store(AppModuleFormStoreRequest $request)
     {
         // create a API user for the AppModule
         $attributes = $request->all();
+        $attributesForApiUser = $request->all();
         $nameFormed = preg_replace('/\s+/', '', Str::lower($request->get('name')));
-        $attributes['email'] = $nameFormed.'@gapp_module.com';
-        $attributes['password'] = Hash::make($nameFormed.'@gitas');
-        $attributes['api_token'] =  Str::random(60);
-        $apiUser = User::create($attributes);
+        $attributesForApiUser['email'] = $nameFormed.'@gapp_module.com';
+        $attributesForApiUser['password'] = Hash::make($nameFormed.'@gitas');
+        $attributesForApiUser['api_token'] =  Str::random(60);
+        $apiUser = User::create($attributesForApiUser);
         // create model
-        $request->request->set('user_id', $apiUser->id);
-        $model = AppModule::create( $request->all() );
+        $attributes['user_id'] = $apiUser->id;
+        AppModule::create( $attributes );
+        return new SuccessJSONResponseResource(null);
+    }
+
+    public function show($model)
+    {
         return new AppModuleResource($model);
     }
 
-    public function show($id)
+    public function update(AppModuleFormUpdateRequest $request, AppModule $model )
     {
-        $model = AppModule::find($id);
-        return new AppModuleResource($model);
-    }
-
-    public function update(AppModuleFormRequest $request, $id)
-    {
-        $model = AppModule::findOrFail($id);
         $model->update($request->all());
-        return new AppModuleResource($model);
+        return new SuccessJSONResponseResource(null);
     }
 
     public function destroy($id)
@@ -57,8 +58,6 @@ class AppModuleController extends Controller
 
             // remove API user
         });
-
-
 
     }
 }

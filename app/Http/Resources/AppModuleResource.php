@@ -19,6 +19,7 @@ class AppModuleResource extends JsonResource
             'id'            => $this->resource->id,
             'name'          => $this->resource->name,
             'description'   => $this->resource->description,
+            'permission_prefix'   => $this->resource->permission_prefix,
             //'user'          => $this->resource->user
         ];
     }
