@@ -56,9 +56,9 @@
     <div class="subnavbar-inner">
         <div class="container">
             <ul class="mainnav">
-                <li @php if( isset($page['api_users']) ) echo 'class="active"'; @endphp><a href=""><i class="icon-group"></i><span>API Users</span> </a> </li>
-                <li @php if( isset($page['buses']) ) echo 'class="active"'; @endphp><a href=""><i class="icon-truck"></i><span>Buses</span> </a> </li>
-                <li @php if( isset($page['app_modules']) ) echo 'class="active"'; @endphp><a href=""><i class="icon-cloud"></i><span>App Modules</span> </a></li>
+                <li @php if( isset($page['users']) ) echo 'class="active"'; @endphp><a href="{{route('users.index')}}"><i class="icon-group"></i><span>API Users</span> </a> </li>
+                <li @php if( isset($page['buses']) ) echo 'class="active"'; @endphp><a href="{{route('buses.index')}}"><i class="icon-truck"></i><span>Buses</span> </a> </li>
+                <li @php if( isset($page['app_modules']) ) echo 'class="active"'; @endphp><a href="{{route('app_modules.index')}}"><i class="icon-cloud"></i><span>App Modules</span> </a></li>
             </ul>
         </div>
         <!-- /container -->

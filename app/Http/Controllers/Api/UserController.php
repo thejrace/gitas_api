@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UserFormStoreRequest;
 use App\Http\Requests\UserFormUpdateRequest;
+use App\Http\Resources\SuccessJSONResponseResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResourceAllData;
 use App\User;
@@ -21,29 +22,32 @@ class UserController extends Controller
 
     public function store(UserFormStoreRequest $request)
     {
-        $request->request->set('api_token', Str::random(60));
-        $request->request->set('password', Hash::make($request->get('password')));
-        $user = User::create($request->all());
-        return new UserResource($user);
+        $attributes = $request->all();
+        $attributes['api_token']    =  Str::random(60);
+        $attributes['password']     = Hash::make($request->get('password'));
+        User::create($attributes);
+        return new SuccessJSONResponseResource(null);
     }
 
-    public function show($id)
+    public function show($model)
     {
-        $user = User::findOrFail($id);
-        return new UserResource($user);
+        return new UserResource($model);
     }
 
-    public function update(UserFormUpdateRequest $request, $id)
+    public function update(UserFormUpdateRequest $request, User $model)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-        return new UserResource($user);
+        $attributes = $request->all();
+        if( $request->filled('password') ){
+            $attributes['password'] = Hash::make($request->get('password'));
+        }
+        $model->update($attributes);
+        return new SuccessJSONResponseResource(null);
     }
 
-    public function destroy($id)
+    public function destroy($model)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $model->delete();
+        return new SuccessJSONResponseResource(null);
     }
 
 }

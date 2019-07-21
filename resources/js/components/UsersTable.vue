@@ -2,7 +2,7 @@
     <div>
         <vue-table-filter-bar></vue-table-filter-bar>
         <vuetable ref="vuetable"
-                  api-url="buses/dataTables"
+                  api-url="users/dataTables"
                   :fields="fields"
                   pagination-path="pagination"
                   :append-params="moreParams"
@@ -12,6 +12,10 @@
         >
             <template slot="actions" scope="props">
                 <div class="custom-actions">
+                    <button class="ui basic button" title="İzinler"
+                            @click="onAction('show-permissions', props.rowData, props.rowIndex)">
+                        <i class="icon-key"></i>
+                    </button>
                     <button class="ui basic button"
                             @click="onAction('edit-item', props.rowData, props.rowIndex)">
                         <i class="icon-pencil"></i>
@@ -68,7 +72,7 @@
             onAction (action, data, index) {
                 switch( action ){
                     case 'edit-item':
-                        window.open("/buses/form/"+data.id,'_blank');
+                        window.open("/users/form/"+data.id,'_blank');
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
@@ -79,7 +83,7 @@
                 }
             },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/buses/'+dataId);
+                const response = await window.axios.delete('/api/users/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -92,20 +96,16 @@
                 fields:[
                     'id',
                     {
-                        name: 'official_plate',
-                        title:'Ruhsat Plaka',
+                        name: 'name',
+                        title:'İsim',
                         titleClass: 'center aligned',
                         dataClass: 'center aligned',
-                        sortField: 'official_plate'
+                        sortField: 'name'
                     },
                     {
-                        name: 'active_plate',
-                        title:'Aktif Plaka',
-                        sortField: 'official_plate'
-                    },
-                    {
-                        name: 'created_at',
-                        title:'Eklenme',
+                        name: 'email',
+                        title:'Eposta',
+                        sortField: 'email'
                     },
                     {
                         name: '__slot:actions',
