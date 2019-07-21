@@ -1911,15 +1911,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
     action: function action() {
       if (this.$props.updateFlag) {
         this.form.put('/api/buses/' + this.$props.dataId).then(function (_ref) {
-          /*console.log(data)*/
-
           var data = _ref.data;
+
+          if (data.hasOwnProperty('success')) {
+            alert('Success!');
+          } else {
+            alert('Error');
+          }
         });
       } else {
         this.form.post('/api/buses').then(function (_ref2) {
-          /*console.log(data)*/
-
           var data = _ref2.data;
+
+          if (data.hasOwnProperty('success')) {
+            alert('Success!');
+          } else {
+            alert('Error');
+          }
         });
       }
     },
@@ -1927,7 +1935,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
       var _fetch = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var response, key;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -1937,10 +1945,14 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 
               case 2:
                 response = _context.sent;
-                this.form.active_plate = response.data.data[0].active_plate;
-                this.form.official_plate = response.data.data[0].official_plate;
 
-              case 5:
+                for (key in response.data.data) {
+                  if (this.form.hasOwnProperty(key)) {
+                    this.form[key] = response.data.data[key];
+                  }
+                }
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -2102,6 +2114,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2149,6 +2174,18 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
     },
     onChangePage: function onChangePage(page) {
       this.$refs.vuetable.changePage(page);
+    },
+    onAction: function onAction(action, data, index) {
+      switch (action) {
+        case 'edit-item':
+          window.open("/buses/busForm/" + data.id, '_blank');
+          break;
+
+        case 'delete-item':
+          break;
+      }
+
+      console.log('slot) action: ' + action, data.name, index);
     }
   },
   data: function data() {
@@ -2167,6 +2204,11 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
       }, {
         name: 'created_at',
         title: 'Eklenme'
+      }, {
+        name: '__slot:actions',
+        title: 'Actions',
+        titleClass: 'center aligned',
+        dataClass: 'center aligned'
       }],
       moreParams: {}
     };
@@ -43104,7 +43146,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("button", { attrs: { disabled: _vm.form.busy, type: "submit" } }, [
-        _vm._v("\n        Add\n    ")
+        _vm._v("\n        Save\n    ")
       ])
     ]
   )
@@ -43234,7 +43276,51 @@ var render = function() {
             }
           }
         },
-        on: { "vuetable:pagination-data": _vm.onPaginationData }
+        on: { "vuetable:pagination-data": _vm.onPaginationData },
+        scopedSlots: _vm._u([
+          {
+            key: "actions",
+            fn: function(props) {
+              return [
+                _c("div", { staticClass: "custom-actions" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "ui basic button",
+                      on: {
+                        click: function($event) {
+                          return _vm.onAction(
+                            "edit-item",
+                            props.rowData,
+                            props.rowIndex
+                          )
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "icon-pencil" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "ui basic button",
+                      on: {
+                        click: function($event) {
+                          return _vm.onAction(
+                            "delete-item",
+                            props.rowData,
+                            props.rowIndex
+                          )
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "icon-remove" })]
+                  )
+                ])
+              ]
+            }
+          }
+        ])
       }),
       _vm._v(" "),
       _c("vuetable-pagination", {

@@ -19,7 +19,7 @@
             </div>
         </div>
         <button :disabled="form.busy" type="submit">
-            Add
+            Save
         </button>
     </form>
 </template>
@@ -50,16 +50,31 @@
             action () {
                 if( this.$props.updateFlag ){
                     this.form.put('/api/buses/'+this.$props.dataId)
-                        .then(({ data }) => { /*console.log(data)*/ })
+                        .then(({ data }) => {
+                            if( data.hasOwnProperty('success') ){
+                                alert('Success!');
+                            } else {
+                                alert('Error');
+                            }
+                        })
                 } else {
                     this.form.post('/api/buses')
-                        .then(({ data }) => { /*console.log(data)*/ })
+                        .then(({ data }) => {
+                            if( data.hasOwnProperty('success') ){
+                                alert('Success!');
+                            } else {
+                                alert('Error');
+                            }
+                        })
                 }
             },
             async fetch() {
                 const response = await window.axios.get('/api/buses/'+this.$props.dataId);
-                this.form.active_plate = response.data.data[0].active_plate;
-                this.form.official_plate = response.data.data[0].official_plate;
+                for( let key in response.data.data ){
+                    if( this.form.hasOwnProperty(key) ){
+                        this.form[key] = response.data.data[key];
+                    }
+                }
             }
         },
         mounted(){

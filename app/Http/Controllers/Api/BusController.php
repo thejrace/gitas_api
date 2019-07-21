@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BusResource;
 use App\Http\Requests\BusFormStoreRequest;
 use App\Http\Requests\BusFormUpdateRequest;
+use App\Http\Resources\SuccessJSONResponseResource;
 use Illuminate\Http\Request;
 
 
@@ -29,8 +30,8 @@ class BusController extends Controller
 
     public function store(BusFormStoreRequest $request)
     {
-        $model = Bus::create( $request->all() );
-        return new BusResource($model);
+        Bus::create( $request->all() );
+        return new SuccessJSONResponseResource(null);
     }
 
     public function show($model)

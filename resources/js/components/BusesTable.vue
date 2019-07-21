@@ -9,7 +9,20 @@
                   :css="css.table"
                   :http-options="{ headers: {Authorization: 'Bearer tEZXkuGlRI9GKfMZVqpDndzO5uFxuxBR0nAHOFhYFrGKrvKf7AnIGo1qpX01'} }"
                   @vuetable:pagination-data="onPaginationData"
-        ></vuetable>
+        >
+            <template slot="actions" scope="props">
+                <div class="custom-actions">
+                    <button class="ui basic button"
+                            @click="onAction('edit-item', props.rowData, props.rowIndex)">
+                        <i class="icon-pencil"></i>
+                    </button>
+                    <button class="ui basic button"
+                            @click="onAction('delete-item', props.rowData, props.rowIndex)">
+                        <i class="icon-remove"></i>
+                    </button>
+                </div>
+            </template>
+        </vuetable>
         <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"  :css="css.pagination"></vuetable-pagination>
     </div>
 </template>
@@ -19,7 +32,9 @@
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
     import CssConfig from './vuetable-styles.js';
     import VueEvents from 'vue-events';
+
     Vue.use(VueEvents);
+
 
     export default {
         components: {
@@ -49,6 +64,17 @@
             },
             onChangePage (page) {
                 this.$refs.vuetable.changePage(page)
+            },
+            onAction (action, data, index) {
+                switch( action ){
+                    case 'edit-item':
+                        window.open("/buses/busForm/"+data.id,'_blank');
+                        break;
+                    case 'delete-item':
+                        break;
+                }
+
+                console.log('slot) action: ' + action, data.name, index)
             }
         },
         data(){
@@ -71,6 +97,12 @@
                     {
                         name: 'created_at',
                         title:'Eklenme',
+                    },
+                    {
+                        name: '__slot:actions',
+                        title: 'Actions',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned'
                     },
                 ],
                 moreParams: {}
