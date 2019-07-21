@@ -13,6 +13,9 @@
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
+                                <div class="top-nav-container">
+                                    <a href="{{route('users.form')}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
+                                </div>
                                 <users-vuetable></users-vuetable>
                             </div>
                         </div>

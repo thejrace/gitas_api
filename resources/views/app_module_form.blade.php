@@ -8,8 +8,8 @@
                     <div class="span12">
                         <div class="widget">
                             <div class="widget-header">
-                                <i class="icon-truck"></i>
-                                <h3>Bus Form</h3>
+                                <i class="icon-cloud"></i>
+                                <h3>App Module Form</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">

@@ -1131,6 +1131,10 @@ color: #333;
 .MR0 { margin-right:0;}
 
 
+.widget-content .top-nav-container{
+	text-align:right;
+}
+
 
 /*------------------------------------------------------------------
 [1. Max Width: 480px]

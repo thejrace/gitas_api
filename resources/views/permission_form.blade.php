@@ -17,7 +17,7 @@
                             @if(isset($updateFlag))
                                 <permission-form data-id="{{ $dataId }}" update-flag></permission-form>
                             @else
-                                <permission-form></permission-form>
+                                <permission-form permission-prefix="@php if(isset($_GET['permission_prefix'])) echo $_GET["permission_prefix"] @endphp" ></permission-form>
                             @endif
 
                             </div>

@@ -13,6 +13,9 @@
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
+                                <div class="top-nav-container">
+                                    <a href="{{route('app_modules.form')}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
+                                </div>
                                 <app-modules-vuetable></app-modules-vuetable>
                             </div>
                         </div>

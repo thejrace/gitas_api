@@ -3051,7 +3051,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     'updateFlag': Boolean,
-    'dataId': String
+    'dataId': String,
+    'permissionPrefix': String
   },
   data: function data() {
     return {
@@ -3124,6 +3125,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
   mounted: function mounted() {
     if (this.$props.updateFlag) {
       this.fetch();
+    } else {
+      this.form.name = this.$props.permissionPrefix;
     }
   }
 });

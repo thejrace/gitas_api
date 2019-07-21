@@ -10,9 +10,13 @@
                             <div class="widget-header">
                                 <i class="icon-truck"></i>
                                 <h3>Buses</h3>
+
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
+                                <div class="top-nav-container">
+                                    <a href="{{route('buses.form')}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
+                                </div>
                                 <buses-vuetable></buses-vuetable>
                             </div>
                         </div>

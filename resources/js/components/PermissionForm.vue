@@ -25,7 +25,8 @@
     export default {
         props: {
             'updateFlag': Boolean,
-            'dataId' : String
+            'dataId' : String,
+            'permissionPrefix': String
         },
         data () {
             return {
@@ -69,6 +70,8 @@
         mounted(){
             if( this.$props.updateFlag ){
                 this.fetch();
+            } else {
+                this.form.name = this.$props.permissionPrefix;
             }
         }
     }
