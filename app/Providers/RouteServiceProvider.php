@@ -7,6 +7,7 @@ use App\Bus;
 use App\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Spatie\Permission\Models\Permission;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('bus', Bus::class);
         Route::model('user', User::class);
         Route::model('app_module', AppModule::class);
+        Route::model('permission', Permission::class);
     }
 
     /**

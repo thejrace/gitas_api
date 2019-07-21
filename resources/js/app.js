@@ -24,6 +24,7 @@ Vue.component('bus-index', require('./components/BusIndex.vue').default);
 Vue.component('test-form', require('./components/TestForm.vue').default);
 Vue.component('bus-form', require('./components/BusForm.vue').default);
 Vue.component('user-form', require('./components/UserForm.vue').default);
+Vue.component('permission-form', require('./components/PermissionForm.vue').default);
 Vue.component('login-form', require('./components/LoginForm.vue').default);
 Vue.component('app-module-form', require('./components/AppModuleForm.vue').default);
 Vue.component('my-vuetable', require('./components/MyVuetable.vue').default);

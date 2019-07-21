@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\BusFormController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PermissionFormController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormController;
 
@@ -49,10 +50,15 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::prefix('app_module_permissions')->group(function(){
-        Route::get('/{app_module}',                                         [ AppModulePermissionController::class, 'index'] )->name('app_module_permissions.index');
-        Route::get('dataTables/{app_module}',                                [ AppModulePermissionController::class, 'dataTables'] );
+        Route::get('/{app_module}',                             [ AppModulePermissionController::class, 'index'] )->name('app_module_permissions.index');
+        Route::get('dataTables/{app_module}',                   [ AppModulePermissionController::class, 'dataTables'] );
         Route::get('form',                                      [ AppModuleFormController::class, 'create'] )->name('app_module_permissions.form');
         Route::get('form/{app_module}',                         [ AppModuleFormController::class, 'edit'] );
+    });
+
+    Route::prefix('permissions')->group(function(){
+        Route::get('form',                                      [ PermissionFormController::class, 'create'] )->name('permissions.form');
+        Route::get('form/{permission}',                         [ PermissionFormController::class, 'edit'] );
     });
 
     Route::prefix('users')->group(function(){

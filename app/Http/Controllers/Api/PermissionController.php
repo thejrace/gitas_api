@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\PermissionFormRequest;
+use App\Http\Requests\PermissionFormStoreRequest;
+use App\Http\Requests\PermissionFormUpdateRequest;
+use App\Http\Resources\PermissionResource;
+use App\Http\Resources\SuccessJSONResponseResource;
 use App\User;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
@@ -10,27 +13,31 @@ use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
 
-    public function store(PermissionFormRequest $request)
+    public function store(PermissionFormStoreRequest $request)
     {
-        $perm = Permission::create(['name' => $request->get('name')]);
-        return $perm;
+        Permission::create(['name' => $request->get('name')]);
+        return new SuccessJSONResponseResource(null);
     }
 
-    public function update( PermissionFormRequest $request, $id ){
-        $perm = Permission::findById($id);
-        $perm->update($request->all());
-        return $perm;
+    public function show( Permission $model)
+    {
+        return new PermissionResource($model);
     }
 
-    public function destroy($id)
+    public function update(PermissionFormUpdateRequest $request, Permission $model ){
+
+        $model->update($request->all());
+        return new SuccessJSONResponseResource(null);
+    }
+
+    public function destroy( Permission $model )
     {
-        $permission = Permission::findById($id);
-        $users = User::permission($permission)->get();
+        $users = User::permission($model)->get();
         foreach( $users as $user ){
-            $user->revokePermissionTo($permission);
+            $user->revokePermissionTo($model);
         }
-        $permission->delete();
+        $model->delete();
+        return new SuccessJSONResponseResource(null);
     }
-
 
 }
