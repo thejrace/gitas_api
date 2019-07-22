@@ -2082,7 +2082,6 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'updateFlag': Boolean,
     'dataId': String
   },
   data: function data() {
@@ -2097,48 +2096,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
   },
   methods: {
     action: function action() {
-      if (this.$props.updateFlag) {
-        this.form.put('/api/app_modules/' + this.$props.dataId).then(function (_ref) {
-          var data = _ref.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      } else {
-        this.form.post('/api/app_modules').then(function (_ref2) {
-          var data = _ref2.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      }
+      this.dataId ? this.update() : this.store();
     },
-    fetch: function () {
-      var _fetch = _asyncToGenerator(
+    store: function () {
+      var _store = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, key;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios.get('/api/app_modules/' + this.$props.dataId);
+                return this.form.post('/api/app_modules');
 
               case 2:
                 response = _context.sent;
-
-                for (key in response.data.data) {
-                  if (this.form.hasOwnProperty(key)) {
-                    this.form[key] = response.data.data[key];
-                  }
-                }
+                this.actionStatusCallback(response.data.data);
 
               case 4:
               case "end":
@@ -2148,15 +2122,78 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
         }, _callee, this);
       }));
 
+      function store() {
+        return _store.apply(this, arguments);
+      }
+
+      return store;
+    }(),
+    update: function () {
+      var _update = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.form.put('/api/app_modules/' + this.dataId);
+
+              case 2:
+                response = _context2.sent;
+                this.actionStatusCallback(response.data.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function update() {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }(),
+    fetch: function () {
+      var _fetch = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return window.axios.get('/api/app_modules/' + this.dataId);
+
+              case 2:
+                response = _context3.sent;
+                this.form.fill(response.data.data);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
       function fetch() {
         return _fetch.apply(this, arguments);
       }
 
       return fetch;
-    }()
+    }(),
+    actionStatusCallback: function actionStatusCallback(response) {
+      response.hasOwnProperty('success') ? alert('Success!') : alert('Error');
+    }
   },
   mounted: function mounted() {
-    if (this.$props.updateFlag) {
+    if (this.dataId) {
       this.fetch();
     }
   }
@@ -2407,7 +2444,6 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'updateFlag': Boolean,
     'dataId': String
   },
   data: function data() {
@@ -2422,48 +2458,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
   },
   methods: {
     action: function action() {
-      if (this.$props.updateFlag) {
-        this.form.put('/api/app_module_users/' + this.$props.dataId).then(function (_ref) {
-          var data = _ref.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      } else {
-        this.form.post('/api/app_module_users').then(function (_ref2) {
-          var data = _ref2.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      }
+      this.dataId ? this.update() : this.store();
     },
-    fetch: function () {
-      var _fetch = _asyncToGenerator(
+    store: function () {
+      var _store = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, key;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios.get('/api/app_module_users/' + this.$props.dataId);
+                return this.form.post('/api/app_module_users');
 
               case 2:
                 response = _context.sent;
-
-                for (key in response.data.data) {
-                  if (this.form.hasOwnProperty(key)) {
-                    this.form[key] = response.data.data[key];
-                  }
-                }
+                this.actionStatusCallback(response.data.data);
 
               case 4:
               case "end":
@@ -2473,15 +2484,78 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
         }, _callee, this);
       }));
 
+      function store() {
+        return _store.apply(this, arguments);
+      }
+
+      return store;
+    }(),
+    update: function () {
+      var _update = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.form.put('/api/app_module_users/' + this.dataId);
+
+              case 2:
+                response = _context2.sent;
+                this.actionStatusCallback(response.data.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function update() {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }(),
+    fetch: function () {
+      var _fetch = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return window.axios.get('/api/app_module_users/' + this.dataId);
+
+              case 2:
+                response = _context3.sent;
+                this.form.fill(response.data.data);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
       function fetch() {
         return _fetch.apply(this, arguments);
       }
 
       return fetch;
-    }()
+    }(),
+    actionStatusCallback: function actionStatusCallback(response) {
+      response.hasOwnProperty('success') ? alert('Success!') : alert('Error');
+    }
   },
   mounted: function mounted() {
-    if (this.$props.updateFlag) {
+    if (this.dataId) {
       this.fetch();
     }
   }
@@ -2930,12 +3004,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'updateFlag': Boolean,
-    'dataId': String
+    dataId: {
+      type: String,
+      "default": null
+    }
   },
   data: function data() {
     return {
-      // Create a new form instance
       form: new vform__WEBPACK_IMPORTED_MODULE_2__["Form"]({
         active_plate: '',
         official_plate: '',
@@ -2945,48 +3020,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
   },
   methods: {
     action: function action() {
-      if (this.$props.updateFlag) {
-        this.form.put('/api/buses/' + this.$props.dataId).then(function (_ref) {
-          var data = _ref.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      } else {
-        this.form.post('/api/buses').then(function (_ref2) {
-          var data = _ref2.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      }
+      this.dataId ? this.update() : this.store();
     },
-    fetch: function () {
-      var _fetch = _asyncToGenerator(
+    store: function () {
+      var _store = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, key;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios.get('/api/buses/' + this.$props.dataId);
+                return this.form.post('/api/buses');
 
               case 2:
                 response = _context.sent;
-
-                for (key in response.data.data) {
-                  if (this.form.hasOwnProperty(key)) {
-                    this.form[key] = response.data.data[key];
-                  }
-                }
+                this.actionStatusCallback(response.data.data);
 
               case 4:
               case "end":
@@ -2996,15 +3046,78 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
         }, _callee, this);
       }));
 
+      function store() {
+        return _store.apply(this, arguments);
+      }
+
+      return store;
+    }(),
+    update: function () {
+      var _update = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.form.put('/api/buses/' + this.dataId);
+
+              case 2:
+                response = _context2.sent;
+                this.actionStatusCallback(response.data.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function update() {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }(),
+    fetch: function () {
+      var _fetch = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return window.axios.get('/api/buses/' + this.dataId);
+
+              case 2:
+                response = _context3.sent;
+                this.form.fill(response.data.data);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
       function fetch() {
         return _fetch.apply(this, arguments);
       }
 
       return fetch;
-    }()
+    }(),
+    actionStatusCallback: function actionStatusCallback(response) {
+      response.hasOwnProperty('success') ? alert('Success!') : alert('Error');
+    }
   },
   mounted: function mounted() {
-    if (this.$props.updateFlag) {
+    if (this.dataId) {
       this.fetch();
     }
   }
@@ -3574,7 +3687,6 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'updateFlag': Boolean,
     'dataId': String,
     'permissionPrefix': String
   },
@@ -3588,48 +3700,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
   },
   methods: {
     action: function action() {
-      if (this.$props.updateFlag) {
-        this.form.put('/api/permissions/' + this.$props.dataId).then(function (_ref) {
-          var data = _ref.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      } else {
-        this.form.post('/api/permissions').then(function (_ref2) {
-          var data = _ref2.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      }
+      this.dataId ? this.update() : this.store();
     },
-    fetch: function () {
-      var _fetch = _asyncToGenerator(
+    store: function () {
+      var _store = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, key;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios.get('/api/permissions/' + this.$props.dataId);
+                return this.form.post('/api/permissions');
 
               case 2:
                 response = _context.sent;
-
-                for (key in response.data.data) {
-                  if (this.form.hasOwnProperty(key)) {
-                    this.form[key] = response.data.data[key];
-                  }
-                }
+                this.actionStatusCallback(response.data.data);
 
               case 4:
               case "end":
@@ -3639,15 +3726,78 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
         }, _callee, this);
       }));
 
+      function store() {
+        return _store.apply(this, arguments);
+      }
+
+      return store;
+    }(),
+    update: function () {
+      var _update = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.form.put('/api/permissions/' + this.dataId);
+
+              case 2:
+                response = _context2.sent;
+                this.actionStatusCallback(response.data.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function update() {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }(),
+    fetch: function () {
+      var _fetch = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return window.axios.get('/api/permissions/' + this.dataId);
+
+              case 2:
+                response = _context3.sent;
+                this.form.fill(response.data.data);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
       function fetch() {
         return _fetch.apply(this, arguments);
       }
 
       return fetch;
-    }()
+    }(),
+    actionStatusCallback: function actionStatusCallback(response) {
+      response.hasOwnProperty('success') ? alert('Success!') : alert('Error');
+    }
   },
   mounted: function mounted() {
-    if (this.$props.updateFlag) {
+    if (this.dataId) {
       this.fetch();
     } else {
       this.form.name = this.$props.permissionPrefix;
@@ -3792,7 +3942,6 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'updateFlag': Boolean,
     'dataId': String
   },
   data: function data() {
@@ -3807,48 +3956,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
   },
   methods: {
     action: function action() {
-      if (this.$props.updateFlag) {
-        this.form.put('/api/users/' + this.$props.dataId).then(function (_ref) {
-          var data = _ref.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      } else {
-        this.form.post('/api/users').then(function (_ref2) {
-          var data = _ref2.data;
-
-          if (data.data.hasOwnProperty('success')) {
-            alert('Success!');
-          } else {
-            alert('Error');
-          }
-        });
-      }
+      this.dataId ? this.update() : this.store();
     },
-    fetch: function () {
-      var _fetch = _asyncToGenerator(
+    store: function () {
+      var _store = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, key;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios.get('/api/users/' + this.$props.dataId);
+                return this.form.post('/api/users');
 
               case 2:
                 response = _context.sent;
-
-                for (key in response.data.data) {
-                  if (this.form.hasOwnProperty(key)) {
-                    this.form[key] = response.data.data[key];
-                  }
-                }
+                this.actionStatusCallback(response.data.data);
 
               case 4:
               case "end":
@@ -3858,15 +3982,78 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
         }, _callee, this);
       }));
 
+      function store() {
+        return _store.apply(this, arguments);
+      }
+
+      return store;
+    }(),
+    update: function () {
+      var _update = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.form.put('/api/users/' + this.dataId);
+
+              case 2:
+                response = _context2.sent;
+                this.actionStatusCallback(response.data.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function update() {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }(),
+    fetch: function () {
+      var _fetch = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return window.axios.get('/api/users/' + this.dataId);
+
+              case 2:
+                response = _context3.sent;
+                this.form.fill(response.data.data);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
       function fetch() {
         return _fetch.apply(this, arguments);
       }
 
       return fetch;
-    }()
+    }(),
+    actionStatusCallback: function actionStatusCallback(response) {
+      response.hasOwnProperty('success') ? alert('Success!') : alert('Error');
+    }
   },
   mounted: function mounted() {
-    if (this.$props.updateFlag) {
+    if (this.dataId) {
       this.fetch();
     }
   }

@@ -42,7 +42,6 @@
 
     export default {
         props: {
-            'updateFlag': Boolean,
             'dataId' : String
         },
         data () {
@@ -57,37 +56,30 @@
         },
         methods: {
             action () {
-                if( this.$props.updateFlag ){
-                    this.form.put('/api/app_modules/'+this.$props.dataId)
-                        .then(({ data }) => {
-                            if( data.data.hasOwnProperty('success') ){
-                                alert('Success!');
-                            } else {
-                                alert('Error');
-                            }
-                        })
-                } else {
-                    this.form.post('/api/app_modules')
-                        .then(({ data }) => {
-                            if( data.data.hasOwnProperty('success') ){
-                                alert('Success!');
-                            } else {
-                                alert('Error');
-                            }
-                        })
-                }
+                this.dataId
+                    ? this.update()
+                    : this.store();
+            },
+            async store() {
+                const response = await this.form.post('/api/app_modules');
+                this.actionStatusCallback(response.data.data);
+            },
+            async update() {
+                const response = await this.form.put('/api/app_modules/'+this.dataId);
+                this.actionStatusCallback(response.data.data);
             },
             async fetch() {
-                const response = await window.axios.get('/api/app_modules/'+this.$props.dataId);
-                for( let key in response.data.data ){
-                    if( this.form.hasOwnProperty(key) ){
-                        this.form[key] = response.data.data[key];
-                    }
-                }
+                const response = await window.axios.get('/api/app_modules/'+this.dataId);
+                this.form.fill(response.data.data);
+            },
+            actionStatusCallback( response ){
+                ( response.hasOwnProperty('success') )
+                    ? alert('Success!')
+                    : alert('Error');
             }
         },
         mounted(){
-            if( this.$props.updateFlag ){
+            if( this.dataId ){
                 this.fetch();
             }
         }

@@ -43,12 +43,13 @@
 
     export default {
         props: {
-            'updateFlag': Boolean,
-            'dataId' : String
+            dataId : {
+                type: String,
+                default: null
+            }
         },
         data () {
             return {
-                // Create a new form instance
                 form: new Form({
                     active_plate: '',
                     official_plate: '',
@@ -58,37 +59,31 @@
         },
         methods: {
             action () {
-                if( this.$props.updateFlag ){
-                    this.form.put('/api/buses/'+this.$props.dataId)
-                        .then(({ data }) => {
-                            if( data.data.hasOwnProperty('success') ){
-                                alert('Success!');
-                            } else {
-                                alert('Error');
-                            }
-                        })
-                } else {
-                    this.form.post('/api/buses')
-                        .then(({ data }) => {
-                            if( data.data.hasOwnProperty('success') ){
-                                alert('Success!');
-                            } else {
-                                alert('Error');
-                            }
-                        })
-                }
+                this.dataId
+                    ? this.update()
+                    : this.store();
+            },
+            async store() {
+                const response = await this.form.post('/api/buses');
+                this.actionStatusCallback(response.data.data);
+            },
+
+            async update() {
+                const response = await this.form.put('/api/buses/'+this.dataId);
+                this.actionStatusCallback(response.data.data);
             },
             async fetch() {
-                const response = await window.axios.get('/api/buses/'+this.$props.dataId);
-                for( let key in response.data.data ){
-                    if( this.form.hasOwnProperty(key) ){
-                        this.form[key] = response.data.data[key];
-                    }
-                }
+                const response = await window.axios.get('/api/buses/'+this.dataId);
+                this.form.fill(response.data.data);
+            },
+            actionStatusCallback( response ){
+                ( response.hasOwnProperty('success') )
+                    ? alert('Success!')
+                    : alert('Error');
             }
         },
         mounted(){
-            if( this.$props.updateFlag ){
+            if( this.dataId ){
                 this.fetch();
             }
         }

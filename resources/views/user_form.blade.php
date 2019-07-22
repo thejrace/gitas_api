@@ -13,13 +13,7 @@
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
-
-                            @if(isset($updateFlag))
-                                <user-form data-id="{{ $dataId }}" update-flag></user-form>
-                            @else
-                                <user-form></user-form>
-                            @endif
-
+                                <user-form data-id="{{ $dataId ?? null }}"></user-form>
                             </div>
                         </div>
                     </div>

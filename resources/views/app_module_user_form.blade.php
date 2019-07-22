@@ -11,15 +11,8 @@
                                 <i class="icon-user"></i>
                                 <h3>App Module User Form</h3>
                             </div> <!-- /widget-header -->
-
                             <div class="widget-content">
-
-                            @if(isset($updateFlag))
-                                <app-module-user-form data-id="{{ $dataId }}" update-flag></app-module-user-form>
-                            @else
-                                <app-module-user-form></app-module-user-form>
-                            @endif
-
+                                <app-module-user-form data-id="{{ $dataId ?? null }}" update-flag></app-module-user-form>
                             </div>
                         </div>
                     </div>

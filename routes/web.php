@@ -38,7 +38,7 @@ Route::post('logout',                                           [ LoginControlle
 Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::get('/',                                             [ MainController::class, 'index'] );
-    Route::get('/test/{app_module}',                                  [ MainController::class, 'test'] );
+    Route::get('/test',                                  [ MainController::class, 'test'] );
 
     Route::prefix('buses')->group(function(){
         Route::get('/',                                         [ BusController::class, 'index'] )->name('buses.index');
@@ -55,10 +55,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     });
 
     Route::prefix('app_module_permissions')->group(function(){
-        Route::get('/{app_module}',                             [ AppModulePermissionController::class, 'index'] )->name('app_module_permissions.index');
-        Route::get('dataTables/{app_module}',                   [ AppModulePermissionController::class, 'dataTables'] );
         Route::get('form',                                      [ AppModuleFormController::class, 'create'] )->name('app_module_permissions.form');
         Route::get('form/{app_module}',                         [ AppModuleFormController::class, 'edit'] );
+        Route::get('dataTables/{app_module}',                   [ AppModulePermissionController::class, 'dataTables'] );
+        Route::get('/{app_module}',                             [ AppModulePermissionController::class, 'index'] )->name('app_module_permissions.index');
     });
 
     Route::prefix('permissions')->group(function(){
@@ -68,15 +68,16 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     });
 
     Route::prefix('user_permissions')->group(function(){
-        Route::get('/{user}',                                   [ UserPermissionController::class, 'index'] )->name('user_permissions.index');
         Route::get('dataTables/{user}',                         [ UserPermissionController::class, 'dataTables'] );
+        Route::get('{user}',                                   [ UserPermissionController::class, 'index'] )->name('user_permissions.index');
     });
 
     Route::prefix('app_module_users')->group(function(){
-        Route::get('/{app_module}',                             [ AppModuleUserController::class, 'index'] )->name('app_module_users.index');
+
         Route::get('dataTables/{app_module}',                   [ AppModuleUserController::class, 'dataTables'] );
         Route::get('form',                                      [ AppModuleUserFormController::class, 'create'] )->name('app_module_users.form');
         Route::get('form/{app_module_user}',                    [ AppModuleUserFormController::class, 'edit'] );
+        Route::get('{app_module}',                             [ AppModuleUserController::class, 'index'] )->name('app_module_users.index');
     });
 
     Route::prefix('app_module_user_permissions')->group(function(){

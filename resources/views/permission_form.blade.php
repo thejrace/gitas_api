@@ -13,13 +13,7 @@
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
-
-                            @if(isset($updateFlag))
-                                <permission-form data-id="{{ $dataId }}" update-flag></permission-form>
-                            @else
-                                <permission-form permission-prefix="@php if(isset($_GET['permission_prefix'])) echo $_GET["permission_prefix"] @endphp" ></permission-form>
-                            @endif
-
+                                <permission-form data-id="{{ $dataId ?? null }}" permission-prefix="@php if(isset($_GET['permission_prefix'])) echo $_GET["permission_prefix"] @endphp"></permission-form>
                             </div>
                         </div>
                     </div>

@@ -14,13 +14,12 @@ class MainController extends Controller
 {
 
     public function index(){
-        return view('dashboard');
+        return view('app_module_user_form');
 
     }
 
     public function test( Request $request, AppModule $appModule ){
-        return AppModuleUserResource::collection($appModule->users()->paginate(20));
-
+        return view('app_module_user_form');
     }
 
 }

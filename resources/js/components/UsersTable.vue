@@ -39,7 +39,6 @@
 
     Vue.use(VueEvents);
 
-
     export default {
         components: {
             Vuetable,
