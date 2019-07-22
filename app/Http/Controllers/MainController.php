@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AppModule;
 use App\Bus;
+use App\Http\Resources\AppModuleUserResource;
 use App\Http\Resources\PermissionResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -17,9 +18,9 @@ class MainController extends Controller
 
     }
 
-    public function test( Request $request, User $user ){
-        $permisson = Permission::query()->where('id', 1)->get();
-        return $permisson;
+    public function test( Request $request, AppModule $appModule ){
+        return AppModuleUserResource::collection($appModule->users()->paginate(20));
+
     }
 
 }

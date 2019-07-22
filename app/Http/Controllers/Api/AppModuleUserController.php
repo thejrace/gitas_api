@@ -6,6 +6,7 @@ use App\AppModuleUser;
 use App\Http\Requests\AppModuleUserFormStoreRequest;
 use App\Http\Requests\AppModuleUserFormUpdateRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AppModuleUserResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -21,6 +22,12 @@ class AppModuleUserController extends Controller
         AppModuleUser::create($attributes);
         return new SuccessJSONResponseResource(null);
     }
+
+    public function show( AppModuleUser $model)
+    {
+        return new AppModuleUserResource($model);
+    }
+
 
     public function update(AppModuleUserFormUpdateRequest $request, AppModuleUser $model )
     {
