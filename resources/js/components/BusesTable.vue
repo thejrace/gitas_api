@@ -92,6 +92,13 @@
                 fields:[
                     'id',
                     {
+                        name: 'code',
+                        title:'Kapı Kodu',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned',
+                        sortField: 'code'
+                    },
+                    {
                         name: 'official_plate',
                         title:'Ruhsat Plaka',
                         titleClass: 'center aligned',

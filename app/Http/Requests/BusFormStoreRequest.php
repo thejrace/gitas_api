@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BusFormStoreRequest extends FormRequest
 {
@@ -24,9 +25,9 @@ class BusFormStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'active_plate'              => 'required|min:5|max:20',
-            'official_plate'            => 'required|min:5|max:20',
-            'define_to_user_default'    => 'numeric'
+            'code'                      => [ 'required', Rule::unique('buses') ],
+            'active_plate'              => [ 'required', Rule::unique('buses') ],
+            'official_plate'            => [ 'required', Rule::unique('buses') ]
         ];
     }
 }

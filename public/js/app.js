@@ -2406,6 +2406,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["HasError"]);
@@ -2421,7 +2431,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
       form: new vform__WEBPACK_IMPORTED_MODULE_2__["Form"]({
         active_plate: '',
         official_plate: '',
-        store_data: 0
+        code: ''
       })
     };
   },
@@ -2756,6 +2766,12 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     return {
       css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"],
       fields: ['id', {
+        name: 'code',
+        title: 'Kapı Kodu',
+        titleClass: 'center aligned',
+        dataClass: 'center aligned',
+        sortField: 'code'
+      }, {
         name: 'official_plate',
         title: 'Ruhsat Plaka',
         titleClass: 'center aligned',
@@ -44457,10 +44473,51 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "control-group" }, [
+        _c("div", { staticClass: "control-group" }, [
+          _c(
+            "label",
+            { staticClass: "control-label", attrs: { for: "official_plate" } },
+            [_vm._v("Kapı Kodu")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "controls" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.code,
+                  expression: "form.code"
+                }
+              ],
+              attrs: { type: "text", name: "code", id: "code" },
+              domProps: { value: _vm.form.code },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "code", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.form.errors.has("code")
+              ? _c("div", { staticClass: "alert alert-danger" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.form.errors.get("code")) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
         _c(
           "label",
           { staticClass: "control-label", attrs: { for: "active_plate" } },
-          [_vm._v("Active Plate")]
+          [_vm._v("Aktif Plaka")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "controls" }, [
@@ -44501,7 +44558,7 @@ var render = function() {
         _c(
           "label",
           { staticClass: "control-label", attrs: { for: "official_plate" } },
-          [_vm._v("Official Plate")]
+          [_vm._v("Ruhsat Plaka")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "controls" }, [
