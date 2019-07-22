@@ -18,9 +18,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\BusFormController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionFormController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormController;
+use App\Http\Controllers\UserPermissionController;
 
 
 // Authentication Routes...
@@ -33,7 +35,7 @@ Route::post('logout',                                           [ LoginControlle
 Route::middleware(['auth'])->group(function(){
 
     Route::get('/',                                             [ MainController::class, 'index'] );
-    Route::get('/test/{app_module}',                            [ MainController::class, 'test'] );
+    Route::get('/test/{user}',                                  [ MainController::class, 'test'] );
 
     Route::prefix('buses')->group(function(){
         Route::get('/',                                         [ BusController::class, 'index'] )->name('buses.index');
@@ -57,8 +59,14 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::prefix('permissions')->group(function(){
+        Route::get('dataTables/{user}',                         [ PermissionController::class, 'dataTables'] );
         Route::get('form',                                      [ PermissionFormController::class, 'create'] )->name('permissions.form');
         Route::get('form/{permission}',                         [ PermissionFormController::class, 'edit'] );
+    });
+
+    Route::prefix('user_permissions')->group(function(){
+        Route::get('/{user}',                                   [ UserPermissionController::class, 'index'] )->name('user_permissions.index');
+        Route::get('dataTables/{user}',                         [ UserPermissionController::class, 'dataTables'] );
     });
 
     Route::prefix('users')->group(function(){

@@ -30,8 +30,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::resource('users',                                        UserController::class );
     Route::resource('buses',                                        BusController::class );
     Route::resource('app_modules',                                  AppModuleController::class );
-    Route::resource('app_module_permissions',                       AppModulePermissionController::class );
-    Route::resource('app_module_user_permissions',                  AppModuleUserPermissionController::class );
     Route::resource('permissions',                                  PermissionController::class );
     Route::resource('user_permissions',                             UserPermissionController::class );
 

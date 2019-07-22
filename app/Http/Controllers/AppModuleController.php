@@ -15,8 +15,7 @@ class AppModuleController extends Controller
             if( count($exp) > 1 ) $query->orderBy($exp[0], $exp[1]);
         }
         if( $req->filled('filter')) {
-            $query->orWhere('active_plate', 'LIKE', '%'.$req->get('filter').'%')
-                ->orWhere('official_plate', 'LIKE', '%'.$req->get('filter').'%');
+            $query->orWhere('name', 'LIKE', '%'.$req->get('filter').'%');
         }
         return AppModuleResource::collection($query->paginate(20));
     }

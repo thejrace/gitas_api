@@ -2,7 +2,7 @@
     <div>
         <vue-table-filter-bar></vue-table-filter-bar>
         <vuetable ref="vuetable"
-                  api-url="users/dataTables"
+                  :api-url="apiUrl"
                   :fields="fields"
                   pagination-path="pagination"
                   :append-params="moreParams"
@@ -12,17 +12,9 @@
         >
             <template slot="actions" scope="props">
                 <div class="custom-actions">
-                    <button class="ui basic button" title="İzinler"
-                            @click="onAction('show-permissions', props.rowData, props.rowIndex)">
-                        <i class="icon-key"></i>
-                    </button>
                     <button class="ui basic button"
-                            @click="onAction('edit-item', props.rowData, props.rowIndex)">
-                        <i class="icon-pencil"></i>
-                    </button>
-                    <button class="ui basic button"
-                            @click="onAction('delete-item', props.rowData, props.rowIndex)">
-                        <i class="icon-remove"></i>
+                            @click="onAction('add-perm', props.rowData, props.rowIndex)">
+                        <i class="icon-plus"></i>
                     </button>
                 </div>
             </template>
@@ -36,11 +28,14 @@
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
     import CssConfig from './vuetable-styles.js';
     import VueEvents from 'vue-events';
+    var querystring = require('querystring');
 
     Vue.use(VueEvents);
 
-
     export default {
+        props: {
+            'model_id': String
+        },
         components: {
             Vuetable,
             VuetablePagination
@@ -71,22 +66,16 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'show-permissions':
-                        window.open("/user_permissions/"+data.id,'_blank');
-                        break;
-                    case 'edit-item':
-                        window.open("/users/form/"+data.id,'_blank');
-                        break;
-                    case 'delete-item':
+                    case 'add-perm':
                         var c = confirm('Are you şur?');
                         if( c ){
-                            this.deleteItem(data.id);
+                            this.addPerm(data.id);
                         }
                         break;
                 }
             },
-            async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/users/'+dataId);
+            async addPerm( dataId ){
+                const response = await window.axios.post('/api/user_permissions', querystring.stringify({ user_id:this.$props.model_id, permission_id:dataId }));
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -95,20 +84,16 @@
         },
         data(){
             return {
+                apiUrl: '/permissions/dataTables/'+this.$props.model_id,
                 css: CssConfig,
                 fields:[
                     'id',
                     {
                         name: 'name',
-                        title:'İsim',
+                        title:'İzin',
                         titleClass: 'center aligned',
                         dataClass: 'center aligned',
                         sortField: 'name'
-                    },
-                    {
-                        name: 'email',
-                        title:'Eposta',
-                        sortField: 'email'
                     },
                     {
                         name: '__slot:actions',

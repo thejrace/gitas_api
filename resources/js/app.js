@@ -29,6 +29,8 @@ Vue.component('login-form', require('./components/LoginForm.vue').default);
 Vue.component('app-module-form', require('./components/AppModuleForm.vue').default);
 Vue.component('my-vuetable', require('./components/MyVuetable.vue').default);
 Vue.component('buses-vuetable', require('./components/BusesTable.vue').default);
+Vue.component('user-permissions-vuetable', require('./components/UserPermissionsTable.vue').default);
+Vue.component('add-user-permissions-vuetable', require('./components/AddUserPermissionsTable.vue').default);
 Vue.component('users-vuetable', require('./components/UsersTable.vue').default);
 Vue.component('app-modules-vuetable', require('./components/AppModulesTable.vue').default);
 Vue.component('app-module-permissions-vuetable', require('./components/AppModulePermissionsTable.vue').default);
