@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\AppModule;
+use App\AppModuleUser;
 use App\Bus;
 use App\User;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('user', User::class);
         Route::model('app_module', AppModule::class);
         Route::model('permission', Permission::class);
+        Route::model('app_module_user', AppModuleUser::class);
     }
 
     /**

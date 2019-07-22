@@ -1,14 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AppModuleController;
-use App\Http\Controllers\Api\AppModulePermissionController;
-use App\Http\Controllers\Api\AppModuleUserPermissionController;
+use App\Http\Controllers\Api\AppModuleUserController;
 use App\Http\Controllers\Api\BusController;
 use App\Http\Controllers\Api\PermissionController;
-use App\Http\Controllers\Api\UserBusDefinitionController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\EmployeeRoleController;
-use App\Http\Controllers\Api\EmploymentStatusController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\UserPermissionController;
 use App\Http\Controllers\MainController;
@@ -30,6 +26,7 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::resource('users',                                        UserController::class );
     Route::resource('buses',                                        BusController::class );
     Route::resource('app_modules',                                  AppModuleController::class );
+    Route::resource('app_module_users',                             AppModuleUserController::class );
     Route::resource('permissions',                                  PermissionController::class );
     Route::resource('user_permissions',                             UserPermissionController::class );
 

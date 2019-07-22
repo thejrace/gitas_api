@@ -14,6 +14,8 @@
 use App\Http\Controllers\AppModuleController;
 use App\Http\Controllers\AppModuleFormController;
 use App\Http\Controllers\AppModulePermissionController;
+use App\Http\Controllers\AppModuleUserController;
+use App\Http\Controllers\AppModuleUserPermissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\BusFormController;
@@ -32,7 +34,7 @@ Route::post('logout',                                           [ LoginControlle
 
 // @todo = permissions
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::get('/',                                             [ MainController::class, 'index'] );
     Route::get('/test/{user}',                                  [ MainController::class, 'test'] );
@@ -67,6 +69,16 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('user_permissions')->group(function(){
         Route::get('/{user}',                                   [ UserPermissionController::class, 'index'] )->name('user_permissions.index');
         Route::get('dataTables/{user}',                         [ UserPermissionController::class, 'dataTables'] );
+    });
+
+    Route::prefix('app_module_users')->group(function(){
+        Route::get('/{app_module}',                             [ AppModuleUserController::class, 'index'] )->name('app_module_users.index');
+        Route::get('dataTables/{app_module}',                   [ AppModuleUserController::class, 'dataTables'] );
+    });
+
+    Route::prefix('app_module_user_permissions')->group(function(){
+        Route::get('/{user}',                                   [ AppModuleUserPermissionController::class, 'index'] )->name('user_permissions.index');
+        Route::get('dataTables/{user}',                         [ AppModuleUserPermissionController::class, 'dataTables'] );
     });
 
     Route::prefix('users')->group(function(){

@@ -12,8 +12,8 @@ class AppModule extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function permissions(){
-        return $this->hasMany(AppModulePermission::class);
+    public function users(){
+        return $this->hasMany(AppModuleUser::class);
     }
 
 }

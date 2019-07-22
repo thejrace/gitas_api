@@ -44,7 +44,7 @@ class UserController extends Controller
         return new SuccessJSONResponseResource(null);
     }
 
-    public function destroy($model)
+    public function destroy(User $model)
     {
         $model->delete();
         return new SuccessJSONResponseResource(null);
