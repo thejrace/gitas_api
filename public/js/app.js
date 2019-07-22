@@ -2400,6 +2400,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -45009,6 +45013,24 @@ var render = function() {
             fn: function(props) {
               return [
                 _c("div", { staticClass: "custom-actions" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "ui basic button",
+                      attrs: { title: "Kullanıcılar" },
+                      on: {
+                        click: function($event) {
+                          return _vm.onAction(
+                            "show-users",
+                            props.rowData,
+                            props.rowIndex
+                          )
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "icon-user" })]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "button",
                     {

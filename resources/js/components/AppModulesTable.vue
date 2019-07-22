@@ -12,6 +12,10 @@
         >
             <template slot="actions" scope="props">
                 <div class="custom-actions">
+                    <button class="ui basic button" title="Kullanıcılar"
+                            @click="onAction('show-users', props.rowData, props.rowIndex)">
+                        <i class="icon-user"></i>
+                    </button>
                     <button class="ui basic button" title="İzinler"
                             @click="onAction('show-permissions', props.rowData, props.rowIndex)">
                         <i class="icon-key"></i>
