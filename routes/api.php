@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AppModuleController;
+use App\Http\Controllers\Api\AppModuleLoginController;
 use App\Http\Controllers\Api\AppModuleUserController;
 use App\Http\Controllers\Api\BusController;
 use App\Http\Controllers\Api\PermissionController;
@@ -32,4 +33,5 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
 
 });
 
-Route::post('login', [ LoginController::class, 'authenticate'] ); // retrieve api token
+Route::post('login',                                                            [ LoginController::class, 'authenticate'] ); // retrieve api token
+Route::post('app_module_login',                                                 [ AppModuleLoginController::class, 'authenticate'] ); // retrieve api token

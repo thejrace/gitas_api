@@ -50,11 +50,13 @@ return [
         'app_module' => [
             'driver' => 'token',
             'provider' => 'app_module',
+            'hash' => false,
         ],
 
         'app_module_user' => [
             'driver' => 'token',
             'provider' => 'app_module_users',
+            'hash' => false,
         ],
     ],
 
