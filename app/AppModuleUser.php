@@ -2,11 +2,17 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class AppModuleUser extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+
+class AppModuleUser extends Authenticatable
 {
 
+    use Notifiable, HasRoles;
+
+    protected $guard_name = 'app_module_user';
     protected $guarded = [];
     protected $hidden = [
         'password'

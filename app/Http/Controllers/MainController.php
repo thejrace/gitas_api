@@ -14,7 +14,7 @@ class MainController extends Controller
 {
 
     public function index(){
-        return view('app_module_user_form');
+        return view('dashboard');
 
     }
 

@@ -35,7 +35,7 @@ Vue.component('add-user-permissions-vuetable', require('./components/AddUserPerm
 Vue.component('users-vuetable', require('./components/UsersTable.vue').default);
 Vue.component('app-modules-vuetable', require('./components/AppModulesTable.vue').default);
 Vue.component('app-module-users-vuetable', require('./components/AppModuleUsersTable.vue').default);
-Vue.component('app-module-permissions-vuetable', require('./components/AppModulePermissionsTable.vue').default);
+Vue.component('app-module-user-permissions-vuetable', require('./components/AppModuleUserPermissionsTable.vue').default);
 Vue.component('vue-table-filter-bar', require('./components/VueTableFilterBar.vue').default);
 
 Vue.mixin({

@@ -9,6 +9,15 @@
                 </div>
             </div>
         </div>
+        <div class="control-group">
+            <label class="control-label" for="description">Description</label>
+            <div class="controls">
+                <textarea v-model="form.description" type="text" name="description" id="description"></textarea>
+                <div class="alert alert-danger" v-if="form.errors.has('description')">
+                    {{ form.errors.get('description') }}
+                </div>
+            </div>
+        </div>
         <button :disabled="form.busy" type="submit">
             Save
         </button>
@@ -31,7 +40,8 @@
             return {
                 // Create a new form instance
                 form: new Form({
-                    name: ''
+                    name: '',
+                    description: ''
                 })
             }
         },

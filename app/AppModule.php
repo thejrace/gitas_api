@@ -2,15 +2,22 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class AppModule extends Model
+class AppModule extends Authenticatable
 {
-    protected $guarded = [];
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
+    use Notifiable, HasRoles;
+
+    protected $guard_name = 'app_module';
+    protected $guarded = [];
+    protected $hidden = [
+        'password'
+    ];
+
+
 
     public function users(){
         return $this->hasMany(AppModuleUser::class);

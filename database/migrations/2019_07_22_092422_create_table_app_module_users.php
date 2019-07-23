@@ -18,8 +18,8 @@ class CreateTableAppModuleUsers extends Migration
             $table->unsignedBigInteger('app_module_id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
-            $table->string('app_module_token', 60);
+            $table->string('password')->nullable();
+            $table->string('api_token', 60);
             $table->foreign('app_module_id')->on('app_modules')->references('id');
         });
     }

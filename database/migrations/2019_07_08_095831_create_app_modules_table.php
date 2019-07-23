@@ -15,7 +15,10 @@ class CreateAppModulesTable extends Migration
     {
         Schema::create('app_modules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('password')->nullable();
+            $table->string('api_token', 60);
+            $table->string('permission_prefix')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
         });

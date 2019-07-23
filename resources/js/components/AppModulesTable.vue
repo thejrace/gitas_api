@@ -14,11 +14,15 @@
                 <div class="custom-actions">
                     <button class="ui basic button" title="Kullanıcılar"
                             @click="onAction('show-users', props.rowData, props.rowIndex)">
-                        <i class="icon-user"></i>
+                        <i class="icon-group"></i>
                     </button>
                     <button class="ui basic button" title="İzinler"
                             @click="onAction('show-permissions', props.rowData, props.rowIndex)">
                         <i class="icon-key"></i>
+                    </button>
+                    <button class="ui basic button" title="Kullanıcı İzinleri"
+                            @click="onAction('show-user-permissions', props.rowData, props.rowIndex)">
+                        <i class="icon-th-list"></i>
                     </button>
                     <button class="ui basic button"
                             @click="onAction('edit-item', props.rowData, props.rowIndex)">
@@ -84,8 +88,11 @@
                             this.deleteItem(data.id);
                         }
                     break;
-                    case'show-permissions':
-                        window.open("/app_module_permissions/"+data.id,'_blank');
+                    case'show-user-permissions':
+                        window.open("/app_module_user_permissions/"+data.id,'_blank');
+                    break;
+                    case'show-users':
+                        window.open("/app_module_users/"+data.id,'_blank');
                     break;
                 }
             },

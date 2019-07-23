@@ -8,7 +8,6 @@ use App\Http\Requests\AppModuleFormUpdateRequest;
 use App\Http\Resources\AppModuleResource;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SuccessJSONResponseResource;
-use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -22,16 +21,10 @@ class AppModuleController extends Controller
 
     public function store(AppModuleFormStoreRequest $request)
     {
-        // create a API user for the AppModule
         $attributes = $request->all();
-        $attributesForApiUser = $request->all();
         $nameFormed = preg_replace('/\s+/', '', Str::lower($request->get('name')));
-        $attributesForApiUser['email'] = $nameFormed.'@gapp_module.com';
-        $attributesForApiUser['password'] = Hash::make($nameFormed.'@gitas');
-        $attributesForApiUser['api_token'] =  Str::random(60);
-        $apiUser = User::create($attributesForApiUser);
-        // create model
-        $attributes['user_id'] = $apiUser->id;
+        $attributes['password'] = Hash::make($nameFormed.'@gitas');
+        $attributes['api_token'] =  Str::random(60);
         AppModule::create( $attributes );
         return new SuccessJSONResponseResource(null);
     }
@@ -47,6 +40,7 @@ class AppModuleController extends Controller
         return new SuccessJSONResponseResource(null);
     }
 
+    // @todo!!
     public function destroy($id)
     {
         DB::transaction(function() use ($id) {
