@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-truck"></i>
-                                <h3>Buses</h3>
+                                <h3>Otobüsler</h3>
 
                             </div> <!-- /widget-header -->
 

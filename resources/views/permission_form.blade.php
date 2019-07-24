@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-lock"></i>
-                                <h3>Permission Form</h3>
+                                <h3>İzin Formu</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">

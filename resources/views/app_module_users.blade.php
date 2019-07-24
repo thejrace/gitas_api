@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-user"></i>
-                                <h3>'{{ request()->route()->parameter('app_module')->name }} App Module Users</h3>
+                                <h3>'{{ request()->route()->parameter('app_module')->name }} Modül Kullanıcıları</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">

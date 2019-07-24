@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-user"></i>
-                                <h3>Users</h3>
+                                <h3>Kullanıcılar</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">

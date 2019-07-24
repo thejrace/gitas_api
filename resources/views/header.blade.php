@@ -26,9 +26,9 @@
             <div class="nav-collapse">
                 <ul class="nav pull-right">
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                    class="icon-cog"></i> Account <b class="caret"></b></a>
+                                    class="icon-cog"></i> Hesap <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:;">Settings</a></li>
+                            <li><a href="javascript:;">Ayarlar</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
@@ -37,7 +37,7 @@
                             <li>
                                 <form action="/logout" method="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <button type="submit">Logout</button>
+                                    <button type="submit">Çıkış</button>
                                 </form>
 
                             </li>
@@ -56,9 +56,9 @@
     <div class="subnavbar-inner">
         <div class="container">
             <ul class="mainnav">
-                <li @php if( isset($page['users']) ) echo 'class="active"'; @endphp><a href="{{route('users.index')}}"><i class="icon-group"></i><span>API Users</span> </a> </li>
-                <li @php if( isset($page['buses']) ) echo 'class="active"'; @endphp><a href="{{route('buses.index')}}"><i class="icon-truck"></i><span>Buses</span> </a> </li>
-                <li @php if( isset($page['app_modules']) ) echo 'class="active"'; @endphp><a href="{{route('app_modules.index')}}"><i class="icon-cloud"></i><span>App Modules</span> </a></li>
+                <li @php if( isset($page['users']) ) echo 'class="active"'; @endphp><a href="{{route('users.index')}}"><i class="icon-group"></i><span>Kullanıcılar</span> </a> </li>
+                <li @php if( isset($page['buses']) ) echo 'class="active"'; @endphp><a href="{{route('buses.index')}}"><i class="icon-truck"></i><span>Otobüsler</span> </a> </li>
+                <li @php if( isset($page['app_modules']) ) echo 'class="active"'; @endphp><a href="{{route('app_modules.index')}}"><i class="icon-cloud"></i><span>Modüller</span> </a></li>
             </ul>
         </div>
         <!-- /container -->

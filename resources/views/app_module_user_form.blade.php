@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-user"></i>
-                                <h3>'{{ request()->route()->parameter('app_module')->name }}' Add App Module User</h3>
+                                <h3>'{{ request()->route()->parameter('app_module')->name }}' Modül Kullanıcısı Ekle</h3>
                             </div> <!-- /widget-header -->
                             <div class="widget-content">
                                 <app-module-user-form data-id="{{ $dataId ?? null }}"  parent-id="{{ request()->route()->parameter('app_module')->id }}"></app-module-user-form>

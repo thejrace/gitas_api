@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-key"></i>
-                                <h3>{{ request()->route()->parameter('app_module')->name }} User Permissions List</h3>
+                                <h3>{{ request()->route()->parameter('app_module')->name }} Modül Kullanıcı İzinleri</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">

@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-cloud"></i>
-                                <h3>App Module Form</h3>
+                                <h3>Modül Formu</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
