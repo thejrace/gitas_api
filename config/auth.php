@@ -49,7 +49,7 @@ return [
 
         'app_module' => [
             'driver' => 'token',
-            'provider' => 'app_module',
+            'provider' => 'app_modules',
             'hash' => false,
         ],
 
@@ -85,7 +85,7 @@ return [
 
         'app_modules' => [
             'driver' => 'eloquent',
-            'model' => App\AppModule::class,
+            'model' => App\AppModule::class
         ],
 
         'app_module_users' => [

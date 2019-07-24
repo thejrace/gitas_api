@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\AppModule;
 use App\Http\Resources\SuccessJSONResponseResource;
+use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
