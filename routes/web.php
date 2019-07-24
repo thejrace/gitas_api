@@ -68,10 +68,11 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::prefix('app_module_users')->group(function(){
 
-        Route::get('dataTables/{app_module}',                   [ AppModuleUserController::class, 'dataTables'] );
-        Route::get('form',                                      [ AppModuleUserFormController::class, 'create'] )->name('app_module_users.form');
-        Route::get('form/{app_module_user}',                    [ AppModuleUserFormController::class, 'edit'] );
-        Route::get('{app_module}',                              [ AppModuleUserController::class, 'index'] )->name('app_module_users.index');
+
+        Route::get('store/{app_module}',                          [ AppModuleUserFormController::class, 'create'] )->name('app_module_users.form');
+        Route::get('update/{app_module_user}',                    [ AppModuleUserFormController::class, 'edit'] );
+        Route::get('dataTables/{app_module}',                     [ AppModuleUserController::class, 'dataTables'] );
+        Route::get('{app_module}',                                [ AppModuleUserController::class, 'index'] )->name('app_module_users.index');
     });
 
     Route::prefix('app_module_user_permissions')->group(function(){

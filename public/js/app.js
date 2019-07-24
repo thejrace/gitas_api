@@ -2405,7 +2405,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'dataId': String
+    'dataId': String,
+    'parentId': String
   },
   data: function data() {
     return {
@@ -2413,7 +2414,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
       form: new vform__WEBPACK_IMPORTED_MODULE_2__["Form"]({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        app_module_id: ''
       })
     };
   },
@@ -2516,6 +2518,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
     }
   },
   mounted: function mounted() {
+    this.form.app_module_id = this.parentId;
+
     if (this.dataId) {
       this.fetch();
     }

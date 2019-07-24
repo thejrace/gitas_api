@@ -17,7 +17,7 @@ class AppModuleUserController extends Controller
     public function store(AppModuleUserFormStoreRequest $request)
     {
         $attributes = $request->all();
-        $attributes['app_module_token']    =  Str::random(60);
+        $attributes['api_token']    =  Str::random(60);
         $attributes['password']     = Hash::make($request->get('password'));
         AppModuleUser::create($attributes);
         return new SuccessJSONResponseResource(null);

@@ -42,7 +42,8 @@
 
     export default {
         props: {
-            'dataId' : String
+            'dataId' : String,
+            'parentId': String
         },
         data () {
             return {
@@ -50,7 +51,8 @@
                 form: new Form({
                     name: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    app_module_id: ''
                 })
             }
         },
@@ -79,6 +81,7 @@
             }
         },
         mounted(){
+            this.form.app_module_id = this.parentId;
             if( this.dataId ){
                 this.fetch();
             }

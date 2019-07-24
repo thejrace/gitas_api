@@ -9,12 +9,12 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-user"></i>
-                                <h3>'{{ request()->route()->parameter('app_module')->name }}' App Module Users</h3>
+                                <h3>'{{ request()->route()->parameter('app_module')->name }} App Module Users</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
                                 <div class="top-nav-container">
-                                    <a href="{{route('app_module_users.form')}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
+                                    <a href="{{route('app_module_users.form', request()->route()->parameter('app_module')->id )}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
                                 </div>
                                 <app-module-users-vuetable  app_module_id="{{ request()->route()->parameter('app_module')->id }}"></app-module-users-vuetable>
                             </div>
