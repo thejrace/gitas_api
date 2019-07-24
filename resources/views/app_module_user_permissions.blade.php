@@ -26,7 +26,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-key"></i>
-                                <h3>'{{ request()->route()->parameter('app_module_user')->name }}' Add Permission</h3>
+                                <h3>'{{ request()->route()->parameter('app_module_user')->name }}' İzin Ekle</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
