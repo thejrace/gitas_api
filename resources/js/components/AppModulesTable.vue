@@ -89,7 +89,7 @@
                         }
                     break;
                     case'show-user-permissions':
-                        window.open("/app_module_user_permissions/"+data.id,'_blank');
+                        window.open("/app_module_permissions/"+data.id,'_blank');
                     break;
                     case'show-users':
                         window.open("/app_module_users/"+data.id,'_blank');

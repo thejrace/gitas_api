@@ -9,7 +9,6 @@ use Spatie\Permission\Traits\HasRoles;
 
 class AppModuleUser extends Authenticatable
 {
-
     use Notifiable, HasRoles;
 
     protected $guard = 'app_module_user';
@@ -17,8 +16,8 @@ class AppModuleUser extends Authenticatable
     protected $hidden = [
         'password'
     ];
-    public $timestamps = false;
 
+    public $timestamps = false;
     public function AppModule(){
         return $this->belongsTo(AppModule::class);
     }

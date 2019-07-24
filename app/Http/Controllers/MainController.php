@@ -18,7 +18,7 @@ class MainController extends Controller
 
     }
 
-    public function test( Request $request, AppModule $appModule ){
+    public function test( Request $request, AppModuleUse $appModule ){
         return view('app_module_user_form');
     }
 

@@ -40,6 +40,18 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/',                                             [ MainController::class, 'index'] );
     Route::get('/test',                                  [ MainController::class, 'test'] );
 
+    Route::prefix('user_permissions')->group(function(){
+        Route::get('dataTables/{user}',                         [ UserPermissionController::class, 'dataTables'] );
+        Route::get('{user}',                                    [ UserPermissionController::class, 'index'] )->name('user_permissions.index');
+    });
+
+    Route::prefix('permissions')->group(function(){
+        Route::get('dataTables/{user}',                         [ PermissionController::class, 'dataTables'] );
+        Route::get('form',                                      [ PermissionFormController::class, 'create'] )->name('permissions.form');
+        Route::get('form/{permission}',                         [ PermissionFormController::class, 'edit'] );
+    });
+
+
     Route::prefix('buses')->group(function(){
         Route::get('/',                                         [ BusController::class, 'index'] )->name('buses.index');
         Route::get('dataTables',                                [ BusController::class, 'dataTables'] );
@@ -54,22 +66,6 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
         Route::get('form/{app_module}',                         [ AppModuleFormController::class, 'edit'] );
     });
 
-    Route::prefix('app_module_user_permissions')->group(function(){
-        Route::get('dataTables/{app_module}',                   [ AppModuleUserPermissionController::class, 'dataTables'] );
-        Route::get('/{app_module}',                             [ AppModuleUserPermissionController::class, 'index'] )->name('app_module_user_permissions.index');
-    });
-
-    Route::prefix('permissions')->group(function(){
-        Route::get('dataTables/{user}',                         [ PermissionController::class, 'dataTables'] );
-        Route::get('form',                                      [ PermissionFormController::class, 'create'] )->name('permissions.form');
-        Route::get('form/{permission}',                         [ PermissionFormController::class, 'edit'] );
-    });
-
-    Route::prefix('user_permissions')->group(function(){
-        Route::get('dataTables/{user}',                         [ UserPermissionController::class, 'dataTables'] );
-        Route::get('{user}',                                    [ UserPermissionController::class, 'index'] )->name('user_permissions.index');
-    });
-
     Route::prefix('app_module_users')->group(function(){
 
         Route::get('dataTables/{app_module}',                   [ AppModuleUserController::class, 'dataTables'] );
@@ -77,6 +73,20 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
         Route::get('form/{app_module_user}',                    [ AppModuleUserFormController::class, 'edit'] );
         Route::get('{app_module}',                              [ AppModuleUserController::class, 'index'] )->name('app_module_users.index');
     });
+
+    Route::prefix('app_module_user_permissions')->group(function(){
+        Route::get('dataTables/{app_module_user}',                   [ AppModuleUserPermissionController::class, 'dataTables'] );
+        Route::get('/{app_module_user}',                             [ AppModuleUserPermissionController::class, 'index'] )->name('app_module_user_permissions.index');
+    });
+
+    Route::prefix('app_module_permissions')->group(function(){
+
+        Route::get('dataTables/{app_module}',                   [ AppModulePermissionController::class, 'dataTables'] );
+        Route::get('{app_module}',                              [ AppModulePermissionController::class, 'index'] )->name('app_module_permissions.index');
+
+    });
+
+
 
     /*Route::prefix('app_module_user_permissions')->group(function(){
         Route::get('/{user}',                                   [ AppModuleUserPermissionController::class, 'index'] )->name('user_permissions.index');

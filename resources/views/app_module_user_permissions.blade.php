@@ -9,20 +9,37 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-key"></i>
-                                <h3>{{ request()->route()->parameter('app_module')->name }} User Permissions List</h3>
+                                <h3>'{{ request()->route()->parameter('app_module_user')->name }}' User Permissions List</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
-                                <div class="top-nav-container">
-                                    <a href="{{route('permissions.form')}}/?permission_prefix={{ request()->route()->parameter('app_module')->permission_prefix }}."><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
-                                </div>
-                                <app-module-user-permissions-vuetable app_module_id="{{ request()->route()->parameter('app_module')->id }}" ></app-module-user-permissions-vuetable>
+                                <app-module-user-permissions-vuetable model_id="{{ request()->route()->parameter('app_module_user')->id }}" ></app-module-user-permissions-vuetable>
                             </div>
                         </div>
                     </div>
                     <!-- /span6 -->
                 </div>
                 <!-- /row -->
+
+                <div class="row">
+                    <div class="span12">
+                        <div class="widget">
+                            <div class="widget-header">
+                                <i class="icon-key"></i>
+                                <h3>'{{ request()->route()->parameter('app_module_user')->name }}' Add Permission</h3>
+                            </div> <!-- /widget-header -->
+
+                            <div class="widget-content">
+
+                                <app-module-permissions-vuetable model_id="{{ request()->route()->parameter('app_module_user')->id }}"></app-module-permissions-vuetable>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /span6 -->
+                </div>
+                <!-- /row -->
+
+
             </div>
             <!-- /app -->
         </div>

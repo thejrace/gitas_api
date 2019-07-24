@@ -22,8 +22,6 @@ class AppModuleController extends Controller
     public function store(AppModuleFormStoreRequest $request)
     {
         $attributes = $request->all();
-        $nameFormed = preg_replace('/\s+/', '', Str::lower($request->get('name')));
-        $attributes['password'] = Hash::make($nameFormed.'@gitas');
         $attributes['api_token'] =  Str::random(60);
         AppModule::create( $attributes );
         return new SuccessJSONResponseResource(null);

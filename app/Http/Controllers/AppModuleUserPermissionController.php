@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\AppModule;
+
+use App\AppModuleUser;
 use App\Http\Resources\PermissionResource;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
 class AppModuleUserPermissionController extends Controller
 {
-    public function dataTables( Request $req, AppModule $model ){
-        $query = Permission::query();
+    public function dataTables( Request $req, AppModuleUser $model ){
+        $query = $model->permissions();
         $query->where('name', 'LIKE', '%'.$model->permission_prefix.'%');
         if( $req->filled('sort') ){
             $exp = explode('|', $req->get('sort'));

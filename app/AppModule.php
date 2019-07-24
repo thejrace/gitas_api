@@ -13,9 +13,6 @@ class AppModule extends Authenticatable
 
     protected $guard = 'app_module';
     protected $guarded = [];
-    protected $hidden = [
-        'password'
-    ];
 
     public function users(){
         return $this->hasMany(AppModuleUser::class);

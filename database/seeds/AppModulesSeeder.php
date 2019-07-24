@@ -15,7 +15,6 @@ class AppModulesSeeder extends Seeder
         $root = AppModule::create(array(
             "name"              => "Obarey Bot",
             "permission_prefix" => "obarey_bot",
-            "password"          => Hash::make("password"),
             "api_token"         => \Illuminate\Support\Str::random(60)
         ));
         $root->assignRole('app_module');

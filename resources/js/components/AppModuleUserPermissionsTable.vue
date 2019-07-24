@@ -13,10 +13,6 @@
             <template slot="actions" scope="props">
                 <div class="custom-actions">
                     <button class="ui basic button"
-                            @click="onAction('edit-item', props.rowData, props.rowIndex)">
-                        <i class="icon-pencil"></i>
-                    </button>
-                    <button class="ui basic button"
                             @click="onAction('delete-item', props.rowData, props.rowIndex)">
                         <i class="icon-remove"></i>
                     </button>
@@ -37,7 +33,7 @@
 
     export default {
         props: {
-            'app_module_id': String
+            'model_id': String
         },
         components: {
             Vuetable,
@@ -69,9 +65,6 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'edit-item':
-                        window.open("/app_module_users/form/"+data.id,'_blank');
-                        break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
                         if( c ){
@@ -81,7 +74,7 @@
                 }
             },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/app_module_users/'+dataId);
+                const response = await window.axios.delete('/api/app_module_user_permissions/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -90,7 +83,7 @@
         },
         data(){
             return {
-                apiUrl: '/app_module_users/dataTables/'+this.$props.app_module_id,
+                apiUrl: '/app_module_user_permissions/dataTables/'+this.model_id,
                 css: CssConfig,
                 fields:[
                     'id',
