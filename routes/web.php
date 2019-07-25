@@ -52,6 +52,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
         Route::get('store/{permission_type}',                               [ PermissionFormController::class, 'create'] )->name('permissions.store');
         Route::get('update/{permission}',                                   [ PermissionFormController::class, 'edit'] );
         Route::get('{permission_type}',                                     [ PermissionController::class, 'index'] );
+        Route::get('dataTables/{permission_type}',                                     [ PermissionController::class, 'dataTables'] );
     });
 
     Route::prefix('permission_types')->group(function(){

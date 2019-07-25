@@ -41,7 +41,7 @@
 
     export default {
         props: {
-            permissionType: Number
+            permissionType: String
         },
         components: {
             Vuetable,

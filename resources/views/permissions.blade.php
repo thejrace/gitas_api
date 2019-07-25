@@ -18,7 +18,7 @@
                                 <div class="top-nav-container">
                                     <a href="{{route('permissions.store', $permission_type )}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
                                 </div>
-                                <permissions-vuetable permission_type="{{ $permission_type }}" ></permissions-vuetable>
+                                <permissions-vuetable permission-type="{{ $permission_type }}" ></permissions-vuetable>
                             </div>
                         </div>
                     </div>

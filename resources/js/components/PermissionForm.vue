@@ -33,15 +33,17 @@
 
     export default {
         props: {
-            'dataId' : String,
-            'permissionPrefix': String
+            dataId : String,
+            parentId: String,
+            permissionPrefix: String
         },
         data () {
             return {
                 // Create a new form instance
                 form: new Form({
                     name: '',
-                    description: ''
+                    description: '',
+                    type: '',
                 })
             }
         },
@@ -72,9 +74,8 @@
         mounted(){
             if( this.dataId ){
                 this.fetch();
-            } else {
-                this.form.name = this.$props.permissionPrefix;
             }
+            this.form.type = this.parentId;
         }
     }
 </script>

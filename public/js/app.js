@@ -3854,15 +3854,17 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'dataId': String,
-    'permissionPrefix': String
+    dataId: String,
+    parentId: String,
+    permissionPrefix: String
   },
   data: function data() {
     return {
       // Create a new form instance
       form: new vform__WEBPACK_IMPORTED_MODULE_2__["Form"]({
         name: '',
-        description: ''
+        description: '',
+        type: ''
       })
     };
   },
@@ -3967,9 +3969,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
   mounted: function mounted() {
     if (this.dataId) {
       this.fetch();
-    } else {
-      this.form.name = this.$props.permissionPrefix;
     }
+
+    this.form.type = this.parentId;
   }
 });
 
@@ -4482,7 +4484,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    permissionType: Number
+    permissionType: String
   },
   components: {
     Vuetable: vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_1__["default"],

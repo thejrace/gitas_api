@@ -22,7 +22,7 @@ class PermissionController extends Controller
 
     public function dataTables( PermissionType $type ){
         $query = Permission::query();
-        $query->where('type', $type );
+        $query->where('type', $type->id );
         return PermissionResource::collection($query->paginate(20));
     }
 

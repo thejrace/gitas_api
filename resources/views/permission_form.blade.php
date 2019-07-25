@@ -13,7 +13,7 @@
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
-                                <permission-form data-id="{{ $dataId ?? null }}" permission-prefix="@php if(isset($_GET['permission_prefix'])) echo $_GET["permission_prefix"] @endphp"></permission-form>
+                                <permission-form data-id="{{ $dataId ?? null }}" parent-id="{{ request()->route()->parameter('permission_type')->id }}" permission-prefix="@php if(isset($_GET['permission_prefix'])) echo $_GET["permission_prefix"] @endphp"></permission-form>
                             </div>
                         </div>
                     </div>
