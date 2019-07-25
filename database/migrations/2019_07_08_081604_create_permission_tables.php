@@ -20,7 +20,9 @@ class CreatePermissionTables extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->unsignedBigInteger('type');
             $table->string('description')->nullable();
+            $table->foreign('type')->references('id')->on('permission_types');
             $table->timestamps();
         });
 

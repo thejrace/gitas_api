@@ -8,12 +8,18 @@
                     <div class="span12">
                         <div class="widget">
                             <div class="widget-header">
-                                <i class="icon-lock"></i>
-                                <h3><i>{{ request()->route()->parameter('permission_type')->name }}</i> - İzin Formu</h3>
+                                <i class="icon-user"></i>
+                                <h3>İzin Tipleri</h3>
                             </div> <!-- /widget-header -->
 
+                            <permission-types-select selected-id="3"></permission-types-select>
+
                             <div class="widget-content">
-                                <permission-form data-id="{{ $dataId ?? null }}" permission-prefix="@php if(isset($_GET['permission_prefix'])) echo $_GET["permission_prefix"] @endphp"></permission-form>
+                                <div class="top-nav-container">
+                                    <a href="{{route('permission_types.form')}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
+                                </div>
+                                <permission-types-vuetable></permission-types-vuetable>
+
                             </div>
                         </div>
                     </div>

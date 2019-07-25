@@ -2,7 +2,7 @@
     <div>
         <vue-table-filter-bar></vue-table-filter-bar>
         <vuetable ref="vuetable"
-                  api-url="app_modules/dataTables"
+                  :api-url="apiUrl"
                   :fields="fields"
                   pagination-path="pagination"
                   :append-params="moreParams"
@@ -12,17 +12,9 @@
         >
             <template slot="actions" scope="props">
                 <div class="custom-actions">
-                    <button class="ui basic button" title="Kullanıcılar"
-                            @click="onAction('show-users', props.rowData, props.rowIndex)">
-                        <i class="icon-group"></i>
-                    </button>
                     <button class="ui basic button" title="İzinler"
                             @click="onAction('show-permissions', props.rowData, props.rowIndex)">
                         <i class="icon-key"></i>
-                    </button>
-                    <button class="ui basic button" title="Kullanıcı İzinleri"
-                            @click="onAction('show-user-permissions', props.rowData, props.rowIndex)">
-                        <i class="icon-th-list"></i>
                     </button>
                     <button class="ui basic button"
                             @click="onAction('edit-item', props.rowData, props.rowIndex)">
@@ -47,8 +39,10 @@
 
     Vue.use(VueEvents);
 
-
     export default {
+        props: {
+            permissionType: Number
+        },
         components: {
             Vuetable,
             VuetablePagination
@@ -79,28 +73,22 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'edit-item':
-                        window.open("/app_modules/form/"+data.id,'_blank');
-                    break;
                     case 'show-permissions':
                         window.open("/user_permissions/"+data.id,'_blank');
+                        break;
+                    case 'edit-item':
+                        window.open("/users/form/"+data.id,'_blank');
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
                         if( c ){
                             this.deleteItem(data.id);
                         }
-                    break;
-                    case'show-user-permissions':
-                        window.open("/app_module_permissions/"+data.id,'_blank');
-                    break;
-                    case'show-users':
-                        window.open("/app_module_users/"+data.id,'_blank');
-                    break;
+                        break;
                 }
             },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/app_modules/'+dataId);
+                const response = await window.axios.delete('/api/users/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -109,6 +97,7 @@
         },
         data(){
             return {
+                apiUrl: '/permissions/dataTables/'+this.permissionType,
                 css: CssConfig,
                 fields:[
                     'id',
@@ -120,14 +109,8 @@
                         sortField: 'name'
                     },
                     {
-                        name: 'permission_prefix',
-                        title:'İzin Ön Ek',
-                        sortField: 'permission_prefix'
-                    },
-                    {
                         name: 'description',
-                        title:'Açıklama',
-                        sortField: 'description'
+                        title:'Açıklama'
                     },
                     {
                         name: '__slot:actions',

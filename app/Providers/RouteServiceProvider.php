@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\AppModule;
 use App\AppModuleUser;
 use App\Bus;
+use App\PermissionType;
 use App\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -30,11 +31,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         //
         parent::boot();
-        Route::model('bus', Bus::class);
-        Route::model('user', User::class);
-        Route::model('app_module', AppModule::class);
-        Route::model('permission', Permission::class);
-        Route::model('app_module_user', AppModuleUser::class);
+        Route::model('bus',                             Bus::class);
+        Route::model('user',                            User::class);
+        Route::model('app_module',                      AppModule::class);
+        Route::model('permission',                      Permission::class);
+        Route::model('permission_type',                 PermissionType::class);
+        Route::model('app_module_user',                 AppModuleUser::class);
+
     }
 
     /**

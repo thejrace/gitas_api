@@ -9,11 +9,11 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-lock"></i>
-                                <h3><i>{{ request()->route()->parameter('permission_type')->name }}</i> - İzin Formu</h3>
+                                <h3>İzin Tipi Formu</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
-                                <permission-form data-id="{{ $dataId ?? null }}" permission-prefix="@php if(isset($_GET['permission_prefix'])) echo $_GET["permission_prefix"] @endphp"></permission-form>
+                                <permission-type-form data-id="{{ $dataId ?? null }}"></permission-type-form>
                             </div>
                         </div>
                     </div>
