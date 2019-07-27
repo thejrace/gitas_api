@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UserPermissionFormRequest;
+use App\Http\Resources\PermissionResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -12,22 +13,20 @@ use Spatie\Permission\Models\Permission;
 class UserPermissionController extends Controller
 {
 
-    public function store(UserPermissionFormRequest $request)
+    public function givePermission( User $user, Permission $permission )
     {
-        $apiUser = User::findOrFail($request->get('user_id'));
-        $permisson = Permission::query()->where('id', $request->get('permission_id'))->first();
-        $apiUser->givePermissionTo($permisson);
+        $user->givePermissionTo($permission);
         return new SuccessJSONResponseResource(null);
     }
 
-    public function show($id)
+    public function getPermissions( User $user )
     {
-        $apiUser = User::findOrFail($id);
-        return $apiUser->getAllPermissions();
+        return new PermissionResource($user->permissions());
     }
 
-    public function destroy($id)
+    public function revokePermission( User $user, Permission $permission )
     {
-
+        $user->revokePermissionTo($permission);
+        return new SuccessJSONResponseResource(null);
     }
 }

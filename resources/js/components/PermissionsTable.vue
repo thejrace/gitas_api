@@ -12,10 +12,6 @@
         >
             <template slot="actions" scope="props">
                 <div class="custom-actions">
-                    <button class="ui basic button" title="İzinler"
-                            @click="onAction('show-permissions', props.rowData, props.rowIndex)">
-                        <i class="icon-key"></i>
-                    </button>
                     <button class="ui basic button"
                             @click="onAction('edit-item', props.rowData, props.rowIndex)">
                         <i class="icon-pencil"></i>
@@ -73,11 +69,8 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'show-permissions':
-                        window.open("/user_permissions/"+data.id,'_blank');
-                        break;
                     case 'edit-item':
-                        window.open("/users/form/"+data.id,'_blank');
+                        window.open("/permissions/update/"+this.permissionType+'/'+data.id,'_blank');
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');

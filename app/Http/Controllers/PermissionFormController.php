@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\PermissionType;
 use Spatie\Permission\Models\Permission;
 
 class PermissionFormController extends Controller
@@ -10,7 +11,7 @@ class PermissionFormController extends Controller
     {
         return view('permission_form');
     }
-    public function edit( Permission $permission )
+    public function edit( PermissionType $permissionType, Permission $permission )
     {
         return view('permission_form')->with([
             'updateFlag' => true,

@@ -1964,10 +1964,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios.post('/api/user_permissions', querystring.stringify({
-                  user_id: this.model_id,
-                  permission_id: dataId
-                }));
+                return window.axios.post('/api/user_permissions/' + this.model_id + '/' + dataId);
 
               case 2:
                 response = _context.sent;
@@ -4486,10 +4483,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -4543,12 +4536,8 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     },
     onAction: function onAction(action, data, index) {
       switch (action) {
-        case 'show-permissions':
-          window.open("/user_permissions/" + data.id, '_blank');
-          break;
-
         case 'edit-item':
-          window.open("/users/form/" + data.id, '_blank');
+          window.open("/permissions/update/" + this.permissionType + '/' + data.id, '_blank');
           break;
 
         case 'delete-item':
@@ -5001,7 +4990,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios["delete"]('/api/user_permissions/' + dataId);
+                return window.axios["delete"]('/api/user_permissions/' + this.model_id + '/' + dataId);
 
               case 2:
                 response = _context.sent;
@@ -5016,7 +5005,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function deleteItem(_x) {
@@ -5028,7 +5017,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
   },
   data: function data() {
     return {
-      apiUrl: '/user_permissions/dataTables/defined/' + this.$props.model_id,
+      apiUrl: '/user_permissions/dataTables/defined/' + this.model_id,
       css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"],
       fields: ['id', {
         name: 'name',
@@ -47842,24 +47831,6 @@ var render = function() {
             fn: function(props) {
               return [
                 _c("div", { staticClass: "custom-actions" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "ui basic button",
-                      attrs: { title: "İzinler" },
-                      on: {
-                        click: function($event) {
-                          return _vm.onAction(
-                            "show-permissions",
-                            props.rowData,
-                            props.rowIndex
-                          )
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "icon-key" })]
-                  ),
-                  _vm._v(" "),
                   _c(
                     "button",
                     {

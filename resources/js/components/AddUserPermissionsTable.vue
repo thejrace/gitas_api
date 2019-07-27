@@ -75,7 +75,7 @@
                 }
             },
             async addPerm( dataId ){
-                const response = await window.axios.post('/api/user_permissions', querystring.stringify({ user_id:this.model_id, permission_id:dataId }));
+                const response = await window.axios.post('/api/user_permissions/'+this.model_id+'/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);

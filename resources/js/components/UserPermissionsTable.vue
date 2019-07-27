@@ -74,7 +74,7 @@
                 }
             },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/user_permissions/'+dataId);
+                const response = await window.axios.delete('/api/user_permissions/'+this.model_id+'/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -83,7 +83,7 @@
         },
         data(){
             return {
-                apiUrl: '/user_permissions/dataTables/defined/'+this.$props.model_id,
+                apiUrl: '/user_permissions/dataTables/defined/'+this.model_id,
                 css: CssConfig,
                 fields:[
                     'id',

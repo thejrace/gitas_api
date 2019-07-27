@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Permission;
 
 class UserPermissionController extends Controller
 {
-    public function dataTablesNotDefined( Request $req, User $user ){
+    public function dataTablesNotDefined( User $user ){
         $query = Permission::query();
         $userPerms = $user->getAllPermissions();
         $excludedArray = [];
@@ -28,7 +28,5 @@ class UserPermissionController extends Controller
     public function index(){
         return view('user_permissions');
     }
-
-
 
 }

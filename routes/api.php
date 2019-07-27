@@ -32,7 +32,12 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::resource('app_module_user_permissions',                  AppModuleUserPermissionController::class );
     Route::resource('permissions',                                  PermissionController::class );
     Route::resource('permission_types',                             PermissionTypeController::class );
-    Route::resource('user_permissions',                             UserPermissionController::class );
+
+    Route::prefix('user_permissions')->group(function(){
+        Route::delete('{user}/{permission}',                                    [ UserPermissionController::class, "revokePermission" ] );
+        Route::post('{user}/{permission}',                                      [ UserPermissionController::class, "givePermission" ] );
+        Route::get('{user}',                                                    [ UserPermissionController::class, "getPermissions" ] );
+    });
 
 });
 
