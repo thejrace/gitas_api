@@ -14,7 +14,7 @@
 
                             <div class="widget-content">
                                 <div class="top-nav-container">
-                                    <a href="{{route('permissions.form')}}/?permission_prefix={{ request()->route()->parameter('app_module')->permission_prefix }}."><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
+                                    <a href="{{route('permissions.app_module.store', request()->route()->parameter('app_module')->id )}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>
                                 </div>
                                 <app-module-permissions-vuetable model_id="{{ request()->route()->parameter('app_module')->id }}" ></app-module-permissions-vuetable>
                             </div>

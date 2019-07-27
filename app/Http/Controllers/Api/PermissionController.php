@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\AppModule;
 use App\Http\Requests\PermissionFormStoreRequest;
 use App\Http\Requests\PermissionFormUpdateRequest;
 use App\Http\Resources\PermissionResource;
@@ -15,7 +16,18 @@ class PermissionController extends Controller
 
     public function store(PermissionFormStoreRequest $request)
     {
-        Permission::create(['name' => $request->get('name'), 'guard_name' => 'api', 'type' => $request->get('type')]);
+        $type = $request->get('type');
+        $name = $request->get('name');
+        if( $type == 2 ){
+            $appModule = AppModule::findOrFail($request->get("app_module_id"));
+            $name = $appModule->permission_prefix.'.'.$name;
+        }
+        Permission::create([
+            'name'              => $name,
+            'guard_name'        => 'api',
+            'type'              => $type,
+            'description'       => $request->get('description')
+        ]);
         return new SuccessJSONResponseResource(null);
     }
 

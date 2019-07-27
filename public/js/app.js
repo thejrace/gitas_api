@@ -3848,6 +3848,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["HasError"]);
@@ -3855,8 +3857,14 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     dataId: String,
-    parentId: String,
-    permissionPrefix: String
+    typeId: String,
+    //  permission type
+    appModuleId: String,
+    //  app_module id
+    showTypeForm: {
+      type: Boolean,
+      "default": false
+    }
   },
   data: function data() {
     return {
@@ -3864,7 +3872,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
       form: new vform__WEBPACK_IMPORTED_MODULE_2__["Form"]({
         name: '',
         description: '',
-        type: ''
+        type: '',
+        app_module_id: ''
       })
     };
   },
@@ -3971,7 +3980,14 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
       this.fetch();
     }
 
-    this.form.type = this.parentId;
+    if (this.appModuleId) {
+      this.showTypeForm = false;
+      this.form.type = "2"; // @todo hack!!! fix it
+
+      this.form.app_module_id = this.appModuleId;
+    } else {
+      this.form.type = this.parentId;
+    }
   }
 });
 
@@ -4175,56 +4191,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     selectedId: String
   },
   data: function data() {
     return {
-      permissionTypes: [{
-        id: 1,
-        name: 'Obarey'
-      }, {
-        id: 2,
-        name: 'Hederoy'
-      }, {
-        id: 3,
-        name: 'At'
-      }]
+      permissionTypes: []
     };
   },
-  fetch: function () {
-    var _fetch = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return window.axios.get('/api/permission_types/');
+  methods: {
+    fetch: function () {
+      var _fetch = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return window.axios.get('/api/permission_types/');
 
-            case 2:
-              response = _context.sent;
-              console.log(response);
-              this.permissionTypes = response.data.data;
+              case 2:
+                response = _context.sent;
+                console.log(response);
+                this.permissionTypes = response.data.data;
 
-            case 5:
-            case "end":
-              return _context.stop();
+              case 5:
+              case "end":
+                return _context.stop();
+            }
           }
-        }
-      }, _callee, this);
-    }));
+        }, _callee, this);
+      }));
 
-    function fetch() {
-      return _fetch.apply(this, arguments);
-    }
+      function fetch() {
+        return _fetch.apply(this, arguments);
+      }
 
-    return fetch;
-  }(),
-  mounted: function mounted() {//this.fetch();
+      return fetch;
+    }()
+  },
+  mounted: function mounted() {
+    this.fetch();
   }
 });
 
@@ -47406,9 +47419,11 @@ var render = function() {
       }
     },
     [
+      _vm.showTypeForm ? _c("permission-types-select") : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "control-group" }, [
         _c("label", { staticClass: "control-label", attrs: { for: "name" } }, [
-          _vm._v("Name")
+          _vm._v("İsim")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "controls" }, [
@@ -47449,7 +47464,7 @@ var render = function() {
         _c(
           "label",
           { staticClass: "control-label", attrs: { for: "description" } },
-          [_vm._v("Description")]
+          [_vm._v("Açıklama")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "controls" }, [
@@ -47489,7 +47504,8 @@ var render = function() {
       _c("button", { attrs: { disabled: _vm.form.busy, type: "submit" } }, [
         _vm._v("\n        Save\n    ")
       ])
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -47637,24 +47653,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "control-group" }, [
     _c(
-      "select",
-      { attrs: { name: "permission_type", id: "permission_type" } },
-      _vm._l(_vm.permissionTypes, function(permission) {
-        return _c(
-          "option",
-          {
-            domProps: {
-              value: permission.id,
-              selected: _vm.selectedId == permission.id
-            }
-          },
-          [_vm._v("\n           " + _vm._s(permission.name) + "\n        ")]
-        )
-      }),
-      0
-    )
+      "label",
+      { staticClass: "control-label", attrs: { for: "permission_type" } },
+      [_vm._v("İzin Tipi")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "controls" }, [
+      _c(
+        "select",
+        { attrs: { name: "permission_type", id: "permission_type" } },
+        _vm._l(_vm.permissionTypes, function(permission) {
+          return _c(
+            "option",
+            {
+              domProps: {
+                value: permission.id,
+                selected: _vm.selectedId == permission.id
+              }
+            },
+            [
+              _vm._v(
+                "\n                " +
+                  _vm._s(permission.name) +
+                  "\n            "
+              )
+            ]
+          )
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = []

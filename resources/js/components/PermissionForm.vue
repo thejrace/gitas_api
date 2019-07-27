@@ -1,7 +1,9 @@
 <template>
     <form @submit.prevent="action" @keydown="form.onKeydown($event)" class="form-horizontal" >
+        <permission-types-select v-if="showTypeForm" ></permission-types-select>
+
         <div class="control-group">
-            <label class="control-label" for="name">Name</label>
+            <label class="control-label" for="name">İsim</label>
             <div class="controls">
                 <input v-model="form.name" type="text" name="name" id="name">
                 <div class="alert alert-danger" v-if="form.errors.has('name')">
@@ -10,7 +12,7 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="description">Description</label>
+            <label class="control-label" for="description">Açıklama</label>
             <div class="controls">
                 <textarea v-model="form.description" type="text" name="description" id="description"></textarea>
                 <div class="alert alert-danger" v-if="form.errors.has('description')">
@@ -34,8 +36,12 @@
     export default {
         props: {
             dataId : String,
-            parentId: String,
-            permissionPrefix: String
+            typeId: String, //  permission type
+            appModuleId: String, //  app_module id
+            showTypeForm: {
+                type: Boolean,
+                default: false
+            }
         },
         data () {
             return {
@@ -44,6 +50,7 @@
                     name: '',
                     description: '',
                     type: '',
+                    app_module_id: ''
                 })
             }
         },
@@ -75,7 +82,14 @@
             if( this.dataId ){
                 this.fetch();
             }
-            this.form.type = this.parentId;
+            if( this.appModuleId ){
+                this.showTypeForm = false;
+                this.form.type = "2"; // @todo hack!!! fix it
+                this.form.app_module_id = this.appModuleId;
+            } else {
+                this.form.type = this.parentId;
+            }
+
         }
     }
 </script>

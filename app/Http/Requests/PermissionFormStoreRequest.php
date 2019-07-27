@@ -24,7 +24,7 @@ class PermissionFormStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:permissions'
+            'name' => 'required|unique:permissions',
         ];
     }
 }

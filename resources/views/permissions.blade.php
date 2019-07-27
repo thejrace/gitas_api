@@ -11,9 +11,6 @@
                                 <i class="icon-user"></i>
                                 <h3><i>{{ request()->route()->parameter('permission_type')->name }}</i> - İzin Listesi</h3>
                             </div> <!-- /widget-header -->
-
-                            <permission-types-select selected-id="3"></permission-types-select>
-
                             <div class="widget-content">
                                 <div class="top-nav-container">
                                     <a href="{{route('permissions.store', $permission_type )}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>

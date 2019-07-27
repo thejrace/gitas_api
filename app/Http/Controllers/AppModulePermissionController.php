@@ -23,8 +23,8 @@ class AppModulePermissionController extends Controller
         return PermissionResource::collection($query->paginate(20));
     }
 
-    public function index(){
-        return view('app_module_permssions');
+    public function index( AppModule $appModule ){
+        return view('app_module_permissions');
     }
 
 }
