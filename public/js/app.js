@@ -1965,7 +1965,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
               case 0:
                 _context.next = 2;
                 return window.axios.post('/api/user_permissions', querystring.stringify({
-                  user_id: this.$props.model_id,
+                  user_id: this.model_id,
                   permission_id: dataId
                 }));
 
@@ -1994,7 +1994,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
   },
   data: function data() {
     return {
-      apiUrl: '/permissions/dataTables/' + this.$props.model_id,
+      apiUrl: '/user_permissions/dataTables/not_defined/' + this.$props.model_id,
       css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"],
       fields: ['id', {
         name: 'name',
@@ -2814,7 +2814,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
           break;
 
         case 'edit-item':
-          window.open("/app_module_users/form/" + data.id, '_blank');
+          window.open("/app_module_users/update/" + this.app_module_id + "/" + data.id, '_blank');
           break;
 
         case 'delete-item':
@@ -3986,7 +3986,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 
       this.form.app_module_id = this.appModuleId;
     } else {
-      this.form.type = this.parentId;
+      this.form.type = this.typeId;
     }
   }
 });
@@ -5028,7 +5028,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
   },
   data: function data() {
     return {
-      apiUrl: '/user_permissions/dataTables/' + this.$props.model_id,
+      apiUrl: '/user_permissions/dataTables/defined/' + this.$props.model_id,
       css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"],
       fields: ['id', {
         name: 'name',

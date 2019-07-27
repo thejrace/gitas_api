@@ -11,9 +11,6 @@
                                 <i class="icon-user"></i>
                                 <h3>İzin Tipleri</h3>
                             </div> <!-- /widget-header -->
-
-                            <permission-types-select selected-id="3"></permission-types-select>
-
                             <div class="widget-content">
                                 <div class="top-nav-container">
                                     <a href="{{route('permission_types.form')}}"><button type="button" class="ui basic button"><i class="icon-plus"></i></button></a>

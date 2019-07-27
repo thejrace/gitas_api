@@ -75,7 +75,7 @@
                 }
             },
             async addPerm( dataId ){
-                const response = await window.axios.post('/api/user_permissions', querystring.stringify({ user_id:this.$props.model_id, permission_id:dataId }));
+                const response = await window.axios.post('/api/user_permissions', querystring.stringify({ user_id:this.model_id, permission_id:dataId }));
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -84,7 +84,7 @@
         },
         data(){
             return {
-                apiUrl: '/permissions/dataTables/'+this.$props.model_id,
+                apiUrl: '/user_permissions/dataTables/not_defined/'+this.$props.model_id,
                 css: CssConfig,
                 fields:[
                     'id',

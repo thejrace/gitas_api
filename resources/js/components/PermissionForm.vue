@@ -87,7 +87,7 @@
                 this.form.type = "2"; // @todo hack!!! fix it
                 this.form.app_module_id = this.appModuleId;
             } else {
-                this.form.type = this.parentId;
+                this.form.type = this.typeId;
             }
 
         }

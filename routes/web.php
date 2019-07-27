@@ -41,10 +41,11 @@ Route::post('logout',                                                       [ Lo
 Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::get('/',                                                         [ MainController::class, 'index'] );
-    Route::get('/test',                                                     [ MainController::class, 'test'] );
+    Route::get('/test/{user}',                                                     [ MainController::class, 'test'] );
 
     Route::prefix('user_permissions')->group(function(){
-        Route::get('dataTables/{user}',                                     [ UserPermissionController::class, 'dataTables'] );
+        Route::get('dataTables/not_defined/{user}',                         [ UserPermissionController::class, 'dataTablesNotDefined'] );
+        Route::get('dataTables/defined/{user}',                             [ UserPermissionController::class, 'dataTablesDefined'] );
         Route::get('{user}',                                                [ UserPermissionController::class, 'index'] )->name('user_permissions.index');
     });
 
@@ -85,7 +86,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
 
         Route::get('store/{app_module}',                                    [ AppModuleUserFormController::class, 'create'] )->name('app_module_users.form');
-        Route::get('update/{app_module_user}',                              [ AppModuleUserFormController::class, 'edit'] );
+        Route::get('update/{app_module}/{app_module_user}',                 [ AppModuleUserFormController::class, 'edit'] );
         Route::get('dataTables/{app_module}',                               [ AppModuleUserController::class, 'dataTables'] );
         Route::get('{app_module}',                                          [ AppModuleUserController::class, 'index'] )->name('app_module_users.index');
     });

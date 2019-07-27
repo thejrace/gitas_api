@@ -83,7 +83,7 @@
         },
         data(){
             return {
-                apiUrl: '/user_permissions/dataTables/'+this.$props.model_id,
+                apiUrl: '/user_permissions/dataTables/defined/'+this.$props.model_id,
                 css: CssConfig,
                 fields:[
                     'id',

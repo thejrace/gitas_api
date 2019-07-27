@@ -10,7 +10,7 @@ class AppModuleUserFormController extends Controller
     {
         return view('app_module_user_form');
     }
-    public function edit( AppModuleUser $user )
+    public function edit( AppModule $appModule, AppModuleUser $user )
     {
         return view('app_module_user_form')->with([
             'updateFlag' => true,

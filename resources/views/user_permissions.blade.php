@@ -9,7 +9,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-lock"></i>
-                                <h3>İzinler</h3>
+                                <h3>'{{ request()->route()->parameter('user')->name }}' İzinler</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">
@@ -26,7 +26,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-lock"></i>
-                                <h3>İzin Ekle</h3>
+                                <h3>'{{ request()->route()->parameter('user')->name }}' İzin Ekle</h3>
                             </div> <!-- /widget-header -->
 
                             <div class="widget-content">

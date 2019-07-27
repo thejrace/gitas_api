@@ -77,7 +77,7 @@
                         window.open("/app_module_user_permissions/"+data.id,'_blank');
                         break;
                     case 'edit-item':
-                        window.open("/app_module_users/form/"+data.id,'_blank');
+                        window.open("/app_module_users/update/"+this.app_module_id+"/"+data.id,'_blank');
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');

@@ -18,8 +18,9 @@ class MainController extends Controller
 
     }
 
-    public function test( Request $request, AppModuleUse $appModule ){
-        return view('app_module_user_form');
+    public function test( User $user ){
+        $query = Permission::query();
+        return $query->paginate(20);
     }
 
 }
