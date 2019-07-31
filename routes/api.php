@@ -29,7 +29,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::resource('buses',                                        BusController::class );
     Route::resource('app_modules',                                  AppModuleController::class );
     Route::resource('app_module_users',                             AppModuleUserController::class );
-    Route::resource('app_module_user_permissions',                  AppModuleUserPermissionController::class );
     Route::resource('permissions',                                  PermissionController::class );
     Route::resource('permission_types',                             PermissionTypeController::class );
 
@@ -37,6 +36,12 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
         Route::delete('{user}/{permission}',                                    [ UserPermissionController::class, "revokePermission" ] );
         Route::post('{user}/{permission}',                                      [ UserPermissionController::class, "givePermission" ] );
         Route::get('{user}',                                                    [ UserPermissionController::class, "getPermissions" ] );
+    });
+
+    Route::prefix('app_module_user_permissions')->group(function(){
+        Route::delete('{app_module_user}/{permission}',                                    [ AppModuleUserPermissionController::class, "revokePermission" ] );
+        Route::post('{app_module_user}/{permission}',                                      [ AppModuleUserPermissionController::class, "givePermission" ] );
+        Route::get('{app_module_user}',                                                    [ AppModuleUserPermissionController::class, "getPermissions" ] );
     });
 
 });

@@ -18,13 +18,15 @@ class PermissionController extends Controller
     {
         $type = $request->get('type');
         $name = $request->get('name');
+        $guard = 'api';
         if( $type == 2 ){
             $appModule = AppModule::findOrFail($request->get("app_module_id"));
             $name = $appModule->permission_prefix.'.'.$name;
+            $guard = 'app_module_user';
         }
         Permission::create([
             'name'              => $name,
-            'guard_name'        => 'api',
+            'guard_name'        => $guard,
             'type'              => $type,
             'description'       => $request->get('description')
         ]);

@@ -31,7 +31,7 @@
 
                             <div class="widget-content">
 
-                                <app-module-permissions-vuetable model_id="{{ request()->route()->parameter('app_module_user')->id }}"></app-module-permissions-vuetable>
+                                <add-app-module-user-permissions-vuetable model_id="{{ request()->route()->parameter('app_module_user')->id }}"></add-app-module-user-permissions-vuetable>
                             </div>
                         </div>
                     </div>

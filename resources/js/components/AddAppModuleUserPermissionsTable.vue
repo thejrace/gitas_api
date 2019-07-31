@@ -13,8 +13,8 @@
             <template slot="actions" scope="props">
                 <div class="custom-actions">
                     <button class="ui basic button"
-                            @click="onAction('delete-item', props.rowData, props.rowIndex)">
-                        <i class="icon-remove"></i>
+                            @click="onAction('add-perm', props.rowData, props.rowIndex)">
+                        <i class="icon-plus"></i>
                     </button>
                 </div>
             </template>
@@ -28,6 +28,7 @@
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
     import CssConfig from './vuetable-styles.js';
     import VueEvents from 'vue-events';
+    var querystring = require('querystring');
 
     Vue.use(VueEvents);
 
@@ -65,16 +66,16 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'delete-item':
+                    case 'add-perm':
                         var c = confirm('Are you şur?');
                         if( c ){
-                            this.deleteItem(data.id);
+                            this.addPerm(data.id);
                         }
                         break;
                 }
             },
-            async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/app_module_user_permissions/'+this.model_id+'/'+dataId);
+            async addPerm( dataId ){
+                const response = await window.axios.post('/api/app_module_user_permissions/'+this.model_id+'/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -83,13 +84,13 @@
         },
         data(){
             return {
-                apiUrl: '/app_module_user_permissions/dataTables/defined/'+this.model_id,
+                apiUrl: '/app_module_user_permissions/dataTables/not_defined/'+this.$props.model_id,
                 css: CssConfig,
                 fields:[
                     'id',
                     {
                         name: 'name',
-                        title:'İsim',
+                        title:'İzin',
                         titleClass: 'center aligned',
                         dataClass: 'center aligned',
                         sortField: 'name'

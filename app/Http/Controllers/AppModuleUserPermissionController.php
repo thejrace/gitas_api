@@ -10,17 +10,21 @@ use Spatie\Permission\Models\Permission;
 
 class AppModuleUserPermissionController extends Controller
 {
-    public function dataTables( Request $req, AppModuleUser $model ){
-        $query = $model->permissions();
-        $query->where('name', 'LIKE', '%'.$model->permission_prefix.'%');
-        if( $req->filled('sort') ){
-            $exp = explode('|', $req->get('sort'));
-            if( count($exp) > 1 ) $query->orderBy($exp[0], $exp[1]);
+    public function dataTablesNotDefined( AppModuleUser $user ){
+        $query = Permission::query();
+        $userPerms = $user->getAllPermissions();
+        $excludedArray = [];
+        foreach( $userPerms as $perm ){
+            $excludedArray[] = $perm->id;
         }
-        if( $req->filled('filter')) {
-            $query->orWhere('name', 'LIKE', '%'.$req->get('filter').'%');
-        }
+        $query->whereNotIn('id', $excludedArray);
+        $query->where('name', 'LIKE', '%'.$user->AppModule->permission_prefix.'%');
+        $query->whereIn('type', [2]); // @todo enum mu yapcan napcan yap amk
         return PermissionResource::collection($query->paginate(20));
+    }
+
+    public function dataTablesDefined( AppModuleUser $user ){
+        return PermissionResource::collection($user->permissions()->paginate(20));
     }
 
     public function index(){

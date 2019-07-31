@@ -33,6 +33,7 @@ Vue.component('my-vuetable', require('./components/MyVuetable.vue').default);
 Vue.component('buses-vuetable', require('./components/BusesTable.vue').default);
 Vue.component('user-permissions-vuetable', require('./components/UserPermissionsTable.vue').default);
 Vue.component('add-user-permissions-vuetable', require('./components/AddUserPermissionsTable.vue').default);
+Vue.component('add-app-module-user-permissions-vuetable', require('./components/AddAppModuleUserPermissionsTable.vue').default);
 Vue.component('users-vuetable', require('./components/UsersTable.vue').default);
 Vue.component('permissions-vuetable', require('./components/PermissionsTable.vue').default);
 Vue.component('permission-types-vuetable', require('./components/PermissionTypesTable.vue').default);

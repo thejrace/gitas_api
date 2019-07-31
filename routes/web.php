@@ -84,8 +84,6 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     });
 
     Route::prefix('app_module_users')->group(function(){
-
-
         Route::get('store/{app_module}',                                    [ AppModuleUserFormController::class, 'create'] )->name('app_module_users.form');
         Route::get('update/{app_module}/{app_module_user}',                 [ AppModuleUserFormController::class, 'edit'] );
         Route::get('dataTables/{app_module}',                               [ AppModuleUserController::class, 'dataTables'] );
@@ -93,15 +91,14 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     });
 
     Route::prefix('app_module_user_permissions')->group(function(){
-        Route::get('dataTables/{app_module_user}',                          [ AppModuleUserPermissionController::class, 'dataTables'] );
-        Route::get('/{app_module_user}',                                    [ AppModuleUserPermissionController::class, 'index'] )->name('app_module_user_permissions.index');
+        Route::get('dataTables/not_defined/{app_module_user}',              [ AppModuleUserPermissionController::class, 'dataTablesNotDefined'] );
+        Route::get('dataTables/defined/{app_module_user}',                  [ AppModuleUserPermissionController::class, 'dataTablesDefined'] );
+        Route::get('{app_module_user}',                                     [ AppModuleUserPermissionController::class, 'index'] )->name('app_module_user_permissions.index');
     });
 
     Route::prefix('app_module_permissions')->group(function(){
-
         Route::get('dataTables/{app_module}',                               [ AppModulePermissionController::class, 'dataTables'] );
         Route::get('{app_module}',                                          [ AppModulePermissionController::class, 'index'] )->name('app_module_permissions.index');
-
     });
 
     Route::prefix('users')->group(function(){
