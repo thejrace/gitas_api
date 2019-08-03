@@ -2474,7 +2474,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
     onAction: function onAction(action, data, index) {
       switch (action) {
         case 'edit-item':
-          window.open("/permissions/form/" + data.id);
+          location.href = "/permissions/form/" + data.id;
           break;
 
         case 'delete-item':
@@ -2983,11 +2983,11 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     onAction: function onAction(action, data, index) {
       switch (action) {
         case 'show-permissions':
-          window.open("/app_module_user_permissions/" + data.id);
+          location.href = "/app_module_user_permissions/" + data.id;
           break;
 
         case 'edit-item':
-          window.open("/app_module_users/update/" + this.app_module_id + "/" + data.id);
+          location.href = "/app_module_users/update/" + this.app_module_id + "/" + data.id;
           break;
 
         case 'delete-item':
@@ -3177,11 +3177,11 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     onAction: function onAction(action, data, index) {
       switch (action) {
         case 'edit-item':
-          window.open("/app_modules/form/" + data.id);
+          location.href = "/app_modules/form/" + data.id;
           break;
 
         case 'show-permissions':
-          window.open("/user_permissions/" + data.id);
+          location.href = "/user_permissions/" + data.id;
           break;
 
         case 'delete-item':
@@ -3194,11 +3194,11 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
           break;
 
         case 'show-user-permissions':
-          window.open("/app_module_permissions/" + data.id);
+          location.href = "/app_module_permissions/" + data.id;
           break;
 
         case 'show-users':
-          window.open("/app_module_users/" + data.id);
+          location.href = "/app_module_users/" + data.id;
           break;
       }
     },
@@ -3666,7 +3666,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     onAction: function onAction(action, data, index) {
       switch (action) {
         case 'edit-item':
-          window.open("/buses/form/" + data.id);
+          location.href = "/buses/form/" + data.id;
           break;
 
         case 'delete-item':
@@ -4525,11 +4525,11 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     onAction: function onAction(action, data, index) {
       switch (action) {
         case 'show-permissions':
-          window.open("/permissions/" + data.id, '_blank');
+          location.href = "/permissions/" + data.id;
           break;
 
         case 'edit-item':
-          window.open("/permission_types/form/" + data.id);
+          location.href = "/permission_types/form/" + data.id;
           break;
 
         case 'delete-item':
@@ -4713,7 +4713,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     onAction: function onAction(action, data, index) {
       switch (action) {
         case 'edit-item':
-          window.open("/permissions/update/" + this.permissionType + '/' + data.id);
+          location.href = "/permissions/update/" + this.permissionType + '/' + data.id;
           break;
 
         case 'delete-item':
@@ -5325,11 +5325,11 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     onAction: function onAction(action, data, index) {
       switch (action) {
         case 'show-permissions':
-          window.open("/user_permissions/" + data.id);
+          location.href = "/user_permissions/" + data.id;
           break;
 
         case 'edit-item':
-          window.open("/users/form/" + data.id);
+          location.href = "/users/form/" + data.id;
           break;
 
         case 'delete-item':

@@ -80,10 +80,10 @@
             onAction (action, data, index) {
                 switch( action ){
                     case 'edit-item':
-                        window.open("/app_modules/form/"+data.id);
+                        location.href = "/app_modules/form/"+data.id;
                     break;
                     case 'show-permissions':
-                        window.open("/user_permissions/"+data.id);
+                        location.href = "/user_permissions/"+data.id;
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
@@ -92,10 +92,10 @@
                         }
                     break;
                     case'show-user-permissions':
-                        window.open("/app_module_permissions/"+data.id);
+                        location.href = "/app_module_permissions/"+data.id;
                     break;
                     case'show-users':
-                        window.open("/app_module_users/"+data.id);
+                        location.href = "/app_module_users/"+data.id;
                     break;
                 }
             },
