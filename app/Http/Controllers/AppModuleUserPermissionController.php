@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
-
 use App\AppModuleUser;
 use App\Http\Resources\PermissionResource;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\Permission\Models\Permission;
 
 class AppModuleUserPermissionController extends Controller
 {
-    public function dataTablesNotDefined( AppModuleUser $user ){
+    /**
+     * Generate datatables data that contains permissions that
+     * app module user does not have
+     *
+     * @param AppModuleUser $user
+     *
+     * @return AnonymousResourceCollection
+     *
+     * @throws \Exception|\Throwable
+     */
+    public function dataTablesNotDefined(AppModuleUser $user){
         $query = Permission::query();
         $userPerms = $user->getAllPermissions();
         $excludedArray = [];
+        /** @var Permission $perm */
         foreach( $userPerms as $perm ){
             $excludedArray[] = $perm->id;
         }
@@ -23,10 +33,25 @@ class AppModuleUserPermissionController extends Controller
         return PermissionResource::collection($query->paginate(20));
     }
 
-    public function dataTablesDefined( AppModuleUser $user ){
+    /**
+     * Generate datatables data that contains permissions that
+     * app module user has
+     *
+     * @param AppModuleUser $user
+     *
+     * @return AnonymousResourceCollection
+     *
+     * @throws \Exception|\Throwable
+     */
+    public function dataTablesDefined(AppModuleUser $user){
         return PermissionResource::collection($user->permissions()->paginate(20));
     }
 
+    /**
+     * Show index view
+     *
+     * @return \View
+     */
     public function index(){
         return view('app_module_user_permissions');
     }
