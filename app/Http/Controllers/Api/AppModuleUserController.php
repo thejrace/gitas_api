@@ -10,10 +10,18 @@ use App\Http\Resources\AppModuleUserResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 
 class AppModuleUserController extends Controller
 {
-
+    /**
+     * Store a newly created model in storage.
+     *
+     * @param AppModuleUserFormStoreRequest $request
+     *
+     * @return SuccessJSONResponseResource
+     */
     public function store(AppModuleUserFormStoreRequest $request)
     {
         $attributes = $request->all();
@@ -23,12 +31,26 @@ class AppModuleUserController extends Controller
         return new SuccessJSONResponseResource(null);
     }
 
-    public function show( AppModuleUser $model)
+    /**
+     * Display the specified resource.
+     *
+     * @param AppModuleUser $model
+     *
+     * @return AppModuleUserResource
+     */
+    public function show(AppModuleUser $model)
     {
         return new AppModuleUserResource($model);
     }
 
-
+    /**
+     * Update the specified location in storage.
+     *
+     * @param AppModuleUserFormUpdateRequest  $request
+     * @param AppModuleUser                   $model
+     *
+     * @return SuccessJSONResponseResource
+     */
     public function update(AppModuleUserFormUpdateRequest $request, AppModuleUser $model )
     {
         $attributes = $request->all();
@@ -39,9 +61,26 @@ class AppModuleUserController extends Controller
         return new SuccessJSONResponseResource(null);
     }
 
-    public function destroy( AppModuleUser $model )
+    /**
+     * Remove app module user
+     *
+     * @param AppModuleUser $model
+     *
+     * @return SuccessJSONResponseResource
+     *
+     * @throws \Exception|\Throwable
+     */
+    public function destroy(AppModuleUser $model)
     {
-        $model->delete();
+        DB::transaction(function() use ($model) {
+            /** @var Permission $permission */
+            // revoke permissions
+            foreach ($model->getAllPermissions() as $permission) {
+                $model->revokePermissionTo($permission);
+            }
+            // delete user
+            $model->delete();
+        });
         return new SuccessJSONResponseResource(null);
     }
 }
