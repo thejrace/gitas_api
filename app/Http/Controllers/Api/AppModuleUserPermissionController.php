@@ -3,43 +3,51 @@
 namespace App\Http\Controllers\Api;
 
 use App\AppModuleUser;
-use App\Http\Requests\PermissionFormStoreRequest;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\SuccessJSONResponseResource;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\Permission\Models\Permission;
 
 class AppModuleUserPermissionController extends Controller
 {
-
-    /*public function store(PermissionFormStoreRequest $request)
+    /**
+     * Get all permissions of the app module user.
+     *
+     * @param AppModuleUser $user
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function getPermissions( AppModuleUser $user )
     {
-        $apiUser = AppModuleUser::findOrFail($request->get('user_id'));
-        $permisson = Permission::query()->where('id', $request->get('permission_id'))->first();
-        $apiUser->givePermissionTo($permisson);
-        return new SuccessJSONResponseResource(null);
+        return PermissionResource::collection($user->permissions());
     }
-    public function destroy($id)
-    {
-        //
-    }*/
 
+    /**
+     * Give specific permission to app module user.
+     *
+     * @param AppModuleUser $user
+     * @param Permission $permission
+     *
+     * @return SuccessJSONResponseResource
+     */
     public function givePermission( AppModuleUser $user, Permission $permission )
     {
         $user->givePermissionTo($permission);
         return new SuccessJSONResponseResource(null);
     }
 
-    public function getPermissions( AppModuleUser $user )
-    {
-        return new PermissionResource($user->permissions());
-    }
-
+    /**
+     * Revoke specific permission from app module user.
+     *
+     * @param AppModuleUser $user
+     * @param Permission $permission
+     *
+     * @return SuccessJSONResponseResource
+     */
     public function revokePermission( AppModuleUser $user, Permission $permission )
     {
         $user->revokePermissionTo($permission);
         return new SuccessJSONResponseResource(null);
     }
-
 }
