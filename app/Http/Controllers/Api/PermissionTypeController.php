@@ -6,30 +6,73 @@ use App\Http\Requests\PermissionTypeFormStoreRequest;
 use App\Http\Requests\PermissionTypeFormUpdateRequest;
 use App\Http\Resources\PermissionTypeResource;
 use App\Http\Resources\SuccessJSONResponseResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\PermissionType;
 use App\Http\Controllers\Controller;
 
 class PermissionTypeController extends Controller
 {
+    /**
+     * Get all Permission Types
+     *
+     * @return AnonymousResourceCollection
+     */
     public function index(){
         return PermissionTypeResource::collection(PermissionType::all());
     }
 
-    public function show( PermissionType $model ){
+    /**
+     * Display the specified resource.
+     *
+     * @param PermissionType $model
+     *
+     * @return PermissionTypeResource
+     */
+    public function show(PermissionType $model){
         return new PermissionTypeResource($model);
     }
 
-    public function store( PermissionTypeFormStoreRequest $request ){
+    /**
+     * Store a newly created model in storage.
+     *
+     * @param PermissionTypeFormStoreRequest $request
+     *
+     * @return SuccessJSONResponseResource
+     */
+    public function store(PermissionTypeFormStoreRequest $request){
         PermissionType::create($request->all());
         return new SuccessJSONResponseResource(null);
     }
 
-    public function update( PermissionTypeFormUpdateRequest $request, PermissionType $model ){
+    /**
+     * Update the specified location in storage.
+     *
+     * @param PermissionTypeFormUpdateRequest  $request
+     * @param PermissionType                   $model
+     *
+     * @return SuccessJSONResponseResource
+     */
+    public function update(PermissionTypeFormUpdateRequest $request, PermissionType $model){
         $model->update($request->all());
         return new SuccessJSONResponseResource(null);
     }
 
-    public function destroy( PermissionType $model ){
-        $model->delete();
+    /**
+     * Remove permission type
+     *
+     * @param PermissionType $model
+     *
+     * @return SuccessJSONResponseResource
+     *
+     * @throws \Exception|\Throwable
+     */
+    public function destroy(PermissionType $model){
+        // $model->delete();
+        // @todo implement
+        // find sub permissions
+        // find users with those permission and revoke them
+
+        // also we dont want user to delete AppModulePerms and UserPerms..
+        return new SuccessJSONResponseResource(null);
     }
 }
