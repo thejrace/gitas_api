@@ -7,6 +7,7 @@ use App\Http\Resources\PermissionResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Psy\Util\Json;
 use Spatie\Permission\Models\Permission;
 
 class AppModuleUserPermissionController extends Controller
@@ -18,7 +19,7 @@ class AppModuleUserPermissionController extends Controller
      *
      * @return AnonymousResourceCollection
      */
-    public function getPermissions( AppModuleUser $user )
+    public function getPermissions(AppModuleUser $user)
     {
         return PermissionResource::collection($user->permissions());
     }
@@ -31,7 +32,7 @@ class AppModuleUserPermissionController extends Controller
      *
      * @return SuccessJSONResponseResource
      */
-    public function givePermission( AppModuleUser $user, Permission $permission )
+    public function givePermission(AppModuleUser $user, Permission $permission)
     {
         $user->givePermissionTo($permission);
         return new SuccessJSONResponseResource(null);
@@ -45,9 +46,25 @@ class AppModuleUserPermissionController extends Controller
      *
      * @return SuccessJSONResponseResource
      */
-    public function revokePermission( AppModuleUser $user, Permission $permission )
+    public function revokePermission(AppModuleUser $user, Permission $permission)
     {
         $user->revokePermissionTo($permission);
         return new SuccessJSONResponseResource(null);
+    }
+
+    /**
+     * Check if app module user has specific permission.
+     *
+     * @param AppModuleUser $user
+     * @param Permission $permission
+     *
+     * @return Json
+     */
+    public function hasPermission(AppModuleUser $user, Permission $permission)
+    {
+        $hasPermission = $user->hasPermissionTo($permission);
+        return response()->json([
+            'hasPermission' => $hasPermission
+        ]);
     }
 }

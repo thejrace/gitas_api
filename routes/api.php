@@ -41,14 +41,19 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::prefix('app_module_user_permissions')->group(function(){
         Route::delete('{app_module_user}/{permission}',                                    [ AppModuleUserPermissionController::class, "revokePermission" ] );
         Route::post('{app_module_user}/{permission}',                                      [ AppModuleUserPermissionController::class, "givePermission" ] );
+        Route::get('{app_module_user}/{permission}',                                       [ AppModuleUserPermissionController::class, "hasPermission" ] );
         Route::get('{app_module_user}',                                                    [ AppModuleUserPermissionController::class, "getPermissions" ] );
     });
 
 });
 
+Route::prefix('permission_check')->group(function(){
+    Route::get('{app_module_user}/{permission}',                                       [ AppModuleUserPermissionController::class, "hasPermission" ] );
+});
+
 Route::middleware(['auth:app_module'])->group(function(){
 
-
+        Route::get('permission_check/{app_module_user}/{permission}',                                       [ AppModuleUserPermissionController::class, "hasPermission" ] );
 
 });
 
