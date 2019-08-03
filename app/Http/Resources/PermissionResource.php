@@ -3,7 +3,11 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\Permission\Models\Permission;
 
+/**
+ * @property Permission $resource
+ */
 class PermissionResource extends JsonResource
 {
     /**

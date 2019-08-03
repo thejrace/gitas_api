@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\AppModule;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property AppModule $resource
+ */
 class AppModuleResource extends JsonResource
 {
     /**
@@ -14,13 +18,13 @@ class AppModuleResource extends JsonResource
      */
     public function toArray($request)
     {
+        $model = $this->resource;
         return [
 
-            'id'            => $this->resource->id,
-            'name'          => $this->resource->name,
-            'description'   => $this->resource->description,
-            'permission_prefix'   => $this->resource->permission_prefix,
-            //'user'          => $this->resource->user
+            'id'                    => $model->id,
+            'name'                  => $model->name,
+            'description'           => $model->description,
+            'permission_prefix'     => $model->permission_prefix,
         ];
     }
 }

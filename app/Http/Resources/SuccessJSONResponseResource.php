@@ -14,6 +14,8 @@ class SuccessJSONResponseResource extends JsonResource
      */
     public function toArray($request)
     {
-        return ['success' => true ];
+        return [
+            'success' => true
+        ];
     }
 }

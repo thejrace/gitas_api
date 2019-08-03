@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\AppModuleUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property AppModuleUser $resource
+ */
 class AppModuleUserResource extends JsonResource
 {
     /**

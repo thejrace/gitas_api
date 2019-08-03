@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Bus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property Bus $resource
+ */
 class BusResource extends JsonResource
 {
     /**

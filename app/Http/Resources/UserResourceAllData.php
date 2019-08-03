@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property User $resource
+ */
 class UserResourceAllData extends JsonResource
 {
     /**
@@ -14,9 +18,6 @@ class UserResourceAllData extends JsonResource
      */
     public function toArray($request)
     {
-        return array_merge(
-            parent::toArray($request),
-            [ 'bus_defs' => $this->resource->userBusDefinitions ]
-        );
+        return parent::toArray($request);
     }
 }

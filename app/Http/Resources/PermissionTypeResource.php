@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\PermissionType;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property PermissionType $resource
+ */
 class PermissionTypeResource extends JsonResource
 {
     /**
