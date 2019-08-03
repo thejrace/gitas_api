@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PermissionTypeResource;
 use App\PermissionType;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
 
 class PermissionTypeController extends Controller
 {
-    public function index(){
-        return view('permission_types');
-    }
-
+    /**
+     * Generate datatables data for the frontend
+     *
+     * @param Request $req
+     *
+     * @return AnonymousResourceCollection
+     */
     public function dataTables( Request $req ){
         $query = PermissionType::query();
         if( $req->filled('sort') ){
@@ -23,5 +28,14 @@ class PermissionTypeController extends Controller
         }
         return PermissionTypeResource::collection($query->paginate(20));
 
+    }
+
+    /**
+     * Show index view
+     *
+     * @return \View
+     */
+    public function index(){
+        return view('permission_types');
     }
 }

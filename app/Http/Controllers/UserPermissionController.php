@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PermissionResource;
 use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\Permission\Models\Permission;
 
 class UserPermissionController extends Controller
 {
-    public function dataTablesNotDefined( User $user ){
+    /**
+     * Generate datatables data that contains permissions that
+     * user does not have
+     *
+     * @param User $user
+     *
+     * @return AnonymousResourceCollection
+     *
+     * @throws \Exception|\Throwable
+     */
+    public function dataTablesNotDefined(User $user){
         $query = Permission::query();
         $userPerms = $user->getAllPermissions();
         $excludedArray = [];
@@ -21,12 +31,26 @@ class UserPermissionController extends Controller
         return PermissionResource::collection($query->paginate(20));
     }
 
-    public function dataTablesDefined( User $user ){
+    /**
+     * Generate datatables data that contains permissions that
+     * user has
+     *
+     * @param User $user
+     *
+     * @return AnonymousResourceCollection
+     *
+     * @throws \Exception|\Throwable
+     */
+    public function dataTablesDefined(User $user){
         return PermissionResource::collection($user->permissions()->paginate(20));
     }
 
+    /**
+     * Show index view
+     *
+     * @return \View
+     */
     public function index(){
         return view('user_permissions');
     }
-
 }

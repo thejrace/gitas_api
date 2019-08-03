@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
-
+    /**
+     * Generate datatables data for the frontend
+     *
+     * @param Request $req
+     *
+     * @return AnonymousResourceCollection
+     */
     public function dataTables( Request $req ){
         $query = User::query();
         if( $req->filled('sort') ){
@@ -23,8 +30,12 @@ class UserController extends Controller
         return UserResource::collection($query->paginate(20));
     }
 
+    /**
+     * Show index view
+     *
+     * @return \View
+     */
     public function index(){
         return view('users');
     }
-
 }
