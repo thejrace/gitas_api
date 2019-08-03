@@ -11,29 +11,58 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
+    /**
+     * Get all Users
+     *
+     * @return AnonymousResourceCollection
+     */
     public function index()
     {
         return UserResourceAllData::collection(User::all());
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param User $model
+     *
+     * @return UserResource
+     */
+    public function show(User $model)
+    {
+        return new UserResource($model);
+    }
+
+    /**
+     * Store a newly created model in storage.
+     *
+     * @param UserFormStoreRequest $request
+     *
+     * @return SuccessJSONResponseResource
+     */
     public function store(UserFormStoreRequest $request)
     {
         $attributes = $request->all();
-        $attributes['api_token']    =  Str::random(60);
+        $attributes['api_token']    = Str::random(60);
         $attributes['password']     = Hash::make($request->get('password'));
         User::create($attributes);
         return new SuccessJSONResponseResource(null);
     }
 
-    public function show($model)
-    {
-        return new UserResource($model);
-    }
-
+    /**
+     * Update the specified location in storage.
+     *
+     * @param UserFormUpdateRequest  $request
+     * @param User                   $model
+     *
+     * @return SuccessJSONResponseResource
+     */
     public function update(UserFormUpdateRequest $request, User $model)
     {
         $attributes = $request->all();
@@ -44,10 +73,24 @@ class UserController extends Controller
         return new SuccessJSONResponseResource(null);
     }
 
+    /**
+     * Remove app user
+     *
+     * @param User $model
+     *
+     * @return SuccessJSONResponseResource
+     *
+     * @throws \Exception|\Throwable
+     */
     public function destroy(User $model)
     {
-        $model->delete();
+        DB::transaction(function() use ($model) {
+            /** @var Permission $permission */
+            foreach( $model->getAllPermissions() as $permission ){
+                $model->revokePermissionTo($permission);
+            }
+            $model->delete();
+        });
         return new SuccessJSONResponseResource(null);
     }
-
 }
