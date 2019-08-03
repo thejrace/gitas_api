@@ -70,7 +70,7 @@
             onAction (action, data, index) {
                 switch( action ){
                     case 'edit-item':
-                        window.open("/permissions/update/"+this.permissionType+'/'+data.id,'_blank');
+                        window.open("/permissions/update/"+this.permissionType+'/'+data.id);
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
@@ -81,7 +81,7 @@
                 }
             },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/users/'+dataId);
+                const response = await window.axios.delete('/api/permissions/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);

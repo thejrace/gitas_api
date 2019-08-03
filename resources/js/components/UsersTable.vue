@@ -71,10 +71,10 @@
             onAction (action, data, index) {
                 switch( action ){
                     case 'show-permissions':
-                        window.open("/user_permissions/"+data.id,'_blank');
+                        window.open("/user_permissions/"+data.id);
                         break;
                     case 'edit-item':
-                        window.open("/users/form/"+data.id,'_blank');
+                        window.open("/users/form/"+data.id);
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');

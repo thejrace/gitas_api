@@ -68,7 +68,7 @@
             onAction (action, data, index) {
                 switch( action ){
                     case 'edit-item':
-                        window.open("/buses/form/"+data.id,'_blank');
+                        window.open("/buses/form/"+data.id);
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
