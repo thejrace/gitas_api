@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\AppModule;
+use App\AppModuleUser;
 use App\Http\Requests\PermissionFormStoreRequest;
 use App\Http\Requests\PermissionFormUpdateRequest;
 use App\Http\Resources\PermissionResource;
@@ -77,8 +78,13 @@ class PermissionController extends Controller
     public function destroy(Permission $model)
     {
         $users = User::permission($model)->get();
+        $appModuleUsers = AppModuleUser::permission($model)->get();
         /** @var User $user */
         foreach( $users as $user ){
+            $user->revokePermissionTo($model);
+        }
+        /** @var AppModuleUser $user */
+        foreach( $appModuleUsers as $user ){
             $user->revokePermissionTo($model);
         }
         $model->delete();
