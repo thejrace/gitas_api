@@ -40,10 +40,13 @@ class AppModuleUser extends Authenticatable
     protected $guard = 'app_module_user';
     protected $guarded = [];
     protected $hidden = [
-        'password'
+        'password',
+        'api_token',
+
     ];
 
     public $timestamps = false;
+
     public function AppModule(){
         return $this->belongsTo(AppModule::class);
     }

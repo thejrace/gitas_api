@@ -2666,7 +2666,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return window.axios.get('/api/app_module_users/' + this.dataId);
+                return window.axios.get('/api/app_module_users/' + this.parentId + '/' + this.dataId);
 
               case 2:
                 response = _context3.sent;

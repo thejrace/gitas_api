@@ -28,6 +28,15 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::resource('users',                                        UserController::class );
     Route::resource('buses',                                        BusController::class );
     Route::resource('app_modules',                                  AppModuleController::class );
+    //Route::resource('app_module_users',                             AppModuleUserController::class );
+
+    Route::prefix('app_module_users')->group(function(){
+        Route::get('{app_module}',                                      [AppModuleUserController::class, 'index']);
+        Route::get('{app_module}/{app_module_user}',                    [AppModuleUserController::class, 'show']);
+        Route::post('/',                                                [AppModuleUserController::class, 'store']);
+        Route::put('{app_module_user}',                                 [AppModuleUserController::class, 'update']);
+        Route::delete('{app_module_user}',                              [AppModuleUserController::class, 'destroy']);
+    });
     Route::resource('app_module_users',                             AppModuleUserController::class );
     Route::resource('permissions',                                  PermissionController::class );
     Route::resource('permission_types',                             PermissionTypeController::class );
@@ -54,6 +63,7 @@ Route::prefix('permission_check')->group(function(){
 Route::middleware(['auth:app_module'])->group(function(){
 
         Route::get('permission_check/{app_module_user}/{permission}',                                       [ AppModuleUserPermissionController::class, "hasPermission" ] );
+        Route::get('app_module_users/{app_module}', [AppModuleUserController::class, 'index'] );
 
 });
 

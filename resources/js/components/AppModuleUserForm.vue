@@ -71,7 +71,7 @@
                 this.actionStatusCallback(response.data.data);
             },
             async fetch() {
-                const response = await window.axios.get('/api/app_module_users/'+this.dataId);
+                const response = await window.axios.get('/api/app_module_users/'+this.parentId + '/' + this.dataId);
                 this.form.fill(response.data.data);
             },
             actionStatusCallback( response ){
