@@ -7,6 +7,7 @@ use App\AppModuleUser;
 use App\Http\Requests\AppModuleUserFormStoreRequest;
 use App\Http\Requests\AppModuleUserFormUpdateRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AppModuleUserFullDataResource;
 use App\Http\Resources\AppModuleUserResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -56,6 +57,18 @@ class AppModuleUserController extends Controller
     public function show(AppModule $appModule, AppModuleUser $model)
     {
         return new AppModuleUserResource($model);
+    }
+
+    /**
+     * Display all related data of specified model
+     *
+     * @param AppModuleUser $model
+     *
+     * @return AppModuleUserFullDataResource
+     */
+    public function fetchData(AppModuleUser $model)
+    {
+        return new AppModuleUserFullDataResource($model);
     }
 
     /**

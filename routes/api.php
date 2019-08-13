@@ -64,6 +64,7 @@ Route::middleware(['auth:app_module'])->group(function(){
 
         Route::get('permission_check/{app_module_user}/{permission}',                                       [ AppModuleUserPermissionController::class, "hasPermission" ] );
         Route::get('app_module_users/{app_module}', [AppModuleUserController::class, 'index'] );
+        Route::get('app_module_user_data/{app_module_user}', [AppModuleUserController::class, 'fetchData'] );
 
 });
 
