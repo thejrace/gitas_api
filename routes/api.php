@@ -66,6 +66,8 @@ Route::middleware(['auth:app_module'])->group(function(){
         Route::get('app_module_users/{app_module}', [AppModuleUserController::class, 'index'] );
         Route::get('app_module_user_data/{app_module_user}', [AppModuleUserController::class, 'fetchData'] );
 
+        Route::post('app_module_user_login', [AppModuleUserController::class, 'login']);
+
 });
 
 Route::post('login',                                                            [ LoginController::class, 'authenticate'] ); // retrieve api token
