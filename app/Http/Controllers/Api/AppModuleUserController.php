@@ -7,8 +7,10 @@ use App\AppModuleUser;
 use App\Http\Requests\AppModuleUserFormStoreRequest;
 use App\Http\Requests\AppModuleUserFormUpdateRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppModuleUserLoginFormRequest;
 use App\Http\Resources\AppModuleUserFullDataResource;
 use App\Http\Resources\AppModuleUserResource;
+use App\Http\Resources\FailJSONResponseResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +59,28 @@ class AppModuleUserController extends Controller
     public function show(AppModule $appModule, AppModuleUser $model)
     {
         return new AppModuleUserResource($model);
+    }
+
+    /**
+     * Login app module user
+     *
+     * @param AppModuleUserLoginFormRequest $request,
+     *
+     * @return FailJSONResponseResource|SuccessJSONResponseResource
+     */
+    public function login(AppModuleUserLoginFormRequest $request)
+    {
+        /** @var AppModuleUser $user */
+        $user = DB::table('app_module_users')
+            ->where('email', $request->input('email'))->first();
+
+        if( !$user ) return new FailJSONResponseResource(null);
+
+        if( Hash::check($request->input('password'), $user->password) ){
+            return new SuccessJSONResponseResource(null);
+        } else {
+            return new FailJSONResponseResource(null);
+        }
     }
 
     /**
