@@ -42,7 +42,6 @@ class AppModuleUser extends Authenticatable
     protected $hidden = [
         'password',
         'api_token',
-
     ];
 
     public $timestamps = false;
