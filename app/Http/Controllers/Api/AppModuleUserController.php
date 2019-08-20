@@ -91,11 +91,11 @@ class AppModuleUserController extends Controller
      *
      * @return FailJSONResponseResource|SuccessJSONResponseResource|array
      */
-    public function validate(AppModuleUserValidateFormRequest $request)
+    public function validateToken(AppModuleUserValidateFormRequest $request)
     {
         /** @var AppModuleUser $user */
         $user = DB::table('app_module_users')
-            ->where('api_token', $request->input('api_token'))->first();
+            ->where('api_token', $request->input('user_api_token'))->first();
 
         if( !$user ) return new FailJSONResponseResource(null);
 
