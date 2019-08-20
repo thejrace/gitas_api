@@ -12,6 +12,16 @@ use App\Http\Resources\SuccessJSONResponseResource;
 class BusController extends Controller
 {
     /**
+     * Get all resources
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function index()
+    {
+        return BusResource::collection(Bus::all());
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param Bus $model
