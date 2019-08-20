@@ -37,7 +37,7 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
         Route::put('{app_module_user}',                                 [AppModuleUserController::class, 'update']);
         Route::delete('{app_module_user}',                              [AppModuleUserController::class, 'destroy']);
     });
-    Route::resource('app_module_users',                             AppModuleUserController::class );
+
     Route::resource('permissions',                                  PermissionController::class );
     Route::resource('permission_types',                             PermissionTypeController::class );
 
@@ -62,12 +62,17 @@ Route::prefix('permission_check')->group(function(){
 
 Route::middleware(['auth:app_module'])->group(function(){
 
-        Route::get('permission_check/{app_module_user}/{permission}',                                       [ AppModuleUserPermissionController::class, "hasPermission" ] );
-        Route::get('app_module_users/{app_module}', [AppModuleUserController::class, 'index'] );
-        Route::get('app_module_user_data/{app_module_user}', [AppModuleUserController::class, 'fetchData'] );
+    Route::prefix('app_module_pipeline')->group(function(){
 
         Route::post('app_module_user_login', [AppModuleUserController::class, 'login']);
         Route::post('app_module_user_validate', [AppModuleUserController::class, 'validateToken']);
+
+        Route::get('app_module_users/{app_module}', [AppModuleUserController::class, 'index'] );
+        Route::get('app_module_user_data/{app_module_user}', [AppModuleUserController::class, 'fetchData'] );
+
+        Route::get('permission_check/{app_module_user}/{permission}',                                       [ AppModuleUserPermissionController::class, "hasPermission" ] );
+
+    });
 
 });
 
