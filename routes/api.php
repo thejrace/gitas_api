@@ -67,6 +67,7 @@ Route::middleware(['auth:app_module'])->group(function(){
         Route::get('app_module_user_data/{app_module_user}', [AppModuleUserController::class, 'fetchData'] );
 
         Route::post('app_module_user_login', [AppModuleUserController::class, 'login']);
+        Route::post('app_module_user_validate', [AppModuleUserController::class, 'validate']);
 
 });
 

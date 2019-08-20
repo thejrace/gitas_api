@@ -8,6 +8,7 @@ use App\Http\Requests\AppModuleUserFormStoreRequest;
 use App\Http\Requests\AppModuleUserFormUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppModuleUserLoginFormRequest;
+use App\Http\Requests\AppModuleUserValidateFormRequest;
 use App\Http\Resources\AppModuleUserFullDataResource;
 use App\Http\Resources\AppModuleUserResource;
 use App\Http\Resources\FailJSONResponseResource;
@@ -81,6 +82,24 @@ class AppModuleUserController extends Controller
         } else {
             return new FailJSONResponseResource(null);
         }
+    }
+
+    /**
+     * Validates api token of app module user
+     *
+     * @param AppModuleUserValidateFormRequest $request
+     *
+     * @return FailJSONResponseResource|SuccessJSONResponseResource|array
+     */
+    public function validate(AppModuleUserValidateFormRequest $request)
+    {
+        /** @var AppModuleUser $user */
+        $user = DB::table('app_module_users')
+            ->where('api_token', $request->input('api_token'))->first();
+
+        if( !$user ) return new FailJSONResponseResource(null);
+
+        return new SuccessJSONResponseResource(null);
     }
 
     /**
