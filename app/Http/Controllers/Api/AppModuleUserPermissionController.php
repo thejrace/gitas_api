@@ -21,7 +21,7 @@ class AppModuleUserPermissionController extends Controller
      */
     public function getPermissions(AppModuleUser $user)
     {
-        return PermissionResource::collection($user->permissions());
+        return PermissionResource::collection($user->permissions);
     }
 
     /**
