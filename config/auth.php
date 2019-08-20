@@ -46,6 +46,18 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'app_module' => [
+            'driver' => 'token',
+            'provider' => 'app_modules',
+            'hash' => false,
+        ],
+
+        'app_module_user' => [
+            'driver' => 'token',
+            'provider' => 'app_module_users',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -69,6 +81,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'app_modules' => [
+            'driver' => 'eloquent',
+            'model' => App\AppModule::class
+        ],
+
+        'app_module_users' => [
+            'driver' => 'eloquent',
+            'model' => App\AppModuleUser::class,
         ],
 
         // 'users' => [

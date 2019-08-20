@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\Permission\Models\Permission;
+
+/**
+ * @property Permission $resource
+ */
+class PermissionResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        /** @var Permission $model */
+        $model = $this->resource;
+
+        return[
+            'id' => $model->id,
+            'name' => $model->name,
+            'description' => $model->description,
+        ];
+    }
+}

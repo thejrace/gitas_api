@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BusFormUpdateRequest extends FormRequest
 {
@@ -23,10 +24,11 @@ class BusFormUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $ignoreID = $this->route('bus')->id;
         return [
-            'active_plate'              => 'min:5|max:20',
-            'official_plate'            => 'min:5|max:20',
-            'define_to_user_default'    => 'numeric'
+            'code'                      => [ 'required', Rule::unique('buses')->ignore($ignoreID) ],
+            'active_plate'              => [ 'required', Rule::unique('buses')->ignore($ignoreID) ],
+            'official_plate'            => [ 'required', Rule::unique('buses')->ignore($ignoreID) ]
         ];
     }
 }

@@ -4,46 +4,93 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UserFormStoreRequest;
 use App\Http\Requests\UserFormUpdateRequest;
+use App\Http\Resources\SuccessJSONResponseResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResourceAllData;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
+    /**
+     * Get all Users
+     *
+     * @return AnonymousResourceCollection
+     */
     public function index()
     {
         return UserResourceAllData::collection(User::all());
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param User $model
+     *
+     * @return UserResource
+     */
+    public function show(User $model)
+    {
+        return new UserResource($model);
+    }
+
+    /**
+     * Store a newly created model in storage.
+     *
+     * @param UserFormStoreRequest $request
+     *
+     * @return SuccessJSONResponseResource
+     */
     public function store(UserFormStoreRequest $request)
     {
-        $request->request->set('api_token', Str::random(60));
-        $request->request->set('password', Hash::make($request->get('password')));
-        $user = User::create($request->all());
-        return new UserResource($user);
+        $attributes = $request->all();
+        $attributes['api_token']    = Str::random(60);
+        $attributes['password']     = Hash::make($request->get('password'));
+        User::create($attributes);
+        return new SuccessJSONResponseResource(null);
     }
 
-    public function show($id)
+    /**
+     * Update the specified location in storage.
+     *
+     * @param UserFormUpdateRequest  $request
+     * @param User                   $model
+     *
+     * @return SuccessJSONResponseResource
+     */
+    public function update(UserFormUpdateRequest $request, User $model)
     {
-        $user = User::findOrFail($id);
-        return new UserResource($user);
+        $attributes = $request->all();
+        if( $request->filled('password') ){
+            $attributes['password'] = Hash::make($request->get('password'));
+        }
+        $model->update($attributes);
+        return new SuccessJSONResponseResource(null);
     }
 
-    public function update(UserFormUpdateRequest $request, $id)
+    /**
+     * Remove app user
+     *
+     * @param User $model
+     *
+     * @return SuccessJSONResponseResource
+     *
+     * @throws \Exception|\Throwable
+     */
+    public function destroy(User $model)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-        return new UserResource($user);
+        DB::transaction(function() use ($model) {
+            /** @var Permission $permission */
+            foreach( $model->getAllPermissions() as $permission ){
+                $model->revokePermissionTo($permission);
+            }
+            $model->delete();
+        });
+        return new SuccessJSONResponseResource(null);
     }
-
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-    }
-
 }

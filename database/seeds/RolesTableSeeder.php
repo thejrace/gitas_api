@@ -12,10 +12,9 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $moduleBot = Role::create(['name' => 'module_bot', 'guard_name' => 'api']);
-        $adminRole = Role::create(['name' => 'admin',  'guard_name' => 'api']);
-        $standartUserRole = Role::create(['name' => 'std_user',  'guard_name' => 'api']);
-
-
+        Role::create(['name' => 'app_module', 'guard_name' => 'app_module']);
+        Role::create(['name' => 'app_module_user', 'guard_name' => 'app_module_user']);
+        Role::create(['name' => 'admin',  'guard_name' => 'api']);
+        Role::create(['name' => 'admin',  'guard_name' => 'web']);
     }
 }

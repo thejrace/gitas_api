@@ -24,10 +24,11 @@ class UserFormUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $ignoreID = $this->get('id');
+        $ignoreID = $this->route('user')->id;
         return [
-            'name'                  => 'filled|min:20',
-            'email'                 => [ 'filled',  Rule::unique('users')->ignore($ignoreID) ],
+            'name'                  => 'filled|min:3',
+            'email'                 => [ 'filled', 'email', Rule::unique('users')->ignore($ignoreID) ],
+            'password'              => 'nullable',
             'date_of_birth'         => 'date_format:Y-m-d'
         ];
     }
