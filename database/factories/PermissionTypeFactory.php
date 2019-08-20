@@ -2,11 +2,12 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Model;
+use App\PermissionType;
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(PermissionType::class, function (Faker $faker) {
     return [
-        //
+        'name' => $faker->colorName,
+        'description' => $faker->text(100),
     ];
 });
