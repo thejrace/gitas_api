@@ -72,7 +72,7 @@ class AppModuleUserTest extends ApiTestCase
         /** @var AppModuleUser $model */
         $model = factory(AppModuleUser::class)->make();
 
-        $attributes = $model->toArray();
+        $attributes             = $model->toArray();
         $attributes['password'] = 'xxx';
 
         $this->postJson($this->url(), $attributes)
@@ -80,8 +80,8 @@ class AppModuleUserTest extends ApiTestCase
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 
         $this->assertDatabaseHas('app_module_users', [
-            'name' => $model->name,
-            'email' => $model->email,
+            'name'          => $model->name,
+            'email'         => $model->email,
             'app_module_id' => $model->app_module_id,
         ]);
     }
@@ -102,10 +102,10 @@ class AppModuleUserTest extends ApiTestCase
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 
         $this->assertDatabaseHas('app_module_users', [
-            'id' => $model->id,
-            'name' => $modelData->name,
+            'id'            => $model->id,
+            'name'          => $modelData->name,
             'app_module_id' => $modelData->app_module_id,
-            'email' => $modelData->email,
+            'email'         => $modelData->email,
         ]);
     }
 
@@ -117,7 +117,7 @@ class AppModuleUserTest extends ApiTestCase
         /** @var AppModuleUser $model */
         $model = factory(AppModuleUser::class)->create();
 
-        $this->delete($this->url() . $model->id )
+        $this->delete($this->url() . $model->id)
             ->assertSuccessful()
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 

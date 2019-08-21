@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -20,6 +19,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AppModuleUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AppModuleUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AppModuleUser permission($permissions)
@@ -38,7 +38,9 @@ class AppModuleUser extends Authenticatable
     use Notifiable, HasRoles;
 
     protected $guard = 'app_module_user';
+
     protected $guarded = [];
+
     protected $hidden = [
         'password',
         'api_token',
@@ -46,7 +48,8 @@ class AppModuleUser extends Authenticatable
 
     public $timestamps = false;
 
-    public function AppModule(){
+    public function AppModule()
+    {
         return $this->belongsTo(AppModule::class);
     }
 }

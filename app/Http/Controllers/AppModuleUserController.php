@@ -12,20 +12,24 @@ class AppModuleUserController extends Controller
     /**
      * Generate datatables data for the frontend
      *
-     * @param Request $req
+     * @param Request   $req
      * @param AppModule $appModule
      *
      * @return AnonymousResourceCollection
      */
-    public function dataTables(Request $req, AppModule $appModule){
+    public function dataTables(Request $req, AppModule $appModule)
+    {
         $query = $appModule->users();
-        if( $req->filled('sort') ){
+        if ($req->filled('sort')) {
             $exp = explode('|', $req->get('sort'));
-            if( count($exp) > 1 ) $query->orderBy($exp[0], $exp[1]);
+            if (count($exp) > 1) {
+                $query->orderBy($exp[0], $exp[1]);
+            }
         }
-        if( $req->filled('filter')) {
-            $query->where('name', 'LIKE', '%'.$req->get('filter').'%');
+        if ($req->filled('filter')) {
+            $query->where('name', 'LIKE', '%' . $req->get('filter') . '%');
         }
+
         return AppModuleUserResource::collection($query->paginate(20));
     }
 
@@ -34,7 +38,8 @@ class AppModuleUserController extends Controller
      *
      * @return \View
      */
-    public function index(){
+    public function index()
+    {
         return view('app_module_users');
     }
 }

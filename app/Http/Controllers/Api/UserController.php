@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserFormStoreRequest;
 use App\Http\Requests\UserFormUpdateRequest;
 use App\Http\Resources\SuccessJSONResponseResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResourceAllData;
 use App\User;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -48,28 +48,30 @@ class UserController extends Controller
      */
     public function store(UserFormStoreRequest $request)
     {
-        $attributes = $request->all();
-        $attributes['api_token']    = Str::random(60);
-        $attributes['password']     = Hash::make($request->get('password'));
+        $attributes              = $request->all();
+        $attributes['api_token'] = Str::random(60);
+        $attributes['password']  = Hash::make($request->get('password'));
         User::create($attributes);
+
         return new SuccessJSONResponseResource(null);
     }
 
     /**
      * Update the specified location in storage.
      *
-     * @param UserFormUpdateRequest  $request
-     * @param User                   $model
+     * @param UserFormUpdateRequest $request
+     * @param User                  $model
      *
      * @return SuccessJSONResponseResource
      */
     public function update(UserFormUpdateRequest $request, User $model)
     {
         $attributes = $request->all();
-        if( $request->filled('password') ){
+        if ($request->filled('password')) {
             $attributes['password'] = Hash::make($request->get('password'));
         }
         $model->update($attributes);
+
         return new SuccessJSONResponseResource(null);
     }
 
@@ -86,11 +88,12 @@ class UserController extends Controller
     {
         DB::transaction(function() use ($model) {
             /** @var Permission $permission */
-            foreach( $model->getAllPermissions() as $permission ){
+            foreach ($model->getAllPermissions() as $permission) {
                 $model->revokePermissionTo($permission);
             }
             $model->delete();
         });
+
         return new SuccessJSONResponseResource(null);
     }
 }

@@ -93,10 +93,10 @@ class BusTest extends ApiTestCase
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 
         $this->assertDatabaseHas('buses', [
-            'id' => $model->id,
-            'active_plate' => $modelData->active_plate,
+            'id'             => $model->id,
+            'active_plate'   => $modelData->active_plate,
             'official_plate' => $modelData->official_plate,
-            'code' => $modelData->code,
+            'code'           => $modelData->code,
         ]);
     }
 
@@ -108,7 +108,7 @@ class BusTest extends ApiTestCase
         /** @var Bus $model */
         $model = factory(Bus::class)->create();
 
-        $this->delete($this->url() . $model->id )
+        $this->delete($this->url() . $model->id)
             ->assertSuccessful()
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 

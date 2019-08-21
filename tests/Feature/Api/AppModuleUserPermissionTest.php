@@ -46,20 +46,20 @@ class AppModuleUserPermissionTest extends ApiTestCase
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create([
-            'type' => 1, // app module user type
+            'type'       => 1, // app module user type
             'guard_name' => 'app_module_user',
         ]);
 
         /** @var AppModuleUser $moduleUser */
         $moduleUser = factory(AppModuleUser::class)->create();
 
-        $this->postJson($this->url() . $moduleUser->id . '/' . $permission->id )
+        $this->postJson($this->url() . $moduleUser->id . '/' . $permission->id)
             ->assertSuccessful()
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 
         $this->assertDatabaseHas('model_has_permissions', [
             'permission_id' => $permission->id,
-            'model_id' => $moduleUser->id,
+            'model_id'      => $moduleUser->id,
         ]);
     }
 
@@ -70,20 +70,20 @@ class AppModuleUserPermissionTest extends ApiTestCase
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create([
-            'type' => 1, // app module user type
+            'type'       => 1, // app module user type
             'guard_name' => 'app_module_user',
         ]);
 
         /** @var AppModuleUser $moduleUser */
         $moduleUser = factory(AppModuleUser::class)->create();
 
-        $this->deleteJson($this->url() . $moduleUser->id . '/' . $permission->id )
+        $this->deleteJson($this->url() . $moduleUser->id . '/' . $permission->id)
             ->assertSuccessful()
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 
         $this->assertDatabaseMissing('model_has_permissions', [
             'permission_id' => $permission->id,
-            'model_id' => $moduleUser->id,
+            'model_id'      => $moduleUser->id,
         ]);
     }
 
@@ -94,7 +94,7 @@ class AppModuleUserPermissionTest extends ApiTestCase
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create([
-            'type' => 1, // app module user type
+            'type'       => 1, // app module user type
             'guard_name' => 'app_module_user',
         ]);
 
@@ -103,7 +103,7 @@ class AppModuleUserPermissionTest extends ApiTestCase
 
         $moduleUser->givePermissionTo($permission);
 
-        $this->getJson($this->url() . $moduleUser->id . '/' . $permission->id )
+        $this->getJson($this->url() . $moduleUser->id . '/' . $permission->id)
             ->assertSuccessful()
             ->assertJsonFragment([
                 'hasPermission' => true,
@@ -117,7 +117,7 @@ class AppModuleUserPermissionTest extends ApiTestCase
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create([
-            'type' => 1, // app module user type
+            'type'       => 1, // app module user type
             'guard_name' => 'app_module_user',
         ]);
 
@@ -130,5 +130,4 @@ class AppModuleUserPermissionTest extends ApiTestCase
             ->assertSuccessful()
             ->assertJsonFragment((PermissionResource::collection($moduleUser->permissions))->jsonSerialize());
     }
-
 }

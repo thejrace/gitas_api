@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Bus;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BusResource;
 use App\Http\Requests\BusFormStoreRequest;
 use App\Http\Requests\BusFormUpdateRequest;
+use App\Http\Resources\BusResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 
 class BusController extends Controller
@@ -42,21 +42,23 @@ class BusController extends Controller
      */
     public function store(BusFormStoreRequest $request)
     {
-        Bus::create( $request->all() );
+        Bus::create($request->all());
+
         return new SuccessJSONResponseResource(null);
     }
 
     /**
      * Update the specified location in storage.
      *
-     * @param BusFormUpdateRequest  $request
-     * @param Bus                   $model
+     * @param BusFormUpdateRequest $request
+     * @param Bus                  $model
      *
      * @return SuccessJSONResponseResource
      */
     public function update(BusFormUpdateRequest $request, Bus $model)
     {
         $model->update($request->all());
+
         return new SuccessJSONResponseResource(null);
     }
 
@@ -72,6 +74,7 @@ class BusController extends Controller
     public function destroy(Bus $model)
     {
         $model->delete();
+
         return new SuccessJSONResponseResource(null);
     }
 }

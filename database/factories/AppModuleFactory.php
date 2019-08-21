@@ -5,11 +5,11 @@
 use App\AppModule;
 use Faker\Generator as Faker;
 
-$factory->define(AppModule::class, function (Faker $faker) {
+$factory->define(AppModule::class, function(Faker $faker) {
     return [
-        'name' => $faker->colorName,
+        'name'              => $faker->colorName,
         'permission_prefix' => strtolower($faker->firstName),
-        'description' => $faker->colorName,
-        'api_token' => \Illuminate\Support\Str::random(60),
+        'description'       => $faker->colorName,
+        'api_token'         => \Illuminate\Support\Str::random(60),
     ];
 });

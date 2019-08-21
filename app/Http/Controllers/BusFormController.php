@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bus;
+
 class BusFormController extends Controller
 {
     /**
@@ -25,8 +26,8 @@ class BusFormController extends Controller
     public function edit(Bus $bus)
     {
         return view('bus_form')->with([
-            'updateFlag'    => true,
-            'dataId'        => $bus->id
+            'updateFlag' => true,
+            'dataId'     => $bus->id,
         ]);
     }
 }

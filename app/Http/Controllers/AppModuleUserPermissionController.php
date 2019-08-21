@@ -19,16 +19,17 @@ class AppModuleUserPermissionController extends Controller
      *
      * @throws \Exception|\Throwable
      */
-    public function dataTablesNotDefined(AppModuleUser $user){
-        $query = Permission::query();
-        $userPerms = $user->getAllPermissions();
+    public function dataTablesNotDefined(AppModuleUser $user)
+    {
+        $query         = Permission::query();
+        $userPerms     = $user->getAllPermissions();
         $excludedArray = [];
         /** @var Permission $perm */
-        foreach( $userPerms as $perm ){
+        foreach ($userPerms as $perm) {
             $excludedArray[] = $perm->id;
         }
         $query->whereNotIn('id', $excludedArray);
-        $query->where('name', 'LIKE', '%'.$user->AppModule->permission_prefix.'%');
+        $query->where('name', 'LIKE', '%' . $user->AppModule->permission_prefix . '%');
         $query->whereIn('type', [2]); // @todo enum mu yapcan napcan yap amk
         return PermissionResource::collection($query->paginate(20));
     }
@@ -43,7 +44,8 @@ class AppModuleUserPermissionController extends Controller
      *
      * @throws \Exception|\Throwable
      */
-    public function dataTablesDefined(AppModuleUser $user){
+    public function dataTablesDefined(AppModuleUser $user)
+    {
         return PermissionResource::collection($user->permissions()->paginate(20));
     }
 
@@ -52,7 +54,8 @@ class AppModuleUserPermissionController extends Controller
      *
      * @return \View
      */
-    public function index(){
+    public function index()
+    {
         return view('app_module_user_permissions');
     }
 }

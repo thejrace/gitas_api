@@ -7,8 +7,8 @@ use App\AppModuleUser;
 use App\Bus;
 use App\PermissionType;
 use App\User;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
 
 class RouteServiceProvider extends ServiceProvider
@@ -24,26 +24,21 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
      */
     public function boot()
     {
         //
         parent::boot();
-        Route::model('bus',                             Bus::class);
-        Route::model('user',                            User::class);
-        Route::model('app_module',                      AppModule::class);
-        Route::model('permission',                      Permission::class);
-        Route::model('permission_type',                 PermissionType::class);
-        Route::model('app_module_user',                 AppModuleUser::class);
-
+        Route::model('bus', Bus::class);
+        Route::model('user', User::class);
+        Route::model('app_module', AppModule::class);
+        Route::model('permission', Permission::class);
+        Route::model('permission_type', PermissionType::class);
+        Route::model('app_module_user', AppModuleUser::class);
     }
 
     /**
      * Define the routes for the application.
-     *
-     * @return void
      */
     public function map()
     {
@@ -58,28 +53,24 @@ class RouteServiceProvider extends ServiceProvider
      * Define the "web" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
      */
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
-     *
-     * @return void
      */
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
+            ->middleware('api')
              //->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->group(base_path('routes/api.php'));
     }
 }

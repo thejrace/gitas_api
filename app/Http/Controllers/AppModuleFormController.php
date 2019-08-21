@@ -23,11 +23,11 @@ class AppModuleFormController extends Controller
      *
      * @return \View
      */
-    public function edit( AppModule $appModule )
+    public function edit(AppModule $appModule)
     {
         return view('app_module_form')->with([
-            'updateFlag'    => true,
-            'dataId'        => $appModule->id
+            'updateFlag' => true,
+            'dataId'     => $appModule->id,
         ]);
     }
 }

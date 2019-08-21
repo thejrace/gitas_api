@@ -14,24 +14,26 @@ class AppModulePermissionFormController extends Controller
      *
      * @return \View
      */
-    public function create(AppModule $appModule){
+    public function create(AppModule $appModule)
+    {
         return view('permission_form')->with([
-            'appModule' => $appModule
+            'appModule' => $appModule,
         ]);
     }
 
     /**
      * Show update form
      *
-     * @param AppModule $appModule
+     * @param AppModule  $appModule
      * @param Permission $permission
      *
      * @return \View
      */
-    public function edit(AppModule $appModule, Permission $permission){
+    public function edit(AppModule $appModule, Permission $permission)
+    {
         return view('permission_form')->with([
             'appModule' => $appModule,
-            'dataId'    => $permission->id
+            'dataId'    => $permission->id,
         ]);
     }
 }

@@ -25,9 +25,10 @@ class AppModuleFormUpdateRequest extends FormRequest
     public function rules()
     {
         $ignoreID = $this->route('app_module')->id;
+
         return [
-            'name' => [ 'required', Rule::unique('app_modules')->ignore($ignoreID) ],
-            'permission_prefix' => [ 'required', Rule::unique('app_modules')->ignore($ignoreID) ]
+            'name'              => ['required', Rule::unique('app_modules')->ignore($ignoreID)],
+            'permission_prefix' => ['required', Rule::unique('app_modules')->ignore($ignoreID)],
         ];
     }
 }

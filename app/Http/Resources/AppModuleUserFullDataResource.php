@@ -10,7 +10,8 @@ class AppModuleUserFullDataResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function toArray($request)
@@ -19,11 +20,11 @@ class AppModuleUserFullDataResource extends JsonResource
         $model = $this->resource;
 
         return [
-            'id'            => $model->id,
-            'name'          => $model->name,
-            'email'         => $model->email,
-            'api_token'     => $model->api_token,
-            'permissions'   => PermissionResource::collection($model->getAllPermissions()),
+            'id'          => $model->id,
+            'name'        => $model->name,
+            'email'       => $model->email,
+            'api_token'   => $model->api_token,
+            'permissions' => PermissionResource::collection($model->getAllPermissions()),
         ];
     }
 }

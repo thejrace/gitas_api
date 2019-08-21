@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTableAppModuleUsers extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('app_module_users', function (Blueprint $table) {
+        Schema::create('app_module_users', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('app_module_id');
             $table->string('name');
@@ -26,8 +24,6 @@ class CreateTableAppModuleUsers extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

@@ -24,10 +24,10 @@ class AppModuleUserFormStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'app_module_id'         => 'required',
-            'name'                  => 'required|min:3',
-            'email'                 => 'required|email|unique:app_module_users',
-            'password'              => 'required'
+            'app_module_id' => 'required',
+            'name'          => 'required|min:3',
+            'email'         => 'required|email|unique:app_module_users',
+            'password'      => 'required',
         ];
     }
 }

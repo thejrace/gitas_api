@@ -21,7 +21,7 @@ class PermissionFormController extends Controller
      * Show update form
      *
      * @param PermissionType $permissionType
-     * @param Permission $permission
+     * @param Permission     $permission
      *
      * @return \View
      */
@@ -29,7 +29,7 @@ class PermissionFormController extends Controller
     {
         return view('permission_form')->with([
             'updateFlag' => true,
-            'dataId'     => $permission->id
+            'dataId'     => $permission->id,
         ]);
     }
 }

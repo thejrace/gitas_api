@@ -24,7 +24,7 @@ class AppModuleUserValidateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_api_token' => 'required'
+            'user_api_token' => 'required',
         ];
     }
 }

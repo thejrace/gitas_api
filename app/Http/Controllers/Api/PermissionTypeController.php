@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionTypeFormStoreRequest;
 use App\Http\Requests\PermissionTypeFormUpdateRequest;
 use App\Http\Resources\PermissionTypeResource;
 use App\Http\Resources\SuccessJSONResponseResource;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\PermissionType;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PermissionTypeController extends Controller
 {
@@ -17,7 +17,8 @@ class PermissionTypeController extends Controller
      *
      * @return AnonymousResourceCollection
      */
-    public function index(){
+    public function index()
+    {
         return PermissionTypeResource::collection(PermissionType::all());
     }
 
@@ -28,7 +29,8 @@ class PermissionTypeController extends Controller
      *
      * @return PermissionTypeResource
      */
-    public function show(PermissionType $model){
+    public function show(PermissionType $model)
+    {
         return new PermissionTypeResource($model);
     }
 
@@ -39,21 +41,25 @@ class PermissionTypeController extends Controller
      *
      * @return SuccessJSONResponseResource
      */
-    public function store(PermissionTypeFormStoreRequest $request){
+    public function store(PermissionTypeFormStoreRequest $request)
+    {
         PermissionType::create($request->all());
+
         return new SuccessJSONResponseResource(null);
     }
 
     /**
      * Update the specified location in storage.
      *
-     * @param PermissionTypeFormUpdateRequest  $request
-     * @param PermissionType                   $model
+     * @param PermissionTypeFormUpdateRequest $request
+     * @param PermissionType                  $model
      *
      * @return SuccessJSONResponseResource
      */
-    public function update(PermissionTypeFormUpdateRequest $request, PermissionType $model){
+    public function update(PermissionTypeFormUpdateRequest $request, PermissionType $model)
+    {
         $model->update($request->all());
+
         return new SuccessJSONResponseResource(null);
     }
 
@@ -66,7 +72,8 @@ class PermissionTypeController extends Controller
      *
      * @throws \Exception|\Throwable
      */
-    public function destroy(PermissionType $model){
+    public function destroy(PermissionType $model)
+    {
         // $model->delete();
         // @todo implement
         // find sub permissions

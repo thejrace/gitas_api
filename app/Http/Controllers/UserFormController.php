@@ -26,8 +26,8 @@ class UserFormController extends Controller
     public function edit(User $user)
     {
         return view('user_form')->with([
-            'updateFlag'    => true,
-            'dataId'        => $user->id
+            'updateFlag' => true,
+            'dataId'     => $user->id,
         ]);
     }
 }

@@ -5,9 +5,9 @@
 use App\PermissionType;
 use Faker\Generator as Faker;
 
-$factory->define(PermissionType::class, function (Faker $faker) {
+$factory->define(PermissionType::class, function(Faker $faker) {
     return [
-        'name' => $faker->colorName,
+        'name'        => $faker->colorName,
         'description' => $faker->text(100),
     ];
 });

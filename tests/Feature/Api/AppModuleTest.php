@@ -94,9 +94,9 @@ class AppModuleTest extends ApiTestCase
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 
         $this->assertDatabaseHas('app_modules', [
-            'id' => $model->id,
-            'name' => $modelData->name,
-            'description' => $modelData->description,
+            'id'                => $model->id,
+            'name'              => $modelData->name,
+            'description'       => $modelData->description,
             'permission_prefix' => $modelData->permission_prefix,
         ]);
     }
@@ -113,7 +113,7 @@ class AppModuleTest extends ApiTestCase
             'app_module_id' => $model->id,
         ]);
 
-        $this->delete($this->url() . $model->id )
+        $this->delete($this->url() . $model->id)
             ->assertSuccessful()
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 

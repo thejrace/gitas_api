@@ -24,8 +24,8 @@ class UserPermissionFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required',
-            'permission_id' => 'required'
+            'user_id'       => 'required',
+            'permission_id' => 'required',
         ];
     }
 }

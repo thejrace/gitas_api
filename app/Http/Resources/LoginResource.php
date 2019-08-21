@@ -13,13 +13,14 @@ class LoginResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function toArray($request)
     {
         return [
-            'api_token' => $this->resource->api_token
+            'api_token' => $this->resource->api_token,
         ];
     }
 }
