@@ -19,11 +19,12 @@ class UserPermissionController extends Controller
      *
      * @throws \Exception|\Throwable
      */
-    public function dataTablesNotDefined(User $user){
-        $query = Permission::query();
-        $userPerms = $user->getAllPermissions();
+    public function dataTablesNotDefined(User $user)
+    {
+        $query         = Permission::query();
+        $userPerms     = $user->getAllPermissions();
         $excludedArray = [];
-        foreach( $userPerms as $perm ){
+        foreach ($userPerms as $perm) {
             $excludedArray[] = $perm->id;
         }
         $query->whereNotIn('id', $excludedArray);
@@ -41,7 +42,8 @@ class UserPermissionController extends Controller
      *
      * @throws \Exception|\Throwable
      */
-    public function dataTablesDefined(User $user){
+    public function dataTablesDefined(User $user)
+    {
         return PermissionResource::collection($user->permissions()->paginate(20));
     }
 
@@ -50,7 +52,8 @@ class UserPermissionController extends Controller
      *
      * @return \View
      */
-    public function index(){
+    public function index()
+    {
         return view('user_permissions');
     }
 }

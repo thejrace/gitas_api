@@ -25,8 +25,9 @@ class PermissionFormUpdateRequest extends FormRequest
     public function rules()
     {
         $ignoreID = $this->route('permission')->id;
+
         return [
-            'name' => [ 'required', Rule::unique('permissions')->ignore($ignoreID) ]
+            'name' => ['required', Rule::unique('permissions')->ignore($ignoreID)],
         ];
     }
 }

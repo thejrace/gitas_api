@@ -25,7 +25,7 @@ class AppModuleFormStoreRequest extends FormRequest
     {
         return [
             'name'              => 'required|unique:app_modules',
-            'permission_prefix' => 'required|unique:app_modules'
+            'permission_prefix' => 'required|unique:app_modules',
         ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use App\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
 
 class UserPermissionController extends Controller
@@ -26,7 +26,7 @@ class UserPermissionController extends Controller
     /**
      * Give specific permission to user.
      *
-     * @param User $user
+     * @param User       $user
      * @param Permission $permission
      *
      * @return SuccessJSONResponseResource
@@ -34,13 +34,14 @@ class UserPermissionController extends Controller
     public function givePermission(User $user, Permission $permission)
     {
         $user->givePermissionTo($permission);
+
         return new SuccessJSONResponseResource(null);
     }
 
     /**
      * Revoke specific permission from app module user.
      *
-     * @param User $user
+     * @param User       $user
      * @param Permission $permission
      *
      * @return SuccessJSONResponseResource
@@ -48,6 +49,7 @@ class UserPermissionController extends Controller
     public function revokePermission(User $user, Permission $permission)
     {
         $user->revokePermissionTo($permission);
+
         return new SuccessJSONResponseResource(null);
     }
 }

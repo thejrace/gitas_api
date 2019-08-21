@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAppModulesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('app_modules', function (Blueprint $table) {
+        Schema::create('app_modules', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('api_token', 60);
@@ -25,8 +23,6 @@ class CreateAppModulesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

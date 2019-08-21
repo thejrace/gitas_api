@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PermissionResource;
 use App\PermissionType;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -16,9 +16,11 @@ class PermissionController extends Controller
      *
      * @return AnonymousResourceCollection
      */
-    public function dataTables(PermissionType $type){
+    public function dataTables(PermissionType $type)
+    {
         $query = Permission::query();
-        $query->where('type', $type->id );
+        $query->where('type', $type->id);
+
         return PermissionResource::collection($query->paginate(20));
     }
 
@@ -29,9 +31,10 @@ class PermissionController extends Controller
      *
      * @return \View
      */
-    public function index( PermissionType $type ){
+    public function index(PermissionType $type)
+    {
         return view('permissions')->with([
-            'permission_type' => $type->id
+            'permission_type' => $type->id,
         ]);
     }
 }

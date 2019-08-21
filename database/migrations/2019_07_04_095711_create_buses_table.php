@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBusesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('buses', function (Blueprint $table) {
+        Schema::create('buses', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('active_plate');
             $table->string('official_plate');
@@ -24,8 +22,6 @@ class CreateBusesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

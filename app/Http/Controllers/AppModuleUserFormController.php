@@ -22,7 +22,7 @@ class AppModuleUserFormController extends Controller
     /**
      * Show update form
      *
-     * @param AppModule $appModule
+     * @param AppModule     $appModule
      * @param AppModuleUser $user
      *
      * @return \View
@@ -31,7 +31,7 @@ class AppModuleUserFormController extends Controller
     {
         return view('app_module_user_form')->with([
             'updateFlag' => true,
-            'dataId'     => $user->id
+            'dataId'     => $user->id,
         ]);
     }
 }

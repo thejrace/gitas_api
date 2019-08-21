@@ -25,9 +25,9 @@ class BusFormStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'code'                      => [ 'required', Rule::unique('buses') ],
-            'active_plate'              => [ 'required', Rule::unique('buses') ],
-            'official_plate'            => [ 'required', Rule::unique('buses') ]
+            'code'           => ['required', Rule::unique('buses')],
+            'active_plate'   => ['required', Rule::unique('buses')],
+            'official_plate' => ['required', Rule::unique('buses')],
         ];
     }
 }

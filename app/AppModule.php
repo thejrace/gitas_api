@@ -2,9 +2,9 @@
 
 namespace App;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * App\AppModule
@@ -20,6 +20,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\AppModuleUser[] $users
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AppModule newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AppModule newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AppModule permission($permissions)
@@ -36,14 +37,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class AppModule extends Authenticatable
 {
-
     use Notifiable, HasRoles;
 
     protected $guard = 'app_module';
+
     protected $guarded = [];
 
-    public function users(){
+    public function users()
+    {
         return $this->hasMany(AppModuleUser::class);
     }
-
 }

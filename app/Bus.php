@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $code
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Bus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Bus newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Bus query()

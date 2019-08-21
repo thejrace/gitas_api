@@ -25,11 +25,12 @@ class AppModuleUserFormUpdateRequest extends FormRequest
     public function rules()
     {
         $ignoreID = $this->route('app_module_user')->id;
+
         return [
-            'name'                  => 'filled|min:3',
-            'email'                 => [ 'filled', 'email', Rule::unique('app_module_users')->ignore($ignoreID) ],
-            'password'              => 'nullable',
-            'date_of_birth'         => 'date_format:Y-m-d'
+            'name'          => 'filled|min:3',
+            'email'         => ['filled', 'email', Rule::unique('app_module_users')->ignore($ignoreID)],
+            'password'      => 'nullable',
+            'date_of_birth' => 'date_format:Y-m-d',
         ];
     }
 }

@@ -25,10 +25,11 @@ class BusFormUpdateRequest extends FormRequest
     public function rules()
     {
         $ignoreID = $this->route('bus')->id;
+
         return [
-            'code'                      => [ 'required', Rule::unique('buses')->ignore($ignoreID) ],
-            'active_plate'              => [ 'required', Rule::unique('buses')->ignore($ignoreID) ],
-            'official_plate'            => [ 'required', Rule::unique('buses')->ignore($ignoreID) ]
+            'code'           => ['required', Rule::unique('buses')->ignore($ignoreID)],
+            'active_plate'   => ['required', Rule::unique('buses')->ignore($ignoreID)],
+            'official_plate' => ['required', Rule::unique('buses')->ignore($ignoreID)],
         ];
     }
 }

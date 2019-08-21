@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\AppModule;
 use App\AppModuleUser;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AppModuleUserFormStoreRequest;
 use App\Http\Requests\AppModuleUserFormUpdateRequest;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AppModuleUserLoginFormRequest;
 use App\Http\Requests\AppModuleUserValidateFormRequest;
 use App\Http\Resources\AppModuleUserFullDataResource;
@@ -14,9 +14,9 @@ use App\Http\Resources\AppModuleUserResource;
 use App\Http\Resources\FailJSONResponseResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class AppModuleUserController extends Controller
@@ -42,17 +42,18 @@ class AppModuleUserController extends Controller
      */
     public function store(AppModuleUserFormStoreRequest $request)
     {
-        $attributes = $request->all();
-        $attributes['api_token']    = Str::random(60);
-        $attributes['password']     = Hash::make($request->get('password'));
+        $attributes              = $request->all();
+        $attributes['api_token'] = Str::random(60);
+        $attributes['password']  = Hash::make($request->get('password'));
         AppModuleUser::create($attributes);
+
         return new SuccessJSONResponseResource(null);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param AppModule $appModule
+     * @param AppModule     $appModule
      * @param AppModuleUser $model
      *
      * @return AppModuleUserResource
@@ -75,9 +76,11 @@ class AppModuleUserController extends Controller
         $user = DB::table('app_module_users')
             ->where('email', $request->input('email'))->first();
 
-        if( !$user ) return new FailJSONResponseResource(null);
+        if (!$user) {
+            return new FailJSONResponseResource(null);
+        }
 
-        if( Hash::check($request->input('password'), $user->password) ){
+        if (Hash::check($request->input('password'), $user->password)) {
             return new SuccessJSONResponseResource(null);
         } else {
             return new FailJSONResponseResource(null);
@@ -97,7 +100,9 @@ class AppModuleUserController extends Controller
         $user = DB::table('app_module_users')
             ->where('api_token', $request->input('user_api_token'))->first();
 
-        if( !$user ) return new FailJSONResponseResource(null);
+        if (!$user) {
+            return new FailJSONResponseResource(null);
+        }
 
         return new SuccessJSONResponseResource(null);
     }
@@ -117,18 +122,19 @@ class AppModuleUserController extends Controller
     /**
      * Update the specified location in storage.
      *
-     * @param AppModuleUserFormUpdateRequest  $request
-     * @param AppModuleUser                   $model
+     * @param AppModuleUserFormUpdateRequest $request
+     * @param AppModuleUser                  $model
      *
      * @return SuccessJSONResponseResource
      */
-    public function update(AppModuleUserFormUpdateRequest $request, AppModuleUser $model )
+    public function update(AppModuleUserFormUpdateRequest $request, AppModuleUser $model)
     {
         $attributes = $request->all();
-        if( $request->filled('password') ){
+        if ($request->filled('password')) {
             $attributes['password'] = Hash::make($request->get('password'));
         }
         $model->update($attributes);
+
         return new SuccessJSONResponseResource(null);
     }
 
@@ -152,6 +158,7 @@ class AppModuleUserController extends Controller
             // delete user
             $model->delete();
         });
+
         return new SuccessJSONResponseResource(null);
     }
 }
