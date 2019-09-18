@@ -2,7 +2,8 @@
 
     <div class="widget">
         <div class="widget-header"> <i class="icon-key"></i>
-            <h3> İzinler</h3>
+            <h3 v-if="permissionType == 1">Kullanıcı İzinleri</h3>
+            <h3 v-else>Modül İzinleri</h3>
         </div>
         <!-- /widget-header -->
         <div class="widget-content">
@@ -62,8 +63,8 @@
             VuetablePagination
         },
         mounted() {
-            this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
-            this.$events.$on('filter-reset', e => this.onFilterReset())
+            this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
+            this.$events.$on('filter-reset', e => this.onFilterReset());
         },
         methods: {
             transform(data){

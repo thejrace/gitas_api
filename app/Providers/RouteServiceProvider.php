@@ -6,6 +6,7 @@ use App\AppModule;
 use App\AppModuleUser;
 use App\Bus;
 use App\PermissionType;
+use App\RouteScanner;
 use App\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('user', User::class);
         Route::model('permission', Permission::class);
         Route::model('permission_type', PermissionType::class);
+        Route::model('routeScanner', RouteScanner::class);
     }
 
     /**

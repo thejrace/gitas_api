@@ -2,9 +2,11 @@
 
     <div class="widget">
         <div class="widget-header"> <i class="icon-key"></i>
-            <h3><i>{{ form.name }}</i> - İzin Form</h3>
+            <h3 v-if="typeId == 1">Kullanıcı İzinleri | <i>{{ form.name }}</i> İzin Form</h3>
+            <h3 v-else>Modül İzinleri | <i>{{ form.name }}</i> İzin Form</h3>
         </div>
         <!-- /widget-header -->
+
         <div class="widget-content">
 
             <form @submit.prevent="action" @keydown="form.onKeydown($event)" class="form-horizontal" >

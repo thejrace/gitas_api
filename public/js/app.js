@@ -2740,6 +2740,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MODULE_2__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_2__["HasError"]);
@@ -3285,6 +3287,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -46817,10 +46820,17 @@ var render = function() {
     _c("div", { staticClass: "widget-header" }, [
       _c("i", { staticClass: "icon-key" }),
       _vm._v(" "),
-      _c("h3", [
-        _c("i", [_vm._v(_vm._s(_vm.form.name))]),
-        _vm._v(" - İzin Form")
-      ])
+      _vm.typeId == 1
+        ? _c("h3", [
+            _vm._v("Kullanıcı İzinleri | "),
+            _c("i", [_vm._v(_vm._s(_vm.form.name))]),
+            _vm._v(" İzin Form")
+          ])
+        : _c("h3", [
+            _vm._v("Modül İzinleri | "),
+            _c("i", [_vm._v(_vm._s(_vm.form.name))]),
+            _vm._v(" İzin Form")
+          ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "widget-content" }, [
@@ -47235,11 +47245,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "widget" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "widget-header" }, [
+      _c("i", { staticClass: "icon-key" }),
+      _vm._v(" "),
+      _vm.permissionType == 1
+        ? _c("h3", [_vm._v("Kullanıcı İzinleri")])
+        : _c("h3", [_vm._v("Modül İzinleri")])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "widget-content" }, [
       _c("div", { staticClass: "top-nav" }, [
-        _c("a", { attrs: { href: _vm.createUrl } }, [_vm._m(1)])
+        _c("a", { attrs: { href: _vm.createUrl } }, [_vm._m(0)])
       ]),
       _vm._v(" "),
       _c(
@@ -47316,16 +47332,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "widget-header" }, [
-      _c("i", { staticClass: "icon-key" }),
-      _vm._v(" "),
-      _c("h3", [_vm._v(" İzinler")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
