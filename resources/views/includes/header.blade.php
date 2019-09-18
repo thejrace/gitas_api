@@ -57,24 +57,22 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li @php if( isset($page['users']) ) echo 'class="active"'; @endphp><a href="{{route('users.index')}}"><i class="icon-group"></i><span>Kullanıcılar</span> </a> </li>
-                        <li @php if( isset($page['buses']) ) echo 'class="active"'; @endphp><a href="{{route('buses.index')}}"><i class="icon-truck"></i><span>Otobüsler</span> </a> </li>
+                        <li><a href="{{route('users.index')}}"><i class="icon-group"></i><span>Kullanıcılar</span> </a> </li>
+                        <li><a href="{{route('services')}}"><i class="icon-code"></i><span>Servisler</span> </a> </li>
+                        <li><a href="{{route('buses.index')}}"><i class="icon-truck"></i><span>Otobüsler</span> </a> </li>
 
-                        <li @php if( isset($page['permissions']) ) echo 'class="active"'; @endphp><a href="{{route('permission_types.index')}}"><i class="icon-key"></i><span>İzinler</span> </a></li>
+                        <li><a href="{{route('permission_types.index')}}"><i class="icon-key"></i><span>İzinler</span> </a></li>
 
                         <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-compass"></i><span>Kahya</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">Kullanıcılar</a></li>
-                                <li><a href="">Kahyalar</a></li>
-                                <li><a href="">Servisler</a></li>
-                                <li><a href="">Hatlar</a></li>
+                                <li><a href="{{ route('routeScanners') }}">Kahyalar</a></li>
+                                <li><a href="{{ route('routes') }}">Hatlar</a></li>
+                                <li><a href="">İzinler</a></li>
                             </ul>
                         </li>
 
                         <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-flag"></i><span>Filo Takip</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">Kullanıcılar</a></li>
-                                <li><a href="">Servisler</a></li>
                                 <li><a href="">İzinler</a></li>
                             </ul>
                         </li>

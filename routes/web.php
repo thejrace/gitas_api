@@ -26,6 +26,14 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionFormController;
 use App\Http\Controllers\PermissionTypeController;
 use App\Http\Controllers\PermissionTypeFormController;
+use App\Http\Controllers\RouteController;
+use App\Http\Controllers\RouteIntersectionController;
+use App\Http\Controllers\RouteScannerController;
+use App\Http\Controllers\RouteScannerFormController;
+use App\Http\Controllers\RouteScannerPreviewController;
+use App\Http\Controllers\RouteStopController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceSettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormController;
 use App\Http\Controllers\UserPermissionController;
@@ -50,11 +58,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::prefix('permissions')->group(function() {
         Route::get('store/{permission_type}', [PermissionFormController::class, 'create'])->name('permissions.store');
         Route::get('update/{permission_type}/{permission}', [PermissionFormController::class, 'edit']);
-
-        Route::get('app_module_store/{app_module}', [AppModulePermissionFormController::class, 'create'])->name('permissions.app_module.store');
-        Route::get('app_module_update/{app_module}/{permission}', [AppModulePermissionFormController::class, 'edit']);
         Route::get('{permission_type}', [PermissionController::class, 'index']);
-        Route::get('dataTables/{permission_type}', [PermissionController::class, 'dataTables']);
     });
 
     Route::prefix('permission_types')->group(function() {
@@ -72,30 +76,6 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('form/{bus}', [BusFormController::class, 'edit']);
     });
 
-    Route::prefix('app_modules')->group(function() {
-        Route::get('/', [AppModuleController::class, 'index'])->name('app_modules.index');
-        Route::get('dataTables', [AppModuleController::class, 'dataTables']);
-        Route::get('form', [AppModuleFormController::class, 'create'])->name('app_modules.form');
-        Route::get('form/{app_module}', [AppModuleFormController::class, 'edit']);
-    });
-
-    Route::prefix('app_module_users')->group(function() {
-        Route::get('store/{app_module}', [AppModuleUserFormController::class, 'create'])->name('app_module_users.form');
-        Route::get('update/{app_module}/{app_module_user}', [AppModuleUserFormController::class, 'edit']);
-        Route::get('dataTables/{app_module}', [AppModuleUserController::class, 'dataTables']);
-        Route::get('{app_module}', [AppModuleUserController::class, 'index'])->name('app_module_users.index');
-    });
-
-    Route::prefix('app_module_user_permissions')->group(function() {
-        Route::get('dataTables/not_defined/{app_module_user}', [AppModuleUserPermissionController::class, 'dataTablesNotDefined']);
-        Route::get('dataTables/defined/{app_module_user}', [AppModuleUserPermissionController::class, 'dataTablesDefined']);
-        Route::get('{app_module_user}', [AppModuleUserPermissionController::class, 'index'])->name('app_module_user_permissions.index');
-    });
-
-    Route::prefix('app_module_permissions')->group(function() {
-        Route::get('dataTables/{app_module}', [AppModulePermissionController::class, 'dataTables']);
-        Route::get('{app_module}', [AppModulePermissionController::class, 'index'])->name('app_module_permissions.index');
-    });
 
     Route::prefix('users')->group(function() {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
@@ -103,4 +83,37 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('form', [UserFormController::class, 'create'])->name('users.form');
         Route::get('form/{user}', [UserFormController::class, 'edit']);
     });
+
+    Route::prefix('routeScanners')->group(function() {
+        Route::get('/', [RouteScannerController::class, 'index'])->name('routeScanners');
+        Route::get('dataTables', [RouteScannerController::class, 'index']);
+        Route::get('preview/{route}', [RouteScannerPreviewController::class, 'index']);
+    });
+
+    Route::prefix('routeScannerForm')->group(function() {
+        Route::get('{routeScanner}', [RouteScannerFormController::class, 'edit'])->name('routeScannerForm.edit');
+        Route::get('/', [RouteScannerFormController::class, 'create'])->name('routeScannerForm.create');
+    });
+
+    Route::prefix('routes')->group(function() {
+        Route::get('/', [RouteController::class, 'index'])->name('routes');
+        Route::get('dataTables', [RouteController::class, 'dataTables']);
+    });
+
+    Route::prefix('routeStops')->group(function() {
+        Route::get('{routeId}', [RouteStopController::class, 'index'])->name('routeStops');
+        Route::get('{routeId}/dataTables', [RouteStopController::class, 'dataTables']);
+    });
+
+    Route::prefix('routeIntersections')->group(function() {
+        Route::get('{routeId}', [RouteIntersectionController::class, 'index'])->name('routeIntersections');
+        Route::get('{routeId}/dataTables', [RouteIntersectionController::class, 'dataTables']);
+    });
+
+    Route::prefix('services')->group(function() {
+        Route::get('/', [ServiceController::class, 'index'])->name('services');
+        Route::get('dataTables', [ServiceController::class, 'dataTables']);
+        Route::get('{id}/settings', [ServiceSettingsController::class, 'index']);
+    });
+
 });

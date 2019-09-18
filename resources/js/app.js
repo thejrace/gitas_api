@@ -19,31 +19,8 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('bus-index', require('./components/BusIndex.vue').default);
-Vue.component('test-form', require('./components/TestForm.vue').default);
-Vue.component('bus-form', require('./components/BusForm.vue').default);
-Vue.component('user-form', require('./components/UserForm.vue').default);
-Vue.component('permission-form', require('./components/PermissionForm.vue').default);
-Vue.component('permission-type-form', require('./components/PermissionTypeForm.vue').default);
 Vue.component('login-form', require('./components/LoginForm.vue').default);
-Vue.component('app-module-form', require('./components/AppModuleForm.vue').default);
-Vue.component('app-module-user-form', require('./components/AppModuleUserForm.vue').default);
-Vue.component('my-vuetable', require('./components/MyVuetable.vue').default);
-Vue.component('buses-vuetable', require('./components/BusesTable.vue').default);
-Vue.component('user-permissions-vuetable', require('./components/UserPermissionsTable.vue').default);
-Vue.component('add-user-permissions-vuetable', require('./components/AddUserPermissionsTable.vue').default);
-Vue.component('add-app-module-user-permissions-vuetable', require('./components/AddAppModuleUserPermissionsTable.vue').default);
-Vue.component('users-vuetable', require('./components/UsersTable.vue').default);
-Vue.component('permissions-vuetable', require('./components/PermissionsTable.vue').default);
-Vue.component('permission-types-vuetable', require('./components/PermissionTypesTable.vue').default);
-Vue.component('app-modules-vuetable', require('./components/AppModulesTable.vue').default);
-Vue.component('app-module-users-vuetable', require('./components/AppModuleUsersTable.vue').default);
-Vue.component('app-module-permissions-vuetable', require('./components/AppModulePermissionsTable.vue').default);
-Vue.component('app-module-user-permissions-vuetable', require('./components/AppModuleUserPermissionsTable.vue').default);
 Vue.component('vue-table-filter-bar', require('./components/VueTableFilterBar.vue').default);
-Vue.component('permission-types-select', require('./components/PermissionTypesSelect.vue').default);
-
 
 // pages
 Vue.component('buses-page', require('./components/BusesPage.vue').default);
@@ -55,15 +32,18 @@ Vue.component('permission-type-form-page', require('./components/PermissionTypeF
 Vue.component('permissions-page', require('./components/PermissionsPage.vue').default);
 Vue.component('permission-form-page', require('./components/PermissionFormPage.vue').default);
 
-
-
+// kahya pages
 Vue.component('route-scanners-page', require('./components/RouteScannersPage.vue').default);
 Vue.component('route-scanner-form-page', require('./components/RouteScannerFormPage.vue').default);
 Vue.component('routes-page', require('./components/RoutesPage.vue').default);
 Vue.component('route-stops-page', require('./components/RouteStopsPage.vue').default);
 Vue.component('route-intersections-page', require('./components/RouteIntersectionsPage.vue').default);
+Vue.component('services-page', require('./components/ServicesPage.vue').default);
 Vue.component('service-settings-page', require('./components/ServiceSettingsPage.vue').default);
+
+// default
 Vue.component('sub-nav-bar', require('./components/SubNavBar.vue').default);
+Vue.component('kahya', require('./components/Kahya.vue').default);
 
 
 

@@ -7,6 +7,13 @@ use App\Http\Controllers\Api\BusController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\PermissionTypeController;
+use App\Http\Controllers\Api\RouteController;
+use App\Http\Controllers\Api\RouteIntersectionController;
+use App\Http\Controllers\Api\RouteScannerController;
+use App\Http\Controllers\Api\RouteScannerDataController;
+use App\Http\Controllers\Api\RouteStopController;
+use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\ServiceSettingsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserPermissionController;
 
@@ -22,18 +29,9 @@ use App\Http\Controllers\Api\UserPermissionController;
 */
 
 Route::middleware(['auth:api', 'role:admin'])->group(function() {
+
     Route::resource('users', UserController::class);
     Route::resource('buses', BusController::class);
-    Route::resource('app_modules', AppModuleController::class);
-    //Route::resource('app_module_users',                             AppModuleUserController::class );
-
-    Route::prefix('app_module_users')->group(function() {
-        Route::get('{app_module}', [AppModuleUserController::class, 'index']);
-        Route::get('{app_module}/{app_module_user}', [AppModuleUserController::class, 'show']);
-        Route::post('/', [AppModuleUserController::class, 'store']);
-        Route::put('{app_module_user}', [AppModuleUserController::class, 'update']);
-        Route::delete('{app_module_user}', [AppModuleUserController::class, 'destroy']);
-    });
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('permission_types', PermissionTypeController::class);
@@ -44,28 +42,44 @@ Route::middleware(['auth:api', 'role:admin'])->group(function() {
         Route::get('{user}', [UserPermissionController::class, 'getPermissions']);
     });
 
-    Route::prefix('app_module_user_permissions')->group(function() {
-        Route::delete('{app_module_user}/{permission}', [AppModuleUserPermissionController::class, 'revokePermission']);
-        Route::post('{app_module_user}/{permission}', [AppModuleUserPermissionController::class, 'givePermission']);
-        Route::get('{app_module_user}/{permission}', [AppModuleUserPermissionController::class, 'hasPermission']);
-        Route::get('{app_module_user}', [AppModuleUserPermissionController::class, 'getPermissions']);
+    Route::prefix('services')->group(function() {
+        Route::get('/', [ServiceController::class, 'index']);
+        Route::get('{id}', [ServiceController::class, 'show']);
+        Route::post('/', [ServiceController::class, 'store']);
+        Route::put('{id}', [ServiceController::class, 'update']);
+        Route::put('{id}/updateSettings', [ServiceSettingsController::class, 'updateSettings']);
+        Route::put('{id}/updateStatus', [ServiceSettingsController::class, 'updateStatus']);
+        Route::get('{id}/settings', [ServiceSettingsController::class, 'show']);
+        Route::delete('{id}', [ServiceController::class, 'destroy']);
     });
-});
 
-Route::prefix('permission_check')->group(function() {
-    Route::get('{app_module_user}/{permission}', [AppModuleUserPermissionController::class, 'hasPermission']);
-});
-
-Route::middleware(['auth:app_module'])->group(function() {
-    Route::prefix('app_module_pipeline')->group(function() {
-        Route::post('app_module_user_login', [AppModuleUserController::class, 'login']);
-        Route::post('app_module_user_validate', [AppModuleUserController::class, 'validateToken']);
-
-        Route::get('app_module_users/{app_module}', [AppModuleUserController::class, 'index']);
-        Route::get('app_module_user_data/{app_module_user}', [AppModuleUserController::class, 'fetchData']);
-
-        Route::get('permission_check/{app_module_user}/{permission}', [AppModuleUserPermissionController::class, 'hasPermission']);
+    /* kahya endpoints */
+    Route::prefix('routeScanners')->group(function() {
+        Route::get('/', [RouteScannerController::class, 'index']);
+        Route::get('/{routeScanner}', [RouteScannerController::class, 'show']);
+        Route::post('/', [RouteScannerController::class, 'store']);
+        Route::put('/{routeScanner}', [RouteScannerController::class, 'update']);
+        Route::delete('/{routeScanner}', [RouteScannerController::class, 'destroy']);
     });
+
+    Route::prefix('routes')->group(function() {
+        Route::get('/', [RouteController::class, 'index']);
+        Route::get('{id}', [RouteController::class, 'show']);
+        Route::post('/', [RouteController::class, 'store']);
+        Route::put('{id}', [RouteController::class, 'update']);
+        Route::delete('{id}', [RouteController::class, 'destroy']);
+    });
+
+    Route::prefix('routeStops/{routeId}')->group(function() {
+        Route::post('/', [RouteStopController::class, 'storeAsMass']);
+    });
+
+    Route::prefix('routeIntersections/{routeId}')->group(function() {
+        Route::post('/', [RouteIntersectionController::class, 'storeAsMass']);
+    });
+
+    Route::get('downloadRouteScannerData/{route}', [RouteScannerDataController::class, 'download']);
+
 });
 
 Route::post('login', [LoginController::class, 'authenticate']); // retrieve api token
