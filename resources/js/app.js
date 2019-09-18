@@ -44,6 +44,30 @@ Vue.component('app-module-user-permissions-vuetable', require('./components/AppM
 Vue.component('vue-table-filter-bar', require('./components/VueTableFilterBar.vue').default);
 Vue.component('permission-types-select', require('./components/PermissionTypesSelect.vue').default);
 
+
+// pages
+Vue.component('buses-page', require('./components/BusesPage.vue').default);
+Vue.component('bus-form-page', require('./components/BusFormPage.vue').default);
+Vue.component('users-page', require('./components/UsersPage.vue').default);
+Vue.component('user-form-page', require('./components/UserFormPage.vue').default);
+Vue.component('permission-types-page', require('./components/PermissionTypesPage.vue').default);
+Vue.component('permission-type-form-page', require('./components/PermissionTypeFormPage.vue').default);
+Vue.component('permissions-page', require('./components/PermissionsPage.vue').default);
+Vue.component('permission-form-page', require('./components/PermissionFormPage.vue').default);
+
+
+
+Vue.component('route-scanners-page', require('./components/RouteScannersPage.vue').default);
+Vue.component('route-scanner-form-page', require('./components/RouteScannerFormPage.vue').default);
+Vue.component('routes-page', require('./components/RoutesPage.vue').default);
+Vue.component('route-stops-page', require('./components/RouteStopsPage.vue').default);
+Vue.component('route-intersections-page', require('./components/RouteIntersectionsPage.vue').default);
+Vue.component('service-settings-page', require('./components/ServiceSettingsPage.vue').default);
+Vue.component('sub-nav-bar', require('./components/SubNavBar.vue').default);
+
+
+
+
 Vue.mixin({
     methods: {
         vuetableTransformResponse: (data) => { // transform laravel response to vue-table format
