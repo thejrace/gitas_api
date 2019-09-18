@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\Api\AppModuleController;
-use App\Http\Controllers\Api\AppModuleUserController;
-use App\Http\Controllers\Api\AppModuleUserPermissionController;
 use App\Http\Controllers\Api\BusController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\PermissionTypeController;
 use App\Http\Controllers\Api\RouteController;
 use App\Http\Controllers\Api\RouteIntersectionController;
+use App\Http\Controllers\Api\RouteIntersectionServiceController;
 use App\Http\Controllers\Api\RouteScannerController;
 use App\Http\Controllers\Api\RouteScannerDataController;
+use App\Http\Controllers\Api\RouteScannerPoolController;
+use App\Http\Controllers\Api\RouteServiceController;
 use App\Http\Controllers\Api\RouteStopController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ServiceSettingsController;
@@ -83,3 +83,26 @@ Route::middleware(['auth:api', 'role:admin'])->group(function() {
 });
 
 Route::post('login', [LoginController::class, 'authenticate']); // retrieve api token
+
+/*
+|--------------------------------------------------------------------------
+| Service Routes
+|--------------------------------------------------------------------------
+|
+| These routes are for services to access.
+|
+*/
+Route::middleware(['auth:service'])->group(function() {
+    Route::prefix('servicePipeline')->group(function() {
+        Route::get('{id}/settings', [ServiceSettingsController::class, 'show']);
+        Route::put('updateRoutes', [RouteServiceController::class, 'update']);
+        Route::put('updateRouteIntersections', [RouteIntersectionServiceController::class, 'update']);
+
+        Route::prefix('routeScanner')->group(function() { // @todo middleware yap bunlari role:routeScanner vs gibi olabilir
+            Route::post('uploadRouteScannerData', [RouteScannerDataController::class, 'upload']);
+            Route::get('list', [RouteScannerPoolController::class, 'index']);
+            Route::get('routeIntersections/{route}', [RouteIntersectionServiceController::class, 'fetch']);
+            Route::get('routeStops', [RouteServiceController::class, 'stops']);
+        });
+    });
+});

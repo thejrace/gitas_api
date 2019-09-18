@@ -44,6 +44,8 @@ Vue.component('service-settings-page', require('./components/ServiceSettingsPage
 // default
 Vue.component('sub-nav-bar', require('./components/SubNavBar.vue').default);
 Vue.component('kahya', require('./components/Kahya.vue').default);
+Vue.component('add-user-permissions-vuetable', require('./components/AddUserPermissionsTable.vue').default);
+Vue.component('user-permissions-vuetable', require('./components/UserPermissionsTable.vue').default);
 
 
 

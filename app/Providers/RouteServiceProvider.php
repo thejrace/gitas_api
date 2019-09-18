@@ -31,10 +31,8 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
         Route::model('bus', Bus::class);
         Route::model('user', User::class);
-        Route::model('app_module', AppModule::class);
         Route::model('permission', Permission::class);
         Route::model('permission_type', PermissionType::class);
-        Route::model('app_module_user', AppModuleUser::class);
     }
 
     /**

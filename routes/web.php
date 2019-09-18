@@ -11,13 +11,6 @@
 |
 */
 
-use App\Http\Controllers\AppModuleController;
-use App\Http\Controllers\AppModuleFormController;
-use App\Http\Controllers\AppModulePermissionController;
-use App\Http\Controllers\AppModulePermissionFormController;
-use App\Http\Controllers\AppModuleUserController;
-use App\Http\Controllers\AppModuleUserFormController;
-use App\Http\Controllers\AppModuleUserPermissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\BusFormController;
@@ -59,6 +52,9 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('store/{permission_type}', [PermissionFormController::class, 'create'])->name('permissions.store');
         Route::get('update/{permission_type}/{permission}', [PermissionFormController::class, 'edit']);
         Route::get('{permission_type}', [PermissionController::class, 'index']);
+
+        Route::get('{permission_type}', [PermissionController::class, 'index']);
+        Route::get('dataTables/{permission_type}', [PermissionController::class, 'dataTables']);
     });
 
     Route::prefix('permission_types')->group(function() {
