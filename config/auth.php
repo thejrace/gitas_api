@@ -47,15 +47,9 @@ return [
             'hash'     => false,
         ],
 
-        'app_module' => [
+        'service' => [
             'driver'   => 'token',
-            'provider' => 'app_modules',
-            'hash'     => false,
-        ],
-
-        'app_module_user' => [
-            'driver'   => 'token',
-            'provider' => 'app_module_users',
+            'provider' => 'services',
             'hash'     => false,
         ],
     ],
@@ -83,14 +77,9 @@ return [
             'model'  => App\User::class,
         ],
 
-        'app_modules' => [
+        'services' => [
             'driver' => 'eloquent',
-            'model'  => App\AppModule::class,
-        ],
-
-        'app_module_users' => [
-            'driver' => 'eloquent',
-            'model'  => App\AppModuleUser::class,
+            'model'  => App\Service::class,
         ],
 
         // 'users' => [
