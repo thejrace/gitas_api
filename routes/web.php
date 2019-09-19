@@ -38,7 +38,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // @todo = permissions
 
-Route::middleware(['auth', 'role:admin'])->group(function() {
+Route::middleware(['auth', 'permission:web_panel.enabled'])->group(function() {
     Route::get('/', [MainController::class, 'index']);
     Route::get('/test/{user}', [MainController::class, 'test']);
 

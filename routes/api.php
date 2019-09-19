@@ -28,8 +28,7 @@ use App\Http\Controllers\Api\UserPermissionController;
 |
 */
 
-Route::middleware(['auth:api', 'role:admin'])->group(function() {
-
+Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
     Route::resource('users', UserController::class);
     Route::resource('buses', BusController::class);
 
@@ -79,7 +78,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function() {
     });
 
     Route::get('downloadRouteScannerData/{route}', [RouteScannerDataController::class, 'download']);
-
 });
 
 Route::post('login', [LoginController::class, 'authenticate']); // retrieve api token

@@ -2,8 +2,8 @@
 
 
     <div class="widget">
-        <div class="widget-header"> <i class="icon-code"></i>
-            <h3> Servisler</h3>
+        <div class="widget-header"> <i class="icon-group"></i>
+            <h3> Kullanıcılar</h3>
         </div>
         <!-- /widget-header -->
         <div class="widget-content">
