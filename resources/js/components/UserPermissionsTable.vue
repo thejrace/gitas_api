@@ -28,9 +28,7 @@
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
     import CssConfig from './vuetable-styles.js';
     import VueEvents from 'vue-events';
-
     Vue.use(VueEvents);
-
     export default {
         props: {
             'model_id': String

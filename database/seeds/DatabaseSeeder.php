@@ -10,9 +10,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PermissionTypesSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(AppModulesSeeder::class);
-        $this->call(AppModuleUsersSeeder::class);
+        $this->call(ServicesTableSeeder::class);
+//        $this->call(RoutesTableSeeder::class);
+//        $this->call(RouteStopsTableSeeder::class);
+//        $this->call(RouteIntersectionsTableSeeder::class);
     }
 }

@@ -6,7 +6,7 @@
          xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
 
     <description>
-        Custom rules for IPera Guest WiFi
+        Custom rules for Gitas API
     </description>
 
     <!--<rule ref="rulesets/cleancode.xml"/>-->
