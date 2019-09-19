@@ -5240,12 +5240,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
 
 Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    createUrl: String
+  },
   components: {
     Vuetable: vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_1__["default"],
     VuetablePagination: vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -48635,6 +48641,10 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "widget-content" }, [
+      _c("div", { staticClass: "top-nav" }, [
+        _c("a", { attrs: { href: _vm.createUrl } }, [_vm._m(1)])
+      ]),
+      _vm._v(" "),
       _c(
         "div",
         [
@@ -48736,6 +48746,19 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("h3", [_vm._v(" Kullanıcılar")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "ui basic button btn btn-info",
+        attrs: { type: "button" }
+      },
+      [_c("i", { staticClass: "icon-plus" })]
+    )
   }
 ]
 render._withStripped = true
