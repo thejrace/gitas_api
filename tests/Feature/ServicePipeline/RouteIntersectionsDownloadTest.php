@@ -50,7 +50,7 @@ class RouteIntersectionsDownloadTest extends ApiTestCase
         ]);
 
         $this->getJson($this->url() . $activeRoute->code)
-            ->assertSuccessful()->dump()
+            ->assertSuccessful()
             ->assertJsonFragment([
                 'intersected_route' => $intersection->intersectedRoute->code,
                 'direction'         => $intersection->direction,

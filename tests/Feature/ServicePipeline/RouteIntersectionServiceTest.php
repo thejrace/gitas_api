@@ -52,7 +52,7 @@ class RouteIntersectionServiceTest extends ApiTestCase
             'total_diff'        => 5,
         ];
 
-        $this->putJson($this->url(), ['data' => json_encode($routeData)])->dump()
+        $this->putJson($this->url(), ['data' => json_encode($routeData)])
             ->assertSuccessful()
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
 

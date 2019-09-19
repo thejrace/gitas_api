@@ -22,7 +22,7 @@ class RouteStopsDownloadTest extends ApiTestCase
     /** @test */
     public function it_requires_authentication()
     {
-        $this->getJson($this->url() . '1')
+        $this->getJson($this->url())
             ->assertStatus(401)
             ->assertExactJson([
                 'message' => 'Unauthenticated.',
@@ -45,7 +45,7 @@ class RouteStopsDownloadTest extends ApiTestCase
             'route_id' => $route->id,
         ]);
 
-        $this->getJson($this->url() . $route->code)
+        $this->getJson($this->url() . '?routeCode=' . $route->code)
             ->assertSuccessful()
             ->assertJsonFragment([
                 'route'     => $stop->route->code,

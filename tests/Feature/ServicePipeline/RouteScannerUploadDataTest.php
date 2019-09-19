@@ -22,7 +22,7 @@ class RouteScannerUploadDataTest extends ApiTestCase
     /** @test */
     public function it_requires_authentication()
     {
-        $this->getJson($this->url() . '1')
+        $this->postJson($this->url())
             ->assertStatus(401)
             ->assertExactJson([
                 'message' => 'Unauthenticated.',
@@ -37,10 +37,7 @@ class RouteScannerUploadDataTest extends ApiTestCase
 
         $this->actingAs($service, 'service');
 
-        /** @var Route $route */
-        $route = factory(Route::class)->create();
-
-        $this->getJson($this->url() . $route->code)
+        $this->postJson($this->url())
             ->assertSuccessful()
             ->assertJsonFragment((new SuccessJSONResponseResource(null))->jsonSerialize());
     }
