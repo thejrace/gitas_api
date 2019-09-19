@@ -5,15 +5,11 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static ROUTE_SCANNER()
- * @method static static ROUTE_BOT()
- * @method static static ROUTE_STOP_BOT()
- * @method static static ROUTE_INTERSECTION_BOT()
+ * @method static static CUSTOM_SERVICE()
+ * @method static static BOT()
  */
 final class ServiceType extends Enum
 {
-    const ROUTE_SCANNER          = 0;
-    const ROUTE_BOT              = 1;
-    const ROUTE_STOP_BOT         = 2;
-    const ROUTE_INTERSECTION_BOT = 3;
+    const CUSTOM_SERVICE = 0;
+    const BOT            = 1;
 }

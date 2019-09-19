@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FailJSONResponseResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,13 +24,17 @@ class RouteScannerDataController extends Controller
      * @param Request $request
      * @param $route
      *
-     * @return SuccessJSONResponseResource
+     * @return FailJSONResponseResource|SuccessJSONResponseResource
      */
     public function upload(Request $request)
     {
         $data = $request->input('data');
 
         $route = json_decode($data, 'true')['routeCode'];
+
+        if (!$route) {
+            return new FailJSONResponseResource(null);
+        }
 
         Storage::put($route . '.json', $data, 'public');
 

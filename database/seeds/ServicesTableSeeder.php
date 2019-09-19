@@ -15,7 +15,7 @@ class ServicesTableSeeder extends Seeder
         $routeScannerSettings = File::get('database/service_route_scanner_settings.json');
         Service::create([
             'name'      => 'Kahya Instance',
-            'type'      => ServiceType::ROUTE_SCANNER,
+            'type'      => ServiceType::CUSTOM_SERVICE,
             'status'    => ServiceStatus::IDLE,
             'settings'  => $routeScannerSettings,
             'api_token' => \Illuminate\Support\Str::random(60),
@@ -24,9 +24,18 @@ class ServicesTableSeeder extends Seeder
         $routeSyncBotSettings = File::get('database/service_route_bot_settings.json');
         Service::create([
             'name'      => 'Route Sync Bot',
-            'type'      => ServiceType::ROUTE_BOT,
+            'type'      => ServiceType::BOT,
             'status'    => ServiceStatus::IDLE,
             'settings'  => $routeSyncBotSettings,
+            'api_token' => \Illuminate\Support\Str::random(60),
+        ]);
+
+        $ftsBotSettings = File::get('database/fts_bot_settings.json');
+        Service::create([
+            'name'      => 'FTS Bot',
+            'type'      => ServiceType::BOT,
+            'status'    => ServiceStatus::IDLE,
+            'settings'  => $ftsBotSettings,
             'api_token' => \Illuminate\Support\Str::random(60),
         ]);
     }

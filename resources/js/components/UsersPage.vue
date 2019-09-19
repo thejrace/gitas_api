@@ -1,12 +1,15 @@
 <template>
 
-
     <div class="widget">
         <div class="widget-header"> <i class="icon-group"></i>
             <h3> Kullanıcılar</h3>
         </div>
         <!-- /widget-header -->
         <div class="widget-content">
+
+            <div class="top-nav">
+                <a v-bind:href="createUrl"><button type="button" class="ui basic button btn btn-info"><i class="icon-plus"></i></button></a>
+            </div>
 
             <div>
                 <vue-table-filter-bar></vue-table-filter-bar>
@@ -55,6 +58,9 @@
     Vue.use(VueEvents);
 
     export default {
+        props:{
+            createUrl: String,
+        },
         components: {
             Vuetable,
             VuetablePagination
