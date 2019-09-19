@@ -57,6 +57,10 @@ class RouteServiceController extends Controller
      */
     public function stops(Request $request)
     {
+        if (!$request->has('routeCode')) {
+            return new FailJSONResponseResource(null);
+        }
+
         $query = Route::query();
         $query->where('code', $request->input('routeCode'));
 
