@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\AppModule;
-use App\AppModuleUser;
 use App\Bus;
 use App\PermissionType;
 use App\RouteScanner;
