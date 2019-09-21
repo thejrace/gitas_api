@@ -41,6 +41,10 @@ Vue.component('route-intersections-page', require('./components/RouteIntersectio
 Vue.component('services-page', require('./components/ServicesPage.vue').default);
 Vue.component('service-settings-page', require('./components/ServiceSettingsPage.vue').default);
 
+// fts pages
+Vue.component('fts-versions-page', require('./components/FtsVersionsPage.vue').default);
+Vue.component('fts-version-form-page', require('./components/FtsVersionFormPage.vue').default);
+
 // default
 Vue.component('sub-nav-bar', require('./components/SubNavBar.vue').default);
 Vue.component('kahya', require('./components/Kahya.vue').default);
