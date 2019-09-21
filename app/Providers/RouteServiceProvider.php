@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Bus;
+use App\FtsVersion;
 use App\PermissionType;
 use App\RouteScanner;
 use App\User;
@@ -33,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('permission', Permission::class);
         Route::model('permission_type', PermissionType::class);
         Route::model('routeScanner', RouteScanner::class);
+        Route::model('ftsVersion', FtsVersion::class);
     }
 
     /**
