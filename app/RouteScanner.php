@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property string $code
  * @property string $settings
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteScanner newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteScanner newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteScanner query()
@@ -21,10 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteScanner whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteScanner whereStatus($value)
  * @mixin \Eloquent
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteScanner whereCode($value)
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\RouteScannerUserConnections[] $connections
+ * @property-read int|null $connections_count
  */
 class RouteScanner extends Model
 {

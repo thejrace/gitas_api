@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $direction
  * @property string $stop_name
  * @property int $total_diff
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteIntersection newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteIntersection newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteIntersection query()
@@ -24,13 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteIntersection whereStopName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteIntersection whereTotalDiff($value)
  * @mixin \Eloquent
- *
  * @property int $active_route_id
  * @property int $intersected_route_id
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteIntersection whereActiveRouteId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteIntersection whereIntersectedRouteId($value)
- *
  * @property-read \App\Route $activeRoute
  * @property-read \App\Route $intersectedRoute
  */

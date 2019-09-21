@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $direction
  * @property int $no
  * @property string $name
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteStop newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteStop newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteStop query()
@@ -22,9 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteStop whereNo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteStop whereRoute($value)
  * @mixin \Eloquent
- *
  * @property int $route_id
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RouteStop whereRouteId($value)
  */
 class RouteStop extends Model

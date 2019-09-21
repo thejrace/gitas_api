@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\RouteIntersection[] $intersections
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\RouteStop[] $stops
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Route newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Route newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Route query()
@@ -20,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Route whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Route whereName($value)
  * @mixin \Eloquent
+ * @property-read int|null $intersections_count
+ * @property-read int|null $stops_count
  */
 class Route extends Model
 {
