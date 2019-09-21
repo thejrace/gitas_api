@@ -14,6 +14,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\BusFormController;
+use App\Http\Controllers\FtsVersionController;
+use App\Http\Controllers\FtsVersionFormController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionFormController;
@@ -110,6 +112,13 @@ Route::middleware(['auth', 'permission:web_panel.enabled'])->group(function() {
         Route::get('/', [ServiceController::class, 'index'])->name('services');
         Route::get('dataTables', [ServiceController::class, 'dataTables']);
         Route::get('{id}/settings', [ServiceSettingsController::class, 'index']);
+    });
+
+    Route::prefix('ftsVersions')->group(function() {
+        Route::get('/', [FtsVersionController::class, 'index'])->name('ftsVersions.index');
+        Route::get('dataTables', [FtsVersionController::class, 'dataTables']);
+        Route::get('form', [FtsVersionFormController::class, 'create'])->name('ftsVersions.form');
+        Route::get('form/{ftsVersion}', [FtsVersionFormController::class, 'edit']);
     });
 
 });

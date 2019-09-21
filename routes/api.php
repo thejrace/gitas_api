@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BusController;
+use App\Http\Controllers\Api\FtsVersionController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\PermissionTypeController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\Api\UserPermissionController;
 
 Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
     Route::resource('users', UserController::class);
+    Route::resource('ftsVersions', FtsVersionController::class);
     Route::resource('buses', BusController::class);
 
     Route::resource('permissions', PermissionController::class);
