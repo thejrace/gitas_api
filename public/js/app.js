@@ -4279,6 +4279,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetable-2/src/components/Vuetable */ "./node_modules/vuetable-2/src/components/Vuetable.vue");
+/* harmony import */ var vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetable-2/src/components/VuetablePagination */ "./node_modules/vuetable-2/src/components/VuetablePagination.vue");
+/* harmony import */ var _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vuetable-styles.js */ "./resources/js/components/vuetable-styles.js");
+/* harmony import */ var vue_events__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-events */ "./node_modules/vue-events/dist/index.js");
+/* harmony import */ var vue_events__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_events__WEBPACK_IMPORTED_MODULE_4__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4336,53 +4341,135 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
+
+
+
+Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     createUrl: String
   },
-  data: function data() {
-    return {
-      items: []
-    };
+  components: {
+    Vuetable: vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_1__["default"],
+    VuetablePagination: vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$events.$on('filter-set', function (eventData) {
+      return _this.onFilterSet(eventData);
+    });
+    this.$events.$on('filter-reset', function (e) {
+      return _this.onFilterReset();
+    });
   },
   methods: {
-    changeStatusAction: function changeStatusAction(item) {
-      console.log(item);
+    transform: function transform(data) {
+      return this.vuetableTransformResponse(data);
     },
-    deleteAction: function deleteAction(item) {},
-    fetch: function () {
-      var _fetch = _asyncToGenerator(
+    onFilterSet: function onFilterSet(filterText) {
+      var _this2 = this;
+
+      this.moreParams = {
+        'filter': filterText
+      };
+      Vue.nextTick(function () {
+        return _this2.$refs.vuetable.refresh();
+      });
+    },
+    onFilterReset: function onFilterReset() {
+      var _this3 = this;
+
+      this.moreParams = {};
+      Vue.nextTick(function () {
+        return _this3.$refs.vuetable.refresh();
+      });
+    },
+    onPaginationData: function onPaginationData(paginationData) {
+      this.$refs.pagination.setPaginationData(paginationData);
+    },
+    onChangePage: function onChangePage(page) {
+      this.$refs.vuetable.changePage(page);
+    },
+    onAction: function onAction(action, data, index) {
+      switch (action) {
+        case 'edit-item':
+          location.href = "/routeScannerForm/" + data.id;
+          break;
+
+        case 'delete-item':
+          var c = confirm('Are you şur?');
+
+          if (c) {
+            this.deleteItem(data.id);
+          }
+
+          break;
+
+        case 'preview-item':
+          location.href = "/routeScanners/preview/" + data.code;
+          break;
+      }
+    },
+    deleteItem: function () {
+      var _deleteItem = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(dataId) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios.get('/api/routeScanners');
+                return window.axios["delete"]('/api/routeScanners/' + dataId);
 
               case 2:
                 response = _context.sent;
-                this.items = response.data.data;
+                console.log(response);
 
-              case 4:
+                if (response.data.data.hasOwnProperty('success')) {
+                  window.location.reload(true);
+                }
+
+              case 5:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee);
       }));
 
-      function fetch() {
-        return _fetch.apply(this, arguments);
+      function deleteItem(_x) {
+        return _deleteItem.apply(this, arguments);
       }
 
-      return fetch;
+      return deleteItem;
     }()
   },
-  mounted: function mounted() {
-    this.fetch();
+  data: function data() {
+    return {
+      css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+      fields: ['id', {
+        name: 'code',
+        title: 'Hat',
+        titleClass: 'center aligned',
+        dataClass: 'center aligned',
+        sortField: 'code'
+      }, {
+        name: '__slot:actions',
+        title: 'İşlemler',
+        titleClass: 'center aligned',
+        dataClass: 'center aligned'
+      }],
+      moreParams: {},
+      httpOptions: {
+        headers: {
+          'Authorization': window.axios.defaults.headers.common['Authorization']
+        }
+      }
+    };
   }
 });
 
@@ -48397,99 +48484,90 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "pricing-plans plans-3" },
-        _vm._l(_vm.items, function(item) {
-          return _c("div", { staticClass: "plan-container" }, [
-            _c(
-              "div",
+        [
+          _c("vue-table-filter-bar"),
+          _vm._v(" "),
+          _c("vuetable", {
+            ref: "vuetable",
+            attrs: {
+              "api-url": "routeScanners/dataTables",
+              fields: _vm.fields,
+              "pagination-path": "pagination",
+              "append-params": _vm.moreParams,
+              css: _vm.css.table,
+              "http-options": _vm.httpOptions
+            },
+            on: { "vuetable:pagination-data": _vm.onPaginationData },
+            scopedSlots: _vm._u([
               {
-                staticClass: "plan",
-                class: { green: item["status"], red: !item["status"] }
-              },
-              [
-                _c("div", { staticClass: "plan-header" }, [
-                  _c("div", { staticClass: "plan-title" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(item.code) +
-                        "\n                        "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "plan-features" }, [
-                  _c("ul", [
-                    _c("li", [
-                      _c("strong", [_vm._v(_vm._s())]),
-                      _vm._v(" kullanıcı tanımlı.")
+                key: "actions",
+                fn: function(props) {
+                  return [
+                    _c("div", { staticClass: "custom-actions" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ui basic button",
+                          on: {
+                            click: function($event) {
+                              return _vm.onAction(
+                                "preview-item",
+                                props.rowData,
+                                props.rowIndex
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icon-eye-open" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ui basic button",
+                          on: {
+                            click: function($event) {
+                              return _vm.onAction(
+                                "edit-item",
+                                props.rowData,
+                                props.rowIndex
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icon-pencil" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ui basic button",
+                          on: {
+                            click: function($event) {
+                              return _vm.onAction(
+                                "delete-item",
+                                props.rowData,
+                                props.rowIndex
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icon-remove" })]
+                      )
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "plan-actions" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn",
-                      class: {
-                        "btn-warning": item["status"],
-                        "btn-success": !item["status"]
-                      },
-                      attrs: { href: "javascript:;" },
-                      on: {
-                        click: function($event) {
-                          return _vm.changeStatusAction(item)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "icon",
-                        class: {
-                          "icon-stop": item["status"],
-                          "icon-play": !item["status"]
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-info",
-                      attrs: { href: "routeScannerForm/" + item.id }
-                    },
-                    [_c("i", { staticClass: "icon icon-edit" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-info",
-                      attrs: { href: "routeScanners/preview/" + item.code }
-                    },
-                    [_c("i", { staticClass: "icon icon-eye-open" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { href: "javascript:;" },
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteAction(item)
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "icon icon-remove" })]
-                  )
-                ])
-              ]
-            )
-          ])
-        }),
-        0
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("vuetable-pagination", {
+            ref: "pagination",
+            attrs: { css: _vm.css.pagination },
+            on: { "vuetable-pagination:change-page": _vm.onChangePage }
+          })
+        ],
+        1
       )
     ])
   ])

@@ -11,35 +11,36 @@
                 <a v-bind:href="createUrl"><button type="button" class="ui basic button btn btn-info"><i class="icon-plus"></i></button></a>
             </div>
 
-            <div class="pricing-plans plans-3">
-                <div class="plan-container" v-for="item in items">
-                    <div class="plan" v-bind:class="{ 'green':item['status'], 'red':!item['status'] }">
-                        <div class="plan-header">
-
-                            <div class="plan-title">
-                                {{ item.code }}
-                            </div> <!-- /plan-title -->
-
-                        </div> <!-- /plan-header -->
-
-                        <div class="plan-features">
-                            <ul>
-                                <li><strong>{{  }}</strong> kullanıcı tanımlı.</li>
-                            </ul>
-                        </div> <!-- /plan-features -->
-
-                        <div class="plan-actions">
-
-                            <a href="javascript:;" @click="changeStatusAction(item)" class="btn" v-bind:class="{ 'btn-warning':item['status'], 'btn-success':!item['status'] }" ><i class="icon" v-bind:class="{ 'icon-stop':item['status'], 'icon-play':!item['status'] }"></i></a>
-                            <a :href="'routeScannerForm/'+item.id" class="btn btn-info"><i class="icon icon-edit"></i></a>
-                            <a :href="'routeScanners/preview/'+item.code" class="btn btn-info"><i class="icon icon-eye-open"></i></a>
-                            <a href="javascript:;" @click="deleteAction(item)" class="btn btn-danger"><i class="icon icon-remove"></i></a>
-
-                        </div> <!-- /plan-actions -->
-
-                    </div> <!-- /plan -->
-                </div> <!-- /plan-container -->
-            </div> <!-- /pricing-plans -->
+            <div>
+                <vue-table-filter-bar></vue-table-filter-bar>
+                <vuetable ref="vuetable"
+                          api-url="routeScanners/dataTables"
+                          :fields="fields"
+                          pagination-path="pagination"
+                          :append-params="moreParams"
+                          :css="css.table"
+                          :http-options="httpOptions"
+                          @vuetable:pagination-data="onPaginationData"
+                >
+                    <template slot="actions" scope="props">
+                        <div class="custom-actions">
+                            <button class="ui basic button"
+                                    @click="onAction('preview-item', props.rowData, props.rowIndex)">
+                                <i class="icon-eye-open"></i>
+                            </button>
+                            <button class="ui basic button"
+                                    @click="onAction('edit-item', props.rowData, props.rowIndex)">
+                                <i class="icon-pencil"></i>
+                            </button>
+                            <button class="ui basic button"
+                                    @click="onAction('delete-item', props.rowData, props.rowIndex)">
+                                <i class="icon-remove"></i>
+                            </button>
+                        </div>
+                    </template>
+                </vuetable>
+                <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"  :css="css.pagination"></vuetable-pagination>
+            </div>
 
         </div>
         <!-- /widget-content -->
@@ -50,28 +51,96 @@
 </template>
 
 <script>
+    import Vuetable from 'vuetable-2/src/components/Vuetable';
+    import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
+    import CssConfig from './vuetable-styles.js';
+    import VueEvents from 'vue-events';
+
+    Vue.use(VueEvents);
+
+
     export default {
         props:{
             createUrl: String,
         },
-        data: () => ({
-            items: []
-        }),
-        methods: {
-            changeStatusAction(item){
-                console.log(item);
-            },
-            deleteAction(item){
-
-            },
-            async fetch(){
-                const response = await window.axios.get('/api/routeScanners');
-                this.items = response.data.data;
-            },
+        components: {
+            Vuetable,
+            VuetablePagination
         },
-        mounted(){
-            this.fetch();
+        mounted() {
+            this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
+            this.$events.$on('filter-reset', e => this.onFilterReset())
+        },
+        methods: {
+            transform(data){
+                return this.vuetableTransformResponse(data);
+            },
+            onFilterSet (filterText) {
+                this.moreParams = {
+                    'filter': filterText
+                };
+                Vue.nextTick( () => this.$refs.vuetable.refresh())
+            },
+            onFilterReset () {
+                this.moreParams = {}
+                Vue.nextTick( () => this.$refs.vuetable.refresh())
+            },
+            onPaginationData (paginationData) {
+                this.$refs.pagination.setPaginationData(paginationData)
+            },
+            onChangePage (page) {
+                this.$refs.vuetable.changePage(page)
+            },
+            onAction (action, data, index) {
+                switch( action ){
+                    case 'edit-item':
+                        location.href = "/routeScannerForm/"+data.id;
+                        break;
+                    case 'delete-item':
+                        var c = confirm('Are you şur?');
+                        if( c ){
+                            this.deleteItem(data.id);
+                        }
+                    break;
+                    case 'preview-item':
+                        location.href = "/routeScanners/preview/"+data.code;
+                        break;
+                }
+            },
+            async deleteItem( dataId ){
+                const response = await window.axios.delete('/api/routeScanners/'+dataId);
+                console.log(response);
+                if( response.data.data.hasOwnProperty('success') ){
+                    window.location.reload(true);
+                }
+            }
+        },
+        data(){
+            return {
+                css: CssConfig,
+                fields:[
+                    'id',
+                    {
+                        name: 'code',
+                        title:'Hat',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned',
+                        sortField: 'code'
+                    },
+                    {
+                        name: '__slot:actions',
+                        title: 'İşlemler',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned'
+                    },
+                ],
+                moreParams: {},
+                httpOptions: {
+                    headers: {
+                        'Authorization': window.axios.defaults.headers.common['Authorization']
+                    }
+                }
+            }
         }
-
     }
 </script>

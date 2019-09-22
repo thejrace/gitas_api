@@ -84,7 +84,7 @@ Route::middleware(['auth', 'permission:web_panel.enabled'])->group(function() {
 
     Route::prefix('routeScanners')->group(function() {
         Route::get('/', [RouteScannerController::class, 'index'])->name('routeScanners');
-        Route::get('dataTables', [RouteScannerController::class, 'index']);
+        Route::get('dataTables', [RouteScannerController::class, 'dataTables']);
         Route::get('preview/{route}', [RouteScannerPreviewController::class, 'index']);
     });
 
