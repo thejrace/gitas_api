@@ -74,6 +74,7 @@
                         <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-flag"></i><span>Filo Takip</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="">İzinler</a></li>
+                                <li><a href="{{route('ftsVersions.index')}}">Version Kontrol</a></li>
                             </ul>
                         </li>
 

@@ -12,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
  * @property int $type
  * @property string $name
  * @property int $status
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service query()
@@ -22,17 +21,13 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service whereType($value)
  * @mixin \Eloquent
- *
  * @property string $api_token
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service whereApiToken($value)
- *
  * @property int $interval
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service whereInterval($value)
- *
  * @property string|null $settings
+ * @property-read int|null $notifications_count
  */
 class Service extends Authenticatable
 {

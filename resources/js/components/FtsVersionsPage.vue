@@ -1,8 +1,8 @@
 <template>
 
     <div class="widget">
-        <div class="widget-header"> <i class="icon-compass"></i>
-            <h3> Kahyalar</h3>
+        <div class="widget-header"> <i class="icon-github"></i>
+            <h3> FTS Versiyon Kontrol</h3>
         </div>
         <!-- /widget-header -->
         <div class="widget-content">
@@ -14,7 +14,7 @@
             <div>
                 <vue-table-filter-bar></vue-table-filter-bar>
                 <vuetable ref="vuetable"
-                          api-url="routeScanners/dataTables"
+                          api-url="ftsVersions/dataTables"
                           :fields="fields"
                           pagination-path="pagination"
                           :append-params="moreParams"
@@ -24,10 +24,6 @@
                 >
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="ui basic button"
-                                    @click="onAction('preview-item', props.rowData, props.rowIndex)">
-                                <i class="icon-eye-open"></i>
-                            </button>
                             <button class="ui basic button"
                                     @click="onAction('edit-item', props.rowData, props.rowIndex)">
                                 <i class="icon-pencil"></i>
@@ -46,8 +42,6 @@
         <!-- /widget-content -->
     </div>
     <!-- /widget -->
-
-
 </template>
 
 <script>
@@ -94,21 +88,18 @@
             onAction (action, data, index) {
                 switch( action ){
                     case 'edit-item':
-                        location.href = "/routeScannerForm/"+data.id;
+                        location.href = "/ftsVersions/form/"+data.id;
                         break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
                         if( c ){
                             this.deleteItem(data.id);
                         }
-                    break;
-                    case 'preview-item':
-                        location.href = "/routeScanners/preview/"+data.code;
                         break;
                 }
             },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/routeScanners/'+dataId);
+                const response = await window.axios.delete('/api/ftsVersions/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -121,11 +112,28 @@
                 fields:[
                     'id',
                     {
-                        name: 'code',
-                        title:'Hat',
+                        name: 'major',
+                        title:'Major',
                         titleClass: 'center aligned',
-                        dataClass: 'center aligned',
-                        sortField: 'code'
+                        dataClass: 'center aligned'
+                    },
+                    {
+                        name: 'minor',
+                        title:'Minor',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned'
+                    },
+                    {
+                        name: 'patch',
+                        title:'Patch',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned'
+                    },
+                    {
+                        name: 'release_date',
+                        title:'Yayınlanma',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned'
                     },
                     {
                         name: '__slot:actions',

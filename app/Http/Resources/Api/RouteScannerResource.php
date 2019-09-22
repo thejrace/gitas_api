@@ -20,10 +20,9 @@ class RouteScannerResource extends JsonResource
         $model = $this->resource;
 
         return [
-            'id'             => $model->id,
-            'code'           => $model->code,
-            'status'         => $model->status,
-            'connected_user' => 3,
+            'id'     => $model->id,
+            'code'   => $model->code,
+            'status' => $model->status,
         ];
     }
 }
