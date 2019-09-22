@@ -2917,6 +2917,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     routeCode: String
@@ -2973,7 +2976,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _fetch = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, j;
+        var response, activeData, x, allData, routeData, filtered, j, _j;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2983,23 +2987,66 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                this.items = response.data.data;
-                this.timestamp = response.data.timestamp; // remove undefined buses with undefined status
+                activeData = JSON.parse(response.data.data);
+                this.items = [];
 
-                for (j = 0; j < this.items.length; j++) {
-                  this.items[j].activeFlag = false;
+                for (x = 0; x < response.data.intersection_data.length; x++) {
+                  allData = response.data.intersection_data[x];
+                  routeData = JSON.parse(allData.data);
+                  filtered = [];
 
-                  if (this.items[j].status === 'UNDEFINED') {
-                    this.items.splice(j, 1);
+                  for (j = 0; j < routeData.data.length; j++) {
+                    routeData.data[j]['position'] += allData.total_diff;
+
+                    if (allData.direction === 0) {
+                      // console.log('POST: ' + routeData.data[j]['position'] + '   MERGEPOINT: ' + response.data.directionMergePoint + '    INT INDEX: ' + allData.intersection_index + '  FLAG: ' + (routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index ) );
+                      if (routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index) {
+                        filtered.push(routeData.data[j]);
+                      }
+                    } else {
+                      if (routeData.data[j]['position'] > response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index) {
+                        filtered.push(routeData.data[j]);
+                      }
+                    }
                   }
-                } // sort list to impersonate
 
+                  this.items = this.items.concat(filtered);
+                }
 
+                this.items = this.items.concat(activeData.data);
+                this.timestamp = activeData.timestamp; // remove undefined buses with undefined status
+
+                _j = 0;
+
+              case 9:
+                if (!(_j < this.items.length)) {
+                  _context.next = 17;
+                  break;
+                }
+
+                if (!(this.items[_j].status === 'UNDEFINED')) {
+                  _context.next = 13;
+                  break;
+                }
+
+                this.items.splice(_j, 1);
+                return _context.abrupt("continue", 14);
+
+              case 13:
+                this.items[_j].activeFlag = false;
+
+              case 14:
+                _j++;
+                _context.next = 9;
+                break;
+
+              case 17:
+                // sort list to impersonate
                 this.items.sort(function (a, b) {
                   return a.position < b.position ? 1 : -1;
                 });
 
-              case 7:
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -47325,6 +47372,10 @@ var render = function() {
                     _vm._v(_vm._s(item.code))
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "box code" }, [
+                    _vm._v(_vm._s(item.route))
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "box stop" }, [
                     _vm._v(_vm._s(item.stop))
                   ]),
@@ -47354,6 +47405,10 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "box code" }, [
                   _vm._v(_vm._s(item.code))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "box code" }, [
+                  _vm._v(_vm._s(item.route))
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "box stop" }, [
@@ -47407,6 +47462,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "box code" }, [
                         _vm._v(_vm._s(item.code))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "box code" }, [
+                        _vm._v(_vm._s(item.route))
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "box stop" }, [

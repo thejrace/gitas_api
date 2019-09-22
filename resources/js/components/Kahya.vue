@@ -10,6 +10,7 @@
                 <div class="status" v-bind:class="item.status" v-on="{ click:item.activeFlag ? stopImpersonate : null }"></div>
                 <div class="box position">{{ item.position}}</div>
                 <div class="box code">{{ item.code}}</div>
+                <div class="box code">{{ item.route}}</div>
                 <div class="box stop">{{ item.stop }}</div>
                 <div class="box direction" v-bind:class="{ 'backward':item['direction'], 'forward':!item['direction'] }">{{ ( item.direction === 0 ) ? 'Gidiş' : 'Dönüş' }}</div>
             </li>
@@ -18,6 +19,7 @@
                 <div class="status" v-bind:class="item.status"></div>
                 <div class="box position">{{ item.position}}</div>
                 <div class="box code">{{ item.code}}</div>
+                <div class="box code">{{ item.route}}</div>
                 <div class="box stop">{{ item.stop }}</div>
                 <div class="box direction" v-bind:class="{ 'backward':item['direction'], 'forward':!item['direction'] }">{{ ( item.direction === 0 ) ? 'Gidiş' : 'Dönüş' }}</div>
             </li>
@@ -36,6 +38,7 @@
                     <div class="status" v-bind:class="item.status"></div>
                     <div class="box position">{{ item.position}}</div>
                     <div class="box code">{{ item.code}}</div>
+                    <div class="box code">{{ item.route}}</div>
                     <div class="box stop">{{ item.stop }}</div>
                     <div class="box direction" v-bind:class="{ 'backward':item['direction'], 'forward':!item['direction'] }">{{ ( item.direction === 0 ) ? 'Gidiş' : 'Dönüş' }}</div>
                 </li>
@@ -71,6 +74,7 @@
         methods: {
             stopImpersonate(){
                 this.impersonateFlag = false;
+
                 this.fetch();  // @todo find a way to immutable clone an array
                 this.forwardList = [];
                 this.backwardList = [];
@@ -106,15 +110,40 @@
             async fetch() {
                 const response = await window.axios.get('/api/downloadRouteScannerData/'+this.routeCode);
 
-                this.items = response.data.data;
-                this.timestamp = response.data.timestamp;
+                let activeData = JSON.parse(response.data.data);
+
+                this.items = [];
+
+                for( let x = 0; x < response.data.intersection_data.length; x++ ){
+                    let allData = response.data.intersection_data[x];
+                    let routeData = JSON.parse(allData.data);
+                    var filtered = [];
+                    for( let j = 0; j < routeData.data.length; j++ ){
+                        routeData.data[j]['position'] += allData.total_diff;
+                        if( allData.direction === 0 ){
+                            // console.log('POST: ' + routeData.data[j]['position'] + '   MERGEPOINT: ' + response.data.directionMergePoint + '    INT INDEX: ' + allData.intersection_index + '  FLAG: ' + (routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index ) );
+                            if( routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index  ){
+                                filtered.push( routeData.data[j] );
+                            }
+                        } else {
+                            if( routeData.data[j]['position'] > response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index  ){
+                                filtered.push( routeData.data[j] );
+                            }
+                        }
+                    }
+
+                    this.items = this.items.concat(filtered);
+                }
+                this.items = this.items.concat(activeData.data);
+                this.timestamp = activeData.timestamp;
 
                 // remove undefined buses with undefined status
                 for( let j = 0; j < this.items.length; j++ ) {
-                    this.items[j].activeFlag = false;
                     if (this.items[j].status === 'UNDEFINED') {
                         this.items.splice(j, 1);
+                        continue;
                     }
+                    this.items[j].activeFlag = false;
                 }
                 // sort list to impersonate
                 this.items.sort((a, b) => (a.position < b.position ? 1 : -1));

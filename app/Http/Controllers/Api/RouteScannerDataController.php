@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FailJSONResponseResource;
 use App\Http\Resources\SuccessJSONResponseResource;
+use App\Route;
+use App\RouteIntersection;
+use App\RouteStop;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,8 +45,78 @@ class RouteScannerDataController extends Controller
         return new SuccessJSONResponseResource(null);
     }
 
+    /**
+     * Return the route scanenr data with intersected route's data
+     *
+     * @param Request $request
+     * @param $route
+     *
+     * @return string
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function download(Request $request, $route)
     {
-        return Storage::get($route . '.json');
+        // check route
+        $routeQuery = Route::query();
+        $routeData  = $routeQuery->where('code', $route)->pluck('id');
+
+        if ($routeData[0]) {
+            // download stops to determine intersection points
+            $routeStopsQuery = RouteStop::query();
+            $routeStops      = $routeStopsQuery->where('route_id', $routeData[0])
+                ->get();
+
+            // find direction merge point like RouteMap
+            $prevDir             = 0;
+            $directionMergePoint = -1;
+
+            foreach ($routeStops as $stop) {
+                if ($stop->direction !== $prevDir) {
+                    break;
+                }
+                $prevDir = $stop->direction;
+                $directionMergePoint++;
+            }
+
+            // download intersections
+            $intersectionQuery = RouteIntersection::query();
+            $intersections     = $intersectionQuery->where('active_route_id', $routeData[0])
+                ->get(['intersected_route_id', 'direction', 'stop_name', 'total_diff'])
+                ->all();
+
+            $output = [
+                'intersection_data'   => [],
+                'data'                => Storage::get($route . '.json'),
+                'directionMergePoint' => $directionMergePoint,
+            ];
+
+            /** @var RouteIntersection $intersection */
+            foreach ($intersections as $intersection) {
+                try {
+                    $data = Storage::get($intersection->intersectedRoute->code . '.json');
+
+                    // find the position of intersection stop in the active route's route map
+                    $j = ($intersection->direction == 0) ? 0 : $directionMergePoint;
+                    for (; $j < count($routeStops); $j++) {
+                        if ($routeStops[$j]->name === $intersection->stop_name) {
+                            break;
+                        }
+                    }
+                    $output['intersection_data'][] = [
+                        'intersected_route'  => $intersection->intersectedRoute->code,
+                        'total_diff'         => $intersection->total_diff,
+                        'direction'          => $intersection->direction,
+                        'intersection_index' => $j,
+                        'data'               => $data ?? '',
+                    ];
+                } catch (FileNotFoundException $e) {
+                }
+            }
+
+            return response()->json($output);
+        }
+
+        return '[]';
     }
 }
