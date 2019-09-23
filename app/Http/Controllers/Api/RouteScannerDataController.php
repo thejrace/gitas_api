@@ -10,6 +10,7 @@ use App\RouteIntersection;
 use App\RouteStop;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class RouteScannerDataController extends Controller
@@ -57,15 +58,22 @@ class RouteScannerDataController extends Controller
      */
     public function download(Request $request, $route)
     {
-        // check route
-        $routeQuery = Route::query();
-        $routeData  = $routeQuery->where('code', $route)->pluck('id');
+        $routeData = Cache::rememberForever('route_data?' . $route, function() use ($route) {
+            // check route
+            $routeQuery = Route::query();
+            $routeData = $routeQuery->where('code', $route)->pluck('id');
+
+            return $routeData;
+        });
 
         if ($routeData[0]) {
-            // download stops to determine intersection points
-            $routeStopsQuery = RouteStop::query();
-            $routeStops      = $routeStopsQuery->where('route_id', $routeData[0])
-                ->get();
+            $routeStops = Cache::rememberForever('route_stops_' . $route, function() use ($routeData) {
+                // download stops to determine intersection points
+                $routeStopsQuery = RouteStop::query();
+
+                return $routeStopsQuery->where('route_id', $routeData[0])
+                    ->get();
+            });
 
             // find direction merge point like RouteMap
             $prevDir             = 0;
@@ -79,11 +87,13 @@ class RouteScannerDataController extends Controller
                 $directionMergePoint++;
             }
 
-            // download intersections
-            $intersectionQuery = RouteIntersection::query();
-            $intersections     = $intersectionQuery->where('active_route_id', $routeData[0])
-                ->get(['intersected_route_id', 'direction', 'stop_name', 'total_diff'])
-                ->all();
+            $intersections = Cache::rememberForever('intersections_' . $route, function() use ($routeData) {
+                // download intersections
+                $intersectionQuery = RouteIntersection::query();
+                return $intersectionQuery->where('active_route_id', $routeData[0])
+                    ->get(['intersected_route_id', 'direction', 'stop_name', 'total_diff'])
+                    ->all();
+            });
 
             $output = [
                 'intersection_data'   => [],

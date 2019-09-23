@@ -2891,86 +2891,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     routeCode: String
   },
   mounted: function mounted() {
     this.fetch();
+    this.timer = setInterval(this.fetch, 60000);
   },
   data: function data() {
     return {
+      shown: [],
       items: [],
       impersonateFlag: false,
       forwardList: [],
       backwardList: [],
-      timestamp: null
+      timestamp: null,
+      timer: null,
+      impersonatedBusCode: null
     };
   },
   methods: {
-    stopImpersonate: function stopImpersonate() {
-      this.impersonateFlag = false;
-      this.fetch(); // @todo find a way to immutable clone an array
+    impersonateV2: function impersonateV2(busCode) {
+      if (this.impersonateFlag) return;
+      this.shown = [];
+      var index;
 
-      this.forwardList = [];
-      this.backwardList = [];
-    },
-    impersonate: function impersonate(bus, index) {
-      this.impersonateFlag = true;
-      var x = index,
-          k = index;
-      var prev, next; // active bus
+      for (index = 0; index < this.items.length; index++) {
+        if (this.items[index].code === busCode) {
+          this.impersonatedBusCode = busCode;
+          this.items[index].activeFlag = true;
 
-      bus.activeFlag = true;
-      this.forwardList.push(bus); // find its adjacent buses
-
-      for (var j = 0; j < 3; j++) {
-        k--;
-        x++;
-        prev = this.items[x];
-        next = this.items[k];
-
-        if (prev) {
-          prev.position = prev.position - bus.position;
-          this.backwardList.push(prev);
-        }
-
-        if (next) {
-          next.position = '+' + (next.position - bus.position);
-          this.forwardList.push(next);
+          for (var k = -5; k < 6; k++) {
+            if (this.items[index - k] !== undefined) {
+              // skip active bus
+              if (k !== 0) this.items[index - k].position -= this.items[index].position;
+              this.shown.push(this.items[index - k]);
+            }
+          }
         }
       }
 
-      this.forwardList.reverse();
+      this.shown.reverse();
+      this.impersonateFlag = true;
     },
     fetch: function () {
       var _fetch = _asyncToGenerator(
@@ -2999,7 +2962,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     routeData.data[j]['position'] += allData.total_diff;
 
                     if (allData.direction === 0) {
-                      // console.log('POST: ' + routeData.data[j]['position'] + '   MERGEPOINT: ' + response.data.directionMergePoint + '    INT INDEX: ' + allData.intersection_index + '  FLAG: ' + (routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index ) );
                       if (routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index) {
                         filtered.push(routeData.data[j]);
                       }
@@ -3046,7 +3008,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return a.position < b.position ? 1 : -1;
                 });
 
-              case 18:
+                if (this.impersonateFlag) {
+                  this.impersonateV2(this.impersonatedBusCode);
+                } else {
+                  this.shown = this.items;
+                }
+
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -47428,28 +47396,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.impersonateFlag
-    ? _c("div", [
-        _c("div", { staticClass: "timestamp" }, [
-          _vm._v(" " + _vm._s(_vm.timestamp) + " ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "ul",
-          { staticClass: "kahya-container" },
-          [
-            _vm._l(_vm.forwardList, function(item) {
+  return _c("div", [
+    _vm.shown.length
+      ? _c("div", [
+          _c("div", { staticClass: "timestamp" }, [
+            _vm._v(" " + _vm._s(_vm.timestamp) + " ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "kahya-container impersonatable" },
+            _vm._l(_vm.shown, function(item) {
               return _c(
                 "li",
-                { staticClass: "clearfix", class: { active: item.activeFlag } },
+                {
+                  staticClass: "clearfix",
+                  class: { active: item.activeFlag },
+                  on: {
+                    click: function($event) {
+                      return _vm.impersonateV2(item.code)
+                    }
+                  }
+                },
                 [
-                  _c(
-                    "div",
-                    _vm._g(
-                      { staticClass: "status", class: item.status },
-                      { click: item.activeFlag ? _vm.stopImpersonate : null }
-                    )
-                  ),
+                  _c("div", { staticClass: "status", class: item.status }),
                   _vm._v(" "),
                   _c("div", { staticClass: "box position" }, [
                     _vm._v(_vm._s(item.position))
@@ -47481,107 +47451,11 @@ var render = function() {
                 ]
               )
             }),
-            _vm._v(" "),
-            _vm._l(_vm.backwardList, function(item) {
-              return _c("li", { staticClass: "clearfix" }, [
-                _c("div", { staticClass: "status", class: item.status }),
-                _vm._v(" "),
-                _c("div", { staticClass: "box position" }, [
-                  _vm._v(_vm._s(item.position))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "box code" }, [
-                  _vm._v(_vm._s(item.code))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "box code" }, [
-                  _vm._v(_vm._s(item.route))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "box stop" }, [
-                  _vm._v(_vm._s(item.stop))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "box direction",
-                    class: {
-                      backward: item["direction"],
-                      forward: !item["direction"]
-                    }
-                  },
-                  [_vm._v(_vm._s(item.direction === 0 ? "Gidiş" : "Dönüş"))]
-                )
-              ])
-            })
-          ],
-          2
-        )
-      ])
-    : _c("div", [
-        _vm.items.length
-          ? _c("div", [
-              _c("div", { staticClass: "timestamp" }, [
-                _vm._v(" " + _vm._s(_vm.timestamp) + " ")
-              ]),
-              _vm._v(" "),
-              _c(
-                "ul",
-                { staticClass: "kahya-container impersonatable" },
-                _vm._l(_vm.items, function(item, index) {
-                  return _c(
-                    "li",
-                    {
-                      staticClass: "clearfix",
-                      on: {
-                        click: function($event) {
-                          return _vm.impersonate(item, index)
-                        }
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "status", class: item.status }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "box position" }, [
-                        _vm._v(_vm._s(item.position))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "box code" }, [
-                        _vm._v(_vm._s(item.code))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "box code" }, [
-                        _vm._v(_vm._s(item.route))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "box stop" }, [
-                        _vm._v(_vm._s(item.stop))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "box direction",
-                          class: {
-                            backward: item["direction"],
-                            forward: !item["direction"]
-                          }
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(item.direction === 0 ? "Gidiş" : "Dönüş")
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                }),
-                0
-              )
-            ])
-          : _c("div", [_vm._v("\n        Veri yok!\n    ")])
-      ])
+            0
+          )
+        ])
+      : _c("div", [_vm._v("\n        Veri yok!\n    ")])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

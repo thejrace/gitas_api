@@ -1,40 +1,12 @@
 <template>
 
-    <div v-if="impersonateFlag">
-
-        <div class="timestamp"> {{ timestamp }} </div>
-
-        <ul class="kahya-container">
-
-            <li v-for="item in forwardList" class="clearfix" v-bind:class="{ active:item.activeFlag }" >
-                <div class="status" v-bind:class="item.status" v-on="{ click:item.activeFlag ? stopImpersonate : null }"></div>
-                <div class="box position">{{ item.position}}</div>
-                <div class="box code">{{ item.code}}</div>
-                <div class="box code">{{ item.route}}</div>
-                <div class="box stop">{{ item.stop }}</div>
-                <div class="box direction" v-bind:class="{ 'backward':item['direction'], 'forward':!item['direction'] }">{{ ( item.direction === 0 ) ? 'Gidiş' : 'Dönüş' }}</div>
-            </li>
-
-            <li v-for="item in backwardList" class="clearfix" >
-                <div class="status" v-bind:class="item.status"></div>
-                <div class="box position">{{ item.position}}</div>
-                <div class="box code">{{ item.code}}</div>
-                <div class="box code">{{ item.route}}</div>
-                <div class="box stop">{{ item.stop }}</div>
-                <div class="box direction" v-bind:class="{ 'backward':item['direction'], 'forward':!item['direction'] }">{{ ( item.direction === 0 ) ? 'Gidiş' : 'Dönüş' }}</div>
-            </li>
-
-        </ul>
-
-    </div>
-
     <div v-else>
-        <div v-if="items.length">
+        <div v-if="shown.length">
 
             <div class="timestamp"> {{ timestamp }} </div>
 
             <ul class="kahya-container impersonatable">
-                <li v-for="(item, index) in items" class="clearfix" @click="impersonate(item, index)">
+                <li v-for="item in shown" class="clearfix" @click="impersonateV2(item.code)" v-bind:class="{ active:item.activeFlag }" >
                     <div class="status" v-bind:class="item.status"></div>
                     <div class="box position">{{ item.position}}</div>
                     <div class="box code">{{ item.code}}</div>
@@ -51,7 +23,6 @@
 
     </div>
 
-
 </template>
 
 <script>
@@ -61,51 +32,40 @@
         },
         mounted() {
             this.fetch();
+            this.timer = setInterval( this.fetch, 60000 );
         },
 
         data: () => ({
+            shown: [],
             items: [],
             impersonateFlag:false,
             forwardList:[],
             backwardList:[],
             timestamp: null,
+            timer: null,
+            impersonatedBusCode: null,
         }),
 
         methods: {
-            stopImpersonate(){
-                this.impersonateFlag = false;
-
-                this.fetch();  // @todo find a way to immutable clone an array
-                this.forwardList = [];
-                this.backwardList = [];
-            },
-            impersonate(bus, index){
-                this.impersonateFlag = true;
-                let x = index, k = index;
-                let prev, next;
-
-                // active bus
-                bus.activeFlag = true;
-                this.forwardList.push(bus);
-
-                // find its adjacent buses
-                for( let j = 0; j < 3; j++ ){
-                    k--;
-                    x++;
-                    prev = this.items[x];
-                    next = this.items[k];
-
-                    if( prev ){
-                        prev.position =  prev.position - bus.position;
-                        this.backwardList.push(prev);
-                    }
-                    if( next ){
-                        next.position = '+' + (next.position - bus.position);
-                        this.forwardList.push(next);
+            impersonateV2(busCode){
+                if( this.impersonateFlag ) return;
+                this.shown = [];
+                let index;
+                for( index = 0; index < this.items.length; index++ ){
+                    if( this.items[index].code === busCode ){
+                        this.impersonatedBusCode = busCode;
+                        this.items[index].activeFlag = true;
+                        for( let k = -5; k < 6; k++ ){
+                            if( this.items[index-k] !== undefined ){
+                                // skip active bus
+                                if( k !== 0 ) this.items[index-k].position -= this.items[index].position;
+                                this.shown.push(this.items[index-k]);
+                            }
+                        }
                     }
                 }
-
-                this.forwardList.reverse();
+                this.shown.reverse();
+                this.impersonateFlag = true;
             },
             async fetch() {
                 const response = await window.axios.get('/api/downloadRouteScannerData/'+this.routeCode);
@@ -121,7 +81,6 @@
                     for( let j = 0; j < routeData.data.length; j++ ){
                         routeData.data[j]['position'] += allData.total_diff;
                         if( allData.direction === 0 ){
-                            // console.log('POST: ' + routeData.data[j]['position'] + '   MERGEPOINT: ' + response.data.directionMergePoint + '    INT INDEX: ' + allData.intersection_index + '  FLAG: ' + (routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index ) );
                             if( routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index  ){
                                 filtered.push( routeData.data[j] );
                             }
@@ -147,6 +106,13 @@
                 }
                 // sort list to impersonate
                 this.items.sort((a, b) => (a.position < b.position ? 1 : -1));
+
+                if( this.impersonateFlag ){
+                    this.impersonateV2(this.impersonatedBusCode);
+                } else {
+                    this.shown = this.items;
+                }
+
             }
         }
     }
