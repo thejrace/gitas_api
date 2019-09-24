@@ -2897,7 +2897,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.fetch();
-    this.timer = setInterval(this.fetch, 60000);
+    this.timer = setInterval(this.fetch, 10000);
   },
   data: function data() {
     return {
@@ -2913,7 +2913,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     impersonateV2: function impersonateV2(busCode) {
-      if (this.impersonateFlag) return;
+      if (this.impersonateFlag && this.impersonatedBusCode === busCode) return;
       this.shown = [];
       var index;
 
