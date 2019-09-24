@@ -108,7 +108,7 @@
                     ? alert('Success')
                     : alert('Error');
 
-                location.reload();
+                this.$refs.vuetable.reload();
             }
         },
         data(){

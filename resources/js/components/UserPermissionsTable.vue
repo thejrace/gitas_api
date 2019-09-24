@@ -12,7 +12,7 @@
         >
             <template slot="actions" scope="props">
                 <div class="custom-actions">
-                    <button class="ui basic button"
+                    <button class="btn btn-danger"
                             @click="onAction('delete-item', props.rowData, props.rowIndex)">
                         <i class="icon-remove"></i>
                     </button>
