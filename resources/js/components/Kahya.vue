@@ -48,7 +48,7 @@
 
         methods: {
             impersonateV2(busCode){
-                if( this.impersonateFlag && this.impersonatedBusCode === busCode ) return;
+                //if( this.impersonateFlag && this.impersonatedBusCode === busCode ) return;
                 this.shown = [];
                 let index;
                 for( index = 0; index < this.items.length; index++ ){
