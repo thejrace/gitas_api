@@ -2,10 +2,10 @@
     <div class="filter-bar ui basic segment grid">
         <div class="ui form">
             <div class="inline field">
-                <label>Search for:</label>
-                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="search">
-                <button class="ui primary button" @click="doFilter">Go</button>
-                <button class="ui button" @click="resetFilter">Reset</button>
+                <label>Ara:</label>
+                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="Arama..">
+                <button class="btn" @click="doFilter" title="Ara"><i class="icon-search"></i></button>
+                <button class="btn" @click="resetFilter" title="Sıfırla"><i class="icon-refresh"></i></button>
             </div>
         </div>
     </div>

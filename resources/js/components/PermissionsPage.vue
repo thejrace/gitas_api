@@ -9,7 +9,7 @@
         <div class="widget-content">
 
             <div class="top-nav">
-                <a v-bind:href="createUrl"><button type="button" class="ui basic button btn btn-info"><i class="icon-plus"></i></button></a>
+                <a v-bind:href="createUrl"><button type="button" class="btn btn-info"><i class="icon-plus"></i></button></a>
             </div>
 
             <div>
@@ -25,11 +25,11 @@
                 >
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="ui basic button"
+                            <button class="btn"
                                     @click="onAction('edit-item', props.rowData, props.rowIndex)">
                                 <i class="icon-pencil"></i>
                             </button>
-                            <button class="ui basic button"
+                            <button class="btn"
                                     @click="onAction('delete-item', props.rowData, props.rowIndex)">
                                 <i class="icon-remove"></i>
                             </button>

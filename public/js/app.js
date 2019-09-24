@@ -47995,7 +47995,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           attrs: { title: "Alt İzinler" },
                           on: {
                             click: function($event) {
@@ -48013,7 +48013,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48030,7 +48030,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48146,7 +48146,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48163,7 +48163,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48201,10 +48201,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "button",
-      {
-        staticClass: "ui basic button btn btn-info",
-        attrs: { type: "button" }
-      },
+      { staticClass: "btn btn-info", attrs: { type: "button" } },
       [_c("i", { staticClass: "icon-plus" })]
     )
   }
@@ -49680,7 +49677,7 @@ var render = function() {
   return _c("div", { staticClass: "filter-bar ui basic segment grid" }, [
     _c("div", { staticClass: "ui form" }, [
       _c("div", { staticClass: "inline field" }, [
-        _c("label", [_vm._v("Search for:")]),
+        _c("label", [_vm._v("Ara:")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -49692,7 +49689,7 @@ var render = function() {
             }
           ],
           staticClass: "three wide column",
-          attrs: { type: "text", placeholder: "search" },
+          attrs: { type: "text", placeholder: "Arama.." },
           domProps: { value: _vm.filterText },
           on: {
             keyup: function($event) {
@@ -49715,14 +49712,22 @@ var render = function() {
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "ui primary button", on: { click: _vm.doFilter } },
-          [_vm._v("Go")]
+          {
+            staticClass: "btn",
+            attrs: { title: "Ara" },
+            on: { click: _vm.doFilter }
+          },
+          [_c("i", { staticClass: "icon-search" })]
         ),
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "ui button", on: { click: _vm.resetFilter } },
-          [_vm._v("Reset")]
+          {
+            staticClass: "btn",
+            attrs: { title: "Sıfırla" },
+            on: { click: _vm.resetFilter }
+          },
+          [_c("i", { staticClass: "icon-refresh" })]
         )
       ])
     ])
