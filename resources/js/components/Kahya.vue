@@ -32,7 +32,7 @@
         },
         mounted() {
             this.fetch();
-            this.timer = setInterval( this.fetch, 10000 );
+            this.timer = setInterval( this.fetch, 30000 );
         },
 
         data: () => ({
