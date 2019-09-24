@@ -2913,7 +2913,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     impersonateV2: function impersonateV2(busCode) {
-      if (this.impersonateFlag && this.impersonatedBusCode === busCode) return;
+      //if( this.impersonateFlag && this.impersonatedBusCode === busCode ) return;
       this.shown = [];
       var index;
 
