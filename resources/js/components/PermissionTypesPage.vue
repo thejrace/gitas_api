@@ -23,15 +23,15 @@
                           @vuetable:pagination-data="onPaginationData">
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="ui basic button" title="Alt İzinler"
+                            <button class="btn" title="Alt İzinler"
                                     @click="onAction('show-permissions', props.rowData, props.rowIndex)">
                                 <i class="icon-key"></i>
                             </button>
-                            <button class="ui basic button"
+                            <button class="btn"
                                     @click="onAction('edit-item', props.rowData, props.rowIndex)">
                                 <i class="icon-pencil"></i>
                             </button>
-                            <button class="ui basic button"
+                            <button class="btn"
                                     @click="onAction('delete-item', props.rowData, props.rowIndex)">
                                 <i class="icon-remove"></i>
                             </button>

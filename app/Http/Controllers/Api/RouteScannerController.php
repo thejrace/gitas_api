@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\ServiceStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RouteScannerStoreFormRequest;
 use App\Http\Requests\Api\RouteScannerUpdateFormRequest;
@@ -59,6 +60,60 @@ class RouteScannerController extends Controller
     public function update(RouteScannerUpdateFormRequest $request, RouteScanner $model)
     {
         $model->update($request->all());
+
+        return new SuccessJSONResponseResource(null);
+    }
+
+    /**
+     * Start the given scanner
+     *
+     * @param RouteScanner $model
+     *
+     * @return SuccessJSONResponseResource
+     */
+    public function start(RouteScanner $model)
+    {
+        $model->update(['status' => ServiceStatus::ACTIVE]);
+
+        return new SuccessJSONResponseResource(null);
+    }
+
+    /**
+     * Stop the given scanner
+     *
+     * @param RouteScanner $model
+     *
+     * @return SuccessJSONResponseResource
+     */
+    public function stop(RouteScanner $model)
+    {
+        $model->update(['status' => ServiceStatus::IDLE]);
+
+        return new SuccessJSONResponseResource(null);
+    }
+
+    /**
+     * Start all scanners
+     *
+     * @return SuccessJSONResponseResource
+     */
+    public function startAll()
+    {
+        RouteScanner::where('status', ServiceStatus::IDLE)
+            ->update(['status' => ServiceStatus::ACTIVE]);
+
+        return new SuccessJSONResponseResource(null);
+    }
+
+    /**
+     * Stop all scanners
+     *
+     * @return SuccessJSONResponseResource
+     */
+    public function stopAll()
+    {
+        RouteScanner::where('status', ServiceStatus::ACTIVE)
+            ->update(['status' => ServiceStatus::IDLE]);
 
         return new SuccessJSONResponseResource(null);
     }

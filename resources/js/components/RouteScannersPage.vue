@@ -9,6 +9,8 @@
 
             <div class="top-nav">
                 <a v-bind:href="createUrl"><button type="button" class="ui basic button btn btn-info"><i class="icon-plus"></i></button></a>
+                <button type="button" class="btn btn-success" title="Tümünü Başlat" @click="batchUpdate('startAll')"><i class="icon-play"></i></button>
+                <button type="button" class="btn btn-danger" title="Tümünü Durdur" @click="batchUpdate('stopAll')"><i class="icon-stop"></i></button>
             </div>
 
             <div>
@@ -22,17 +24,20 @@
                           :http-options="httpOptions"
                           @vuetable:pagination-data="onPaginationData"
                 >
+                    <div slot="status-slot" slot-scope="props">
+                        <button v-if="props.rowData.status === 1" type="button" class="btn btn-danger" title="Durdur" @click="onAction('stop', props.rowData, props.rowIndex)"><i class="icon-stop"></i></button>
+                        <button v-else type="button" class="btn btn-success" title="Başlat" @click="onAction('start', props.rowData, props.rowIndex)"><i class="icon-play"></i></button>
+                    </div>
+
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="ui basic button"
-                                    @click="onAction('preview-item', props.rowData, props.rowIndex)">
+                            <a v-bind:href="'/routeScanners/preview/'+props.rowData.code" class="btn">
                                 <i class="icon-eye-open"></i>
-                            </button>
-                            <button class="ui basic button"
-                                    @click="onAction('edit-item', props.rowData, props.rowIndex)">
+                            </a>
+                            <a v-bind:href="'/routeScannerForm/'+props.rowData.id" class="btn">
                                 <i class="icon-pencil"></i>
-                            </button>
-                            <button class="ui basic button"
+                            </a>
+                            <button class="btn"
                                     @click="onAction('delete-item', props.rowData, props.rowIndex)">
                                 <i class="icon-remove"></i>
                             </button>
@@ -93,26 +98,33 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'edit-item':
-                        location.href = "/routeScannerForm/"+data.id;
-                        break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
                         if( c ){
                             this.deleteItem(data.id);
                         }
                     break;
-                    case 'preview-item':
-                        location.href = "/routeScanners/preview/"+data.code;
+                    case 'start':
+                        this.switchStatus(data.id, 'start');
+                        break;
+                    case 'stop':
+                        this.switchStatus(data.id, 'stop');
                         break;
                 }
             },
+            async switchStatus(id, newStatus){
+                await window.axios.put('/api/routeScanners/'+id+'/'+newStatus);
+                this.$refs.vuetable.reload();
+            },
+            async batchUpdate(action){
+                var c = confirm('Emin misin?');
+                if( !c ) return;
+                await window.axios.put('/api/routeScanners/'+action);
+                this.$refs.vuetable.reload();
+            },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/routeScanners/'+dataId);
-                console.log(response);
-                if( response.data.data.hasOwnProperty('success') ){
-                    window.location.reload(true);
-                }
+                await window.axios.delete('/api/routeScanners/'+dataId);
+                this.$refs.vuetable.reload();
             }
         },
         data(){
@@ -126,6 +138,13 @@
                         titleClass: 'center aligned',
                         dataClass: 'center aligned',
                         sortField: 'code'
+                    },
+                    {
+                        name: '__slot:status-slot',
+                        title:'Durum',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned',
+                        sortField: 'status'
                     },
                     {
                         name: '__slot:actions',

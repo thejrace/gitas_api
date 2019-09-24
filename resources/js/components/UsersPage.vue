@@ -24,15 +24,13 @@
                 >
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="ui basic button" title="İzinler"
-                                    @click="onAction('show-permissions', props.rowData, props.rowIndex)">
+                            <a v-bind:href="'/user_permissions/'+props.rowData.id" class="btn" title="İzinler">
                                 <i class="icon-key"></i>
-                            </button>
-                            <button class="ui basic button"
-                                    @click="onAction('edit-item', props.rowData, props.rowIndex)">
+                            </a>
+                            <a v-bind:href="'/users/form/'+props.rowData.id" class="btn" title="Düzenle" >
                                 <i class="icon-pencil"></i>
-                            </button>
-                            <button class="ui basic button"
+                            </a>
+                            <button class="btn"
                                     @click="onAction('delete-item', props.rowData, props.rowIndex)">
                                 <i class="icon-remove"></i>
                             </button>
@@ -91,12 +89,6 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'show-permissions':
-                        location.href = "/user_permissions/"+data.id;
-                        break;
-                    case 'edit-item':
-                        location.href = "/users/form/"+data.id;
-                        break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
                         if( c ){

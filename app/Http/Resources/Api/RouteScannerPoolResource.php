@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api;
 
+use App\RouteScanner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RouteScannerPoolResource extends JsonResource
@@ -15,6 +16,12 @@ class RouteScannerPoolResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        /** @var RouteScanner $model */
+        $model = $this->resource;
+
+        return [
+            'code'   => $model->code,
+            'status' => (bool)$model->status,
+        ];
     }
 }

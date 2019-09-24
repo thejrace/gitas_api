@@ -4310,6 +4310,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -4363,10 +4368,6 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     },
     onAction: function onAction(action, data, index) {
       switch (action) {
-        case 'edit-item':
-          location.href = "/routeScannerForm/" + data.id;
-          break;
-
         case 'delete-item':
           var c = confirm('Are you şur?');
 
@@ -4376,40 +4377,105 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
 
           break;
 
-        case 'preview-item':
-          location.href = "/routeScanners/preview/" + data.code;
+        case 'start':
+          this.switchStatus(data.id, 'start');
+          break;
+
+        case 'stop':
+          this.switchStatus(data.id, 'stop');
           break;
       }
     },
-    deleteItem: function () {
-      var _deleteItem = _asyncToGenerator(
+    switchStatus: function () {
+      var _switchStatus = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(dataId) {
-        var response;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id, newStatus) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.axios["delete"]('/api/routeScanners/' + dataId);
+                return window.axios.put('/api/routeScanners/' + id + '/' + newStatus);
 
               case 2:
-                response = _context.sent;
-                console.log(response);
+                this.$refs.vuetable.reload();
 
-                if (response.data.data.hasOwnProperty('success')) {
-                  window.location.reload(true);
-                }
-
-              case 5:
+              case 3:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
-      function deleteItem(_x) {
+      function switchStatus(_x, _x2) {
+        return _switchStatus.apply(this, arguments);
+      }
+
+      return switchStatus;
+    }(),
+    batchUpdate: function () {
+      var _batchUpdate = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(action) {
+        var c;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                c = confirm('Emin misin?');
+
+                if (c) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 3:
+                _context2.next = 5;
+                return window.axios.put('/api/routeScanners/' + action);
+
+              case 5:
+                this.$refs.vuetable.reload();
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function batchUpdate(_x3) {
+        return _batchUpdate.apply(this, arguments);
+      }
+
+      return batchUpdate;
+    }(),
+    deleteItem: function () {
+      var _deleteItem = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(dataId) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return window.axios["delete"]('/api/routeScanners/' + dataId);
+
+              case 2:
+                this.$refs.vuetable.reload();
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function deleteItem(_x4) {
         return _deleteItem.apply(this, arguments);
       }
 
@@ -4425,6 +4491,12 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
         titleClass: 'center aligned',
         dataClass: 'center aligned',
         sortField: 'code'
+      }, {
+        name: '__slot:status-slot',
+        title: 'Durum',
+        titleClass: 'center aligned',
+        dataClass: 'center aligned',
+        sortField: 'status'
       }, {
         name: '__slot:actions',
         title: 'İşlemler',
@@ -5188,14 +5260,14 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
               case 2:
                 response = _context3.sent;
                 response.data.data.success ? alert('Success') : alert('Error');
-                location.reload();
+                this.$refs.vuetable.reload();
 
               case 5:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, this);
       }));
 
       function changeServiceStatus(_x3, _x4) {
@@ -5764,8 +5836,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 
@@ -5819,14 +5889,6 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
     },
     onAction: function onAction(action, data, index) {
       switch (action) {
-        case 'show-permissions':
-          location.href = "/user_permissions/" + data.id;
-          break;
-
-        case 'edit-item':
-          location.href = "/users/form/" + data.id;
-          break;
-
         case 'delete-item':
           var c = confirm('Are you şur?');
 
@@ -46671,7 +46733,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "ui basic button",
+                      staticClass: "btn",
                       on: {
                         click: function($event) {
                           return _vm.onAction(
@@ -47933,7 +47995,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           attrs: { title: "Alt İzinler" },
                           on: {
                             click: function($event) {
@@ -47951,7 +48013,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -47968,7 +48030,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48084,7 +48146,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48101,7 +48163,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48139,10 +48201,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "button",
-      {
-        staticClass: "ui basic button btn btn-info",
-        attrs: { type: "button" }
-      },
+      { staticClass: "btn btn-info", attrs: { type: "button" } },
       [_c("i", { staticClass: "icon-plus" })]
     )
   }
@@ -48353,7 +48412,35 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "widget-content" }, [
       _c("div", { staticClass: "top-nav" }, [
-        _c("a", { attrs: { href: _vm.createUrl } }, [_vm._m(1)])
+        _c("a", { attrs: { href: _vm.createUrl } }, [_vm._m(1)]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            attrs: { type: "button", title: "Tümünü Başlat" },
+            on: {
+              click: function($event) {
+                return _vm.batchUpdate("startAll")
+              }
+            }
+          },
+          [_c("i", { staticClass: "icon-play" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger",
+            attrs: { type: "button", title: "Tümünü Durdur" },
+            on: {
+              click: function($event) {
+                return _vm.batchUpdate("stopAll")
+              }
+            }
+          },
+          [_c("i", { staticClass: "icon-stop" })]
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -48374,39 +48461,69 @@ var render = function() {
             on: { "vuetable:pagination-data": _vm.onPaginationData },
             scopedSlots: _vm._u([
               {
+                key: "status-slot",
+                fn: function(props) {
+                  return _c("div", {}, [
+                    props.rowData.status === 1
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            attrs: { type: "button", title: "Durdur" },
+                            on: {
+                              click: function($event) {
+                                return _vm.onAction(
+                                  "stop",
+                                  props.rowData,
+                                  props.rowIndex
+                                )
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "icon-stop" })]
+                        )
+                      : _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "button", title: "Başlat" },
+                            on: {
+                              click: function($event) {
+                                return _vm.onAction(
+                                  "start",
+                                  props.rowData,
+                                  props.rowIndex
+                                )
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "icon-play" })]
+                        )
+                  ])
+                }
+              },
+              {
                 key: "actions",
                 fn: function(props) {
                   return [
                     _c("div", { staticClass: "custom-actions" }, [
                       _c(
-                        "button",
+                        "a",
                         {
-                          staticClass: "ui basic button",
-                          on: {
-                            click: function($event) {
-                              return _vm.onAction(
-                                "preview-item",
-                                props.rowData,
-                                props.rowIndex
-                              )
-                            }
+                          staticClass: "btn",
+                          attrs: {
+                            href: "/routeScanners/preview/" + props.rowData.code
                           }
                         },
                         [_c("i", { staticClass: "icon-eye-open" })]
                       ),
                       _vm._v(" "),
                       _c(
-                        "button",
+                        "a",
                         {
-                          staticClass: "ui basic button",
-                          on: {
-                            click: function($event) {
-                              return _vm.onAction(
-                                "edit-item",
-                                props.rowData,
-                                props.rowIndex
-                              )
-                            }
+                          staticClass: "btn",
+                          attrs: {
+                            href: "/routeScannerForm/" + props.rowData.id
                           }
                         },
                         [_c("i", { staticClass: "icon-pencil" })]
@@ -48415,7 +48532,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -48591,7 +48708,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn button",
+                          staticClass: "btn",
                           attrs: { title: "Duraklar" },
                           on: {
                             click: function($event) {
@@ -48609,7 +48726,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn button",
+                          staticClass: "btn",
                           attrs: { title: "Hat Kesişimleri" },
                           on: {
                             click: function($event) {
@@ -49372,7 +49489,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "ui basic button",
+                      staticClass: "btn btn-danger",
                       on: {
                         click: function($event) {
                           return _vm.onAction(
@@ -49454,35 +49571,24 @@ var render = function() {
                   return [
                     _c("div", { staticClass: "custom-actions" }, [
                       _c(
-                        "button",
+                        "a",
                         {
-                          staticClass: "ui basic button",
-                          attrs: { title: "İzinler" },
-                          on: {
-                            click: function($event) {
-                              return _vm.onAction(
-                                "show-permissions",
-                                props.rowData,
-                                props.rowIndex
-                              )
-                            }
+                          staticClass: "btn",
+                          attrs: {
+                            href: "/user_permissions/" + props.rowData.id,
+                            title: "İzinler"
                           }
                         },
                         [_c("i", { staticClass: "icon-key" })]
                       ),
                       _vm._v(" "),
                       _c(
-                        "button",
+                        "a",
                         {
-                          staticClass: "ui basic button",
-                          on: {
-                            click: function($event) {
-                              return _vm.onAction(
-                                "edit-item",
-                                props.rowData,
-                                props.rowIndex
-                              )
-                            }
+                          staticClass: "btn",
+                          attrs: {
+                            href: "/users/form/" + props.rowData.id,
+                            title: "Düzenle"
                           }
                         },
                         [_c("i", { staticClass: "icon-pencil" })]
@@ -49491,7 +49597,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -49571,7 +49677,7 @@ var render = function() {
   return _c("div", { staticClass: "filter-bar ui basic segment grid" }, [
     _c("div", { staticClass: "ui form" }, [
       _c("div", { staticClass: "inline field" }, [
-        _c("label", [_vm._v("Search for:")]),
+        _c("label", [_vm._v("Ara:")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -49583,7 +49689,7 @@ var render = function() {
             }
           ],
           staticClass: "three wide column",
-          attrs: { type: "text", placeholder: "search" },
+          attrs: { type: "text", placeholder: "Arama.." },
           domProps: { value: _vm.filterText },
           on: {
             keyup: function($event) {
@@ -49606,14 +49712,22 @@ var render = function() {
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "ui primary button", on: { click: _vm.doFilter } },
-          [_vm._v("Go")]
+          {
+            staticClass: "btn",
+            attrs: { title: "Ara" },
+            on: { click: _vm.doFilter }
+          },
+          [_c("i", { staticClass: "icon-search" })]
         ),
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "ui button", on: { click: _vm.resetFilter } },
-          [_vm._v("Reset")]
+          {
+            staticClass: "btn",
+            attrs: { title: "Sıfırla" },
+            on: { click: _vm.resetFilter }
+          },
+          [_c("i", { staticClass: "icon-refresh" })]
         )
       ])
     ])

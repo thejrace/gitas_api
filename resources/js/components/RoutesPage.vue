@@ -20,11 +20,11 @@
                 >
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="btn button" title="Duraklar"
+                            <button class="btn" title="Duraklar"
                                     @click="onAction('show-stops', props.rowData, props.rowIndex)">
                                 <i class="icon-map-marker"></i>
                             </button>
-                            <button class="btn button" title="Hat Kesişimleri"
+                            <button class="btn" title="Hat Kesişimleri"
                                     @click="onAction('show-intersections', props.rowData, props.rowIndex)">
                                 <i class="icon-random"></i>
                             </button>

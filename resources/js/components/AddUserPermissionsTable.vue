@@ -12,7 +12,7 @@
         >
             <template slot="actions" scope="props">
                 <div class="custom-actions">
-                    <button class="ui basic button"
+                    <button class="btn"
                             @click="onAction('add-perm', props.rowData, props.rowIndex)">
                         <i class="icon-plus"></i>
                     </button>

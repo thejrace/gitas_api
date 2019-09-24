@@ -85,3 +85,12 @@
             <!-- /subnavbar-inner -->
         </div>
         <!-- /subnavbar -->
+
+        <div style="margin-bottom: 30px;">
+            <div class="container">
+                <a href="{{ url()->previous() }}" class="btn" title="Geri">
+                    <i class="icon-arrow-left"></i>
+                </a>
+            </div>
+
+        </div>
