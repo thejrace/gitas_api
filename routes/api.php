@@ -59,8 +59,13 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
         Route::get('/', [RouteScannerController::class, 'index']);
         Route::get('/{routeScanner}', [RouteScannerController::class, 'show']);
         Route::post('/', [RouteScannerController::class, 'store']);
+        Route::put('/startAll', [RouteScannerController::class, 'startAll']);
+        Route::put('/stopAll', [RouteScannerController::class, 'stopAll']);
         Route::put('/{routeScanner}', [RouteScannerController::class, 'update']);
+        Route::put('/{routeScanner}/start', [RouteScannerController::class, 'start']);
+        Route::put('/{routeScanner}/stop', [RouteScannerController::class, 'stop']);
         Route::delete('/{routeScanner}', [RouteScannerController::class, 'destroy']);
+
     });
 
     Route::prefix('routes')->group(function() {
