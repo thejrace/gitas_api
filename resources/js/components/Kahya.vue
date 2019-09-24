@@ -32,7 +32,7 @@
         },
         mounted() {
             this.fetch();
-            this.timer = setInterval( this.fetch, 60000 );
+            this.timer = setInterval( this.fetch, 10000 );
         },
 
         data: () => ({
@@ -48,7 +48,7 @@
 
         methods: {
             impersonateV2(busCode){
-                if( this.impersonateFlag ) return;
+                if( this.impersonateFlag && this.impersonatedBusCode === busCode ) return;
                 this.shown = [];
                 let index;
                 for( index = 0; index < this.items.length; index++ ){
