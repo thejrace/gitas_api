@@ -2555,25 +2555,28 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component(vform__WEBPACK_IMPORTED_MOD
       var _store = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this = this;
-
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                //const response = await this.form.post('/api/ftsVersions');
-                this.form.submit('post', '/api/ftsVersions', {
-                  // Transform form data to FormData
-                  transformRequest: [function (data, headers) {
-                    return Object(object_to_formdata__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
-                  }]
-                }).then(function (_ref) {
-                  var data = _ref.data;
+                _context.next = 2;
+                return this.form.post('/api/ftsVersions');
 
-                  _this.actionStatusCallback(data.data);
-                });
+              case 2:
+                response = _context.sent;
+                this.actionStatusCallback(response.data.data);
+                /*this.form.submit('post', '/api/ftsVersions', {
+                    // Transform form data to FormData
+                    transformRequest: [function (data, headers) {
+                        return objectToFormData(data)
+                    }]
+                })
+                .then(({ data }) => {
+                    this.actionStatusCallback(data.data);
+                });*/
 
-              case 1:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -47323,10 +47326,11 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "control-group" }, [
-            _c("label", {
-              staticClass: "control-label",
-              attrs: { for: "change_log" }
-            }),
+            _c(
+              "label",
+              { staticClass: "control-label", attrs: { for: "change_log" } },
+              [_vm._v("Açıklama")]
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "controls" }, [
               _c("textarea", {
@@ -47355,31 +47359,6 @@ var render = function() {
                     _vm._v(
                       "\n                        " +
                         _vm._s(_vm.form.errors.get("change_log")) +
-                        "\n                    "
-                    )
-                  ])
-                : _vm._e()
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "control-group" }, [
-            _c(
-              "label",
-              { staticClass: "control-label", attrs: { for: "file" } },
-              [_vm._v("Exe")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "controls" }, [
-              _c("input", {
-                attrs: { type: "file", id: "file", name: "file" },
-                on: { change: _vm.selectFile }
-              }),
-              _vm._v(" "),
-              _vm.form.errors.has("file")
-                ? _c("div", { staticClass: "alert alert-danger" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(_vm.form.errors.get("file")) +
                         "\n                    "
                     )
                   ])

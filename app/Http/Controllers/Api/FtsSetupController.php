@@ -18,8 +18,8 @@ class FtsSetupController extends Controller
             ->first();
 
         return response()->json([
-            'download_url'        => $lastVersion->downloadUrl(),
-            'helper_download_url' => 'http://gitas_api.test/storage/fts_download/helpers/fts_update_helper',
+            'download_url'        => 'http://gitas_api.test/storage/fts_download/GFTS.json',
+            'helper_download_url' => 'http://gitas_api.test/storage/fts_download/helpers/fts_update_helper.jar',
             'app_config'          => [
                 'base_api' => [
                     'http://gitas_api.test/api/',
@@ -30,6 +30,20 @@ class FtsSetupController extends Controller
                     'http://gitsistem.com/filotakip/get_cookie?key=nJAHJjksd13',
                 ],
             ],
+        ]);
+    }
+
+    /**
+     * Get last version number x.x.x
+     */
+    public function getLastVersion()
+    {
+        /** @var FtsVersion $lastVersion */
+        $lastVersion = FtsVersion::latest()
+            ->first();
+
+        return response()->json([
+            'last_version' => $lastVersion->fullVersion('.'),
         ]);
     }
 }

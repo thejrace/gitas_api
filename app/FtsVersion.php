@@ -31,9 +31,13 @@ class FtsVersion extends Model
 {
     protected $guarded = [];
 
-    public function fullVersion()
+    public function fullVersion($sep = null)
     {
-        return $this->major . '_' . $this->minor . '_' . $this->patch;
+        if (isset($sep)) {
+            return $this->major . $sep . $this->minor . $sep . $this->patch;
+        } else {
+            return $this->major . '_' . $this->minor . '_' . $this->patch;
+        }
     }
 
     public function downloadUrl()

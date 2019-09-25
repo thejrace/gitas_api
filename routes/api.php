@@ -90,6 +90,7 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
 Route::post('login', [LoginController::class, 'authenticate']); // retrieve api token
 
 Route::get('fts/setup', [FtsSetupController::class, 'getApplicationData']);
+Route::get('fts/version', [FtsSetupController::class, 'getLastVersion']);
 
 /*
 |--------------------------------------------------------------------------

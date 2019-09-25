@@ -8,7 +8,6 @@ use App\Http\Requests\FtsVersionStoreFormRequest;
 use App\Http\Requests\FtsVersionUpdateFormRequest;
 use App\Http\Resources\FtsVersionResource;
 use App\Http\Resources\SuccessJSONResponseResource;
-use Illuminate\Support\Facades\Storage;
 
 class FtsVersionController extends Controller
 {
@@ -43,12 +42,7 @@ class FtsVersionController extends Controller
      */
     public function store(FtsVersionStoreFormRequest $request)
     {
-        $model = FtsVersion::create($request->except('file'));
-
-        $request->file('file')->storeAs(
-            'public/fts_download',
-            'gfts_' . $model->fullVersion()
-        );
+        FtsVersion::create($request->except('file'));
 
         return new SuccessJSONResponseResource(null);
     }
@@ -63,11 +57,6 @@ class FtsVersionController extends Controller
      */
     public function update(FtsVersionUpdateFormRequest $request, FtsVersion $model)
     {
-        $request->file('file')->storeAs(
-            'public/fts_download',
-            'gfts_' . $model->fullVersion()
-        );
-
         $model->update($request->except('file'));
 
         return new SuccessJSONResponseResource(null);
