@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BusController;
+use App\Http\Controllers\Api\FtsSetupController;
 use App\Http\Controllers\Api\FtsVersionController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PermissionController;
@@ -65,7 +66,6 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
         Route::put('/{routeScanner}/start', [RouteScannerController::class, 'start']);
         Route::put('/{routeScanner}/stop', [RouteScannerController::class, 'stop']);
         Route::delete('/{routeScanner}', [RouteScannerController::class, 'destroy']);
-
     });
 
     Route::prefix('routes')->group(function() {
@@ -88,6 +88,8 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
 });
 
 Route::post('login', [LoginController::class, 'authenticate']); // retrieve api token
+
+Route::get('fts/setup', [FtsSetupController::class, 'getApplicationData']);
 
 /*
 |--------------------------------------------------------------------------

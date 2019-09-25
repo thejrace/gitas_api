@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\FtsVersion;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FtsVersionFormRequest;
+use App\Http\Requests\FtsVersionStoreFormRequest;
+use App\Http\Requests\FtsVersionUpdateFormRequest;
 use App\Http\Resources\FtsVersionResource;
 use App\Http\Resources\SuccessJSONResponseResource;
+use Illuminate\Support\Facades\Storage;
 
 class FtsVersionController extends Controller
 {
@@ -35,13 +37,18 @@ class FtsVersionController extends Controller
     /**
      * Store a newly created model in storage.
      *
-     * @param FtsVersionFormRequest $request
+     * @param FtsVersionStoreFormRequest $request
      *
      * @return SuccessJSONResponseResource
      */
-    public function store(FtsVersionFormRequest $request)
+    public function store(FtsVersionStoreFormRequest $request)
     {
-        FtsVersion::create($request->all());
+        $model = FtsVersion::create($request->except('file'));
+
+        $request->file('file')->storeAs(
+            'public/fts_download',
+            'gfts_' . $model->fullVersion()
+        );
 
         return new SuccessJSONResponseResource(null);
     }
@@ -49,14 +56,19 @@ class FtsVersionController extends Controller
     /**
      * Update the specified location in storage.
      *
-     * @param FtsVersionFormRequest $request
-     * @param FtsVersion            $model
+     * @param FtsVersionUpdateFormRequest $request
+     * @param FtsVersion                  $model
      *
      * @return SuccessJSONResponseResource
      */
-    public function update(FtsVersionFormRequest $request, FtsVersion $model)
+    public function update(FtsVersionUpdateFormRequest $request, FtsVersion $model)
     {
-        $model->update($request->all());
+        $request->file('file')->storeAs(
+            'public/fts_download',
+            'gfts_' . $model->fullVersion()
+        );
+
+        $model->update($request->except('file'));
 
         return new SuccessJSONResponseResource(null);
     }

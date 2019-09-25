@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $change_log
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FtsVersion newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FtsVersion newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FtsVersion query()
@@ -29,4 +30,14 @@ use Illuminate\Database\Eloquent\Model;
 class FtsVersion extends Model
 {
     protected $guarded = [];
+
+    public function fullVersion()
+    {
+        return $this->major . '_' . $this->minor . '_' . $this->patch;
+    }
+
+    public function downloadUrl()
+    {
+        return 'http://gitfilo.com/fts_download/fts_' . $this->fullVersion();
+    }
 }

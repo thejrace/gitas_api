@@ -2,14 +2,34 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\FtsVersion;
 use App\Http\Controllers\Controller;
 
 class FtsSetupController extends Controller
 {
     /**
-     * Return the required data for setup action.
+     * Return the required data for setup action
      */
     public function getApplicationData()
     {
+        // get last version
+        /** @var FtsVersion $lastVersion */
+        $lastVersion = FtsVersion::latest()
+            ->first();
+
+        return response()->json([
+            'download_url'        => $lastVersion->downloadUrl(),
+            'helper_download_url' => 'http://gitfilo.com/fts_download/helper/fts_update_helper',
+            'app_config'          => [
+                'base_api' => [
+                    'http://gitas_api.test/api/',
+                    'http://gitfilo.com/api',
+                ],
+                'cookie_agent_urls' => [
+                    'http://192.168.2.177/filotakip/get_cookie?key=nJAHJjksd13',
+                    'http://gitsistem.com/filotakip/get_cookie?key=nJAHJjksd13',
+                ],
+            ],
+        ]);
     }
 }
