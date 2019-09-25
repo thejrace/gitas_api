@@ -63,7 +63,7 @@
                         for( let k = -5; k < 6; k++ ){
                             if( this.items[index-k] !== undefined ){
                                 // skip active bus
-                                if( k !== 0 ) this.items[index-k].position -= this.items[index].position;
+                                if( k !== 0 ) this.items[index-k].position -= this.items[index].position; // calculate the stop difference
                                 // add that bus to shown list
                                 this.shown.push(this.items[index-k]);
                             }
