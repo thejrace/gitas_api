@@ -2896,7 +2896,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     routeCode: String
   },
   mounted: function mounted() {
-    this.fetch();
+    // this method is called first when DOM is ready
+    // download initial data
+    this.fetch(); // set timer to update data
+
     this.timer = setInterval(this.fetch, 10000);
   },
   data: function data() {
@@ -2904,8 +2907,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       shown: [],
       items: [],
       impersonateFlag: false,
-      forwardList: [],
-      backwardList: [],
       timestamp: null,
       timer: null,
       impersonatedBusCode: null
@@ -2913,26 +2914,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     impersonateV2: function impersonateV2(busCode) {
-      //if( this.impersonateFlag && this.impersonatedBusCode === busCode ) return;
-      this.shown = [];
-      var index;
+      // reset shown data list
+      this.shown = []; // index of active bus
+
+      var index; // loop through the data to find bus with code busCode
 
       for (index = 0; index < this.items.length; index++) {
         if (this.items[index].code === busCode) {
-          this.impersonatedBusCode = busCode;
-          this.items[index].activeFlag = true;
+          // found!
+          // save bus code
+          this.impersonatedBusCode = busCode; // set active flag for css class
+
+          this.items[index].activeFlag = true; // find first 5 bus which are in front and back of our bus
 
           for (var k = -5; k < 6; k++) {
             if (this.items[index - k] !== undefined) {
               // skip active bus
-              if (k !== 0) this.items[index - k].position -= this.items[index].position;
+              if (k !== 0) this.items[index - k].position -= this.items[index].position; // add that bus to shown list
+
               this.shown.push(this.items[index - k]);
             }
           }
         }
-      }
+      } // reverse the list to show data forward->backward
 
-      this.shown.reverse();
+
+      this.shown.reverse(); // set flag for impersonate
+
       this.impersonateFlag = true;
     },
     fetch: function () {
@@ -2950,32 +2958,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                activeData = JSON.parse(response.data.data);
-                this.items = [];
+                // kahya data of the active bus
+                activeData = JSON.parse(response.data.data); // reset previous data
+
+                this.items = []; // loop through intersections
 
                 for (x = 0; x < response.data.intersection_data.length; x++) {
-                  allData = response.data.intersection_data[x];
-                  routeData = JSON.parse(allData.data);
-                  filtered = [];
+                  // single intersectiond data
+                  allData = response.data.intersection_data[x]; // kahya data of the intersected route
+
+                  routeData = JSON.parse(allData.data); // we will put intersected bus data to this filtered list
+
+                  filtered = []; // loop through instersected route's kahya data
 
                   for (j = 0; j < routeData.data.length; j++) {
-                    routeData.data[j]['position'] += allData.total_diff;
+                    // update the positions to match with active route's stop indexes
+                    routeData.data[j]['position'] += allData.total_diff; // for forward direction, we check if;
+                    // bus is between intersection stop and direction merge point
 
                     if (allData.direction === 0) {
                       if (routeData.data[j]['position'] < response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index) {
                         filtered.push(routeData.data[j]);
                       }
                     } else {
+                      // for backward direction we check if;
+                      // bus is between intersection stop and last stop
                       if (routeData.data[j]['position'] > response.data.directionMergePoint && routeData.data[j]['position'] >= allData.intersection_index) {
                         filtered.push(routeData.data[j]);
                       }
                     }
-                  }
+                  } // merge full data with intersection data
+
 
                   this.items = this.items.concat(filtered);
-                }
+                } // merge active route's kahya data
 
-                this.items = this.items.concat(activeData.data);
+
+                this.items = this.items.concat(activeData.data); // update timestamp data
+
                 this.timestamp = activeData.timestamp; // remove undefined buses with undefined status
 
                 _j = 0;
@@ -3003,10 +3023,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 17:
-                // sort list to impersonate
+                // sort list according to the positions
                 this.items.sort(function (a, b) {
                   return a.position < b.position ? 1 : -1;
-                });
+                }); // if impersonate is active, call the method
 
                 if (this.impersonateFlag) {
                   this.impersonateV2(this.impersonatedBusCode);
