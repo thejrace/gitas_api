@@ -2812,7 +2812,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
                 console.log(response);
 
                 if (response.data.data.hasOwnProperty('success')) {
-                  window.location.reload(true);
+                  this.$refs.vuetable.reload();
                 }
 
               case 5:
@@ -2820,7 +2820,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function deleteItem(_x) {

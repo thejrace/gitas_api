@@ -38,6 +38,6 @@ class FtsVersion extends Model
 
     public function downloadUrl()
     {
-        return 'http://gitfilo.com/fts_download/fts_' . $this->fullVersion();
+        return 'http://gitas_api.test/storage/fts_download/gfts_' . $this->fullVersion();
     }
 }

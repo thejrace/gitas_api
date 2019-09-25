@@ -19,7 +19,7 @@ class FtsSetupController extends Controller
 
         return response()->json([
             'download_url'        => $lastVersion->downloadUrl(),
-            'helper_download_url' => 'http://gitfilo.com/fts_download/helper/fts_update_helper',
+            'helper_download_url' => 'http://gitas_api.test/storage/fts_download/helpers/fts_update_helper',
             'app_config'          => [
                 'base_api' => [
                     'http://gitas_api.test/api/',
