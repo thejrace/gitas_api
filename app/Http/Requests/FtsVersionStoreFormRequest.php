@@ -27,7 +27,6 @@ class FtsVersionStoreFormRequest extends FormRequest
             'major' => 'required|numeric',
             'minor' => 'required|numeric',
             'patch' => 'required|numeric',
-            'file'  => 'required',
         ];
     }
 }
