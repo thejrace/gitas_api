@@ -29,6 +29,7 @@ use App\Http\Controllers\RouteScannerPreviewController;
 use App\Http\Controllers\RouteStopController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceSettingsController;
+use App\Http\Controllers\UserBusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormController;
 use App\Http\Controllers\UserPermissionController;
@@ -66,7 +67,6 @@ Route::middleware(['auth', 'permission:web_panel.enabled'])->group(function() {
         Route::get('/', [PermissionTypeController::class, 'index'])->name('permission_types.index');
     });
 
-
     Route::prefix('buses')->group(function() {
         Route::get('/', [BusController::class, 'index'])->name('buses.index');
         Route::get('dataTables', [BusController::class, 'dataTables']);
@@ -74,12 +74,12 @@ Route::middleware(['auth', 'permission:web_panel.enabled'])->group(function() {
         Route::get('form/{bus}', [BusFormController::class, 'edit']);
     });
 
-
     Route::prefix('users')->group(function() {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('dataTables', [UserController::class, 'dataTables']);
         Route::get('form', [UserFormController::class, 'create'])->name('users.form');
         Route::get('form/{user}', [UserFormController::class, 'edit']);
+        Route::get('{user}/buses', [UserBusController::class, 'index']);
     });
 
     Route::prefix('routeScanners')->group(function() {
@@ -120,5 +120,4 @@ Route::middleware(['auth', 'permission:web_panel.enabled'])->group(function() {
         Route::get('form', [FtsVersionFormController::class, 'create'])->name('ftsVersions.form');
         Route::get('form/{ftsVersion}', [FtsVersionFormController::class, 'edit']);
     });
-
 });

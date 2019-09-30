@@ -1,20 +1,16 @@
 <template>
 
     <div class="widget">
-        <div class="widget-header"> <i class="icon-group"></i>
-            <h3> Kullanıcılar</h3>
+        <div class="widget-header"> <i class="icon-truck"></i>
+            <h3> Kullanıcı Otobüsleri</h3>
         </div>
         <!-- /widget-header -->
         <div class="widget-content">
 
-            <div class="top-nav">
-                <a v-bind:href="createUrl"><button type="button" class="ui basic button btn btn-info"><i class="icon-plus"></i></button></a>
-            </div>
-
             <div>
                 <vue-table-filter-bar></vue-table-filter-bar>
                 <vuetable ref="vuetable"
-                          api-url="users/dataTables"
+                          api-url="buses/dataTables"
                           :fields="fields"
                           pagination-path="pagination"
                           :append-params="moreParams"
@@ -24,39 +20,34 @@
                 >
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <a v-bind:href="'/users/'+props.rowData.id+'/buses'" class="btn" title="Otobüsler">
-                                <i class="icon-truck"></i>
-                            </a>
-                            <a v-bind:href="'/user_permissions/'+props.rowData.id" class="btn" title="İzinler">
-                                <i class="icon-key"></i>
-                            </a>
-                            <a v-bind:href="'/users/form/'+props.rowData.id" class="btn" title="Düzenle" >
+                            <button class="ui basic button"
+                                    @click="onAction('edit-item', props.rowData, props.rowIndex)">
                                 <i class="icon-pencil"></i>
-                            </a>
-                            <button class="btn"
+                            </button>
+                            <button class="ui basic button"
                                     @click="onAction('delete-item', props.rowData, props.rowIndex)">
                                 <i class="icon-remove"></i>
                             </button>
                         </div>
                     </template>
                 </vuetable>
-                <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"  :css="css.pagination"></vuetable-pagination>
+                <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage" :css="css.pagination"></vuetable-pagination>
             </div>
+
         </div>
         <!-- /widget-content -->
     </div>
     <!-- /widget -->
-
 </template>
 
 <script>
-
     import Vuetable from 'vuetable-2/src/components/Vuetable';
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
     import CssConfig from './vuetable-styles.js';
     import VueEvents from 'vue-events';
 
     Vue.use(VueEvents);
+
 
     export default {
         props:{
@@ -92,6 +83,9 @@
             },
             onAction (action, data, index) {
                 switch( action ){
+                    case 'edit-item':
+                        location.href = "/buses/form/"+data.id;
+                        break;
                     case 'delete-item':
                         var c = confirm('Are you şur?');
                         if( c ){
@@ -101,7 +95,7 @@
                 }
             },
             async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/users/'+dataId);
+                const response = await window.axios.delete('/api/buses/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
                     window.location.reload(true);
@@ -114,16 +108,27 @@
                 fields:[
                     'id',
                     {
-                        name: 'name',
-                        title:'İsim',
+                        name: 'code',
+                        title:'Kapı Kodu',
                         titleClass: 'center aligned',
                         dataClass: 'center aligned',
-                        sortField: 'name'
+                        sortField: 'code'
                     },
                     {
-                        name: 'email',
-                        title:'Eposta',
-                        sortField: 'email'
+                        name: 'official_plate',
+                        title:'Ruhsat Plaka',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned',
+                        sortField: 'official_plate'
+                    },
+                    {
+                        name: 'active_plate',
+                        title:'Aktif Plaka',
+                        sortField: 'official_plate'
+                    },
+                    {
+                        name: 'created_at',
+                        title:'Eklenme',
                     },
                     {
                         name: '__slot:actions',
