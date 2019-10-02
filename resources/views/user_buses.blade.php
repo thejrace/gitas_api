@@ -2,6 +2,6 @@
 
 @section('content')
 
-    <user-buses-page></user-buses-page>
+    <user-buses-page user-id="{{ $userId }}" ></user-buses-page>
 
 @endsection

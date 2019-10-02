@@ -14,8 +14,8 @@ class MainController extends Controller
 
     public function test(User $user)
     {
-        $query = Permission::query();
-
-        return $query->paginate(20);
+        foreach ($user->buses as $role) {
+            echo $role;
+        }
     }
 }

@@ -80,6 +80,7 @@ Route::middleware(['auth', 'permission:web_panel.enabled'])->group(function() {
         Route::get('form', [UserFormController::class, 'create'])->name('users.form');
         Route::get('form/{user}', [UserFormController::class, 'edit']);
         Route::get('{user}/buses', [UserBusController::class, 'index']);
+        Route::get('{user}/buses/dataTables', [UserBusController::class, 'dataTables']);
     });
 
     Route::prefix('routeScanners')->group(function() {

@@ -1,5 +1,4 @@
 <template>
-
     <div class="widget">
         <div class="widget-header"> <i class="icon-truck"></i>
             <h3> Kullanıcı Otobüsleri</h3>
@@ -10,7 +9,7 @@
             <div>
                 <vue-table-filter-bar></vue-table-filter-bar>
                 <vuetable ref="vuetable"
-                          api-url="buses/dataTables"
+                          :api-url="apiUrl"
                           :fields="fields"
                           pagination-path="pagination"
                           :append-params="moreParams"
@@ -18,18 +17,11 @@
                           :http-options="httpOptions"
                           @vuetable:pagination-data="onPaginationData"
                 >
-                    <template slot="actions" scope="props">
-                        <div class="custom-actions">
-                            <button class="ui basic button"
-                                    @click="onAction('edit-item', props.rowData, props.rowIndex)">
-                                <i class="icon-pencil"></i>
-                            </button>
-                            <button class="ui basic button"
-                                    @click="onAction('delete-item', props.rowData, props.rowIndex)">
-                                <i class="icon-remove"></i>
-                            </button>
-                        </div>
-                    </template>
+                    <div slot="defined-slot" slot-scope="props">
+                        <button v-if="props.rowData.defined === 1" type="button" class="btn btn-success" title="Tanımla" @click="onAction('stop', props.rowData, props.rowIndex)"><i class="icon-plus"></i></button>
+                        <button v-else type="button" class="btn btn-danger" title="Kaldır" @click="onAction('start', props.rowData, props.rowIndex)"><i class="icon-remove"></i></button>
+                    </div>
+
                 </vuetable>
                 <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage" :css="css.pagination"></vuetable-pagination>
             </div>
@@ -48,10 +40,9 @@
 
     Vue.use(VueEvents);
 
-
     export default {
         props:{
-            createUrl: String,
+            userId: String,
         },
         components: {
             Vuetable,
@@ -83,27 +74,12 @@
             },
             onAction (action, data, index) {
                 switch( action ){
-                    case 'edit-item':
-                        location.href = "/buses/form/"+data.id;
-                        break;
-                    case 'delete-item':
-                        var c = confirm('Are you şur?');
-                        if( c ){
-                            this.deleteItem(data.id);
-                        }
-                        break;
                 }
             },
-            async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/buses/'+dataId);
-                console.log(response);
-                if( response.data.data.hasOwnProperty('success') ){
-                    window.location.reload(true);
-                }
-            }
         },
         data(){
             return {
+                apiUrl:"/users/"+this.userId+"/buses/dataTables",
                 css: CssConfig,
                 fields:[
                     'id',
@@ -124,17 +100,16 @@
                     {
                         name: 'active_plate',
                         title:'Aktif Plaka',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned',
                         sortField: 'official_plate'
                     },
                     {
-                        name: 'created_at',
-                        title:'Eklenme',
-                    },
-                    {
-                        name: '__slot:actions',
-                        title: 'İşlemler',
+                        name: '__slot:defined-slot',
+                        title:'Tanımlanmış',
                         titleClass: 'center aligned',
-                        dataClass: 'center aligned'
+                        dataClass: 'center aligned',
+                        sortField: 'defined'
                     },
                 ],
                 moreParams: {},
