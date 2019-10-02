@@ -18,8 +18,7 @@
                           @vuetable:pagination-data="onPaginationData"
                 >
                     <div slot="defined-slot" slot-scope="props">
-                        <button v-if="props.rowData.defined === 1" type="button" class="btn btn-success" title="Tanımla" @click="onAction('stop', props.rowData, props.rowIndex)"><i class="icon-plus"></i></button>
-                        <button v-else type="button" class="btn btn-danger" title="Kaldır" @click="onAction('start', props.rowData, props.rowIndex)"><i class="icon-remove"></i></button>
+                        <button type="button" class="btn btn-danger" title="Kaldır" @click="onAction('start', props.rowData, props.rowIndex)"><i class="icon-remove"></i></button>
                     </div>
 
                 </vuetable>
@@ -79,7 +78,7 @@
         },
         data(){
             return {
-                apiUrl:"/users/"+this.userId+"/buses/dataTables",
+                apiUrl:"/users/"+this.userId+"/buses/dataTables/defined",
                 css: CssConfig,
                 fields:[
                     'id',
@@ -106,7 +105,7 @@
                     },
                     {
                         name: '__slot:defined-slot',
-                        title:'Tanımlanmış',
+                        title:'Olaylar',
                         titleClass: 'center aligned',
                         dataClass: 'center aligned',
                         sortField: 'defined'

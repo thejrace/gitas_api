@@ -19,6 +19,13 @@ class BusResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $model = $this->resource;
+
+        return [
+            'id'             => $model->id,
+            'code'           => $model->code,
+            'active_plate'   => $model->active_plate,
+            'official_plate' => $model->official_plate,
+        ];
     }
 }

@@ -27,4 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bus extends Model
 {
     protected $guarded = [];
+
+    protected $appends = ['defined']; //Make it available in the json response
+
 }

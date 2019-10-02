@@ -32,20 +32,62 @@ class UserBusController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function dataTables(Request $req, $user)
+    public function dataTablesDefined(Request $req, User $user)
     {
-        $query = Bus::query();
+        $defined = $user->buses
+            ->pluck('id')
+            ->toArray();
+
+        $query = Bus::query()
+            ->whereIn('id', $defined);
+
         if ($req->filled('sort')) {
             $exp = explode('|', $req->get('sort'));
             if (count($exp) > 1) {
                 $query->orderBy($exp[0], $exp[1]);
             }
         }
+
         if ($req->filled('filter')) {
             $query->orWhere('active_plate', 'LIKE', '%' . $req->get('filter') . '%')
-                ->orWhere('official_plate', 'LIKE', '%' . $req->get('filter') . '%');
+                ->orWhere('official_plate', 'LIKE', '%' . $req->get('filter') . '%')
+                ->orWhere('code', 'LIKE', '%' . $req->get('filter') . '%');
         }
 
         return BusResource::collection($query->paginate(20));
     }
+
+    /**
+     * Datatables data
+     *
+     * @param Request $req
+     * @param $user
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function dataTablesNotDefined(Request $req, User $user)
+    {
+        $defined = $user->buses
+            ->pluck('id')
+            ->toArray();
+
+        $query = Bus::query()
+            ->whereNotIn('id', $defined);
+
+        if ($req->filled('sort')) {
+            $exp = explode('|', $req->get('sort'));
+            if (count($exp) > 1) {
+                $query->orderBy($exp[0], $exp[1]);
+            }
+        }
+
+        if ($req->filled('filter')) {
+            $query->orWhere('active_plate', 'LIKE', '%' . $req->get('filter') . '%')
+                ->orWhere('official_plate', 'LIKE', '%' . $req->get('filter') . '%')
+                ->orWhere('code', 'LIKE', '%' . $req->get('filter') . '%');
+        }
+
+        return BusResource::collection($query->paginate(20));
+    }
+
 }

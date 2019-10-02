@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Spatie\Permission\Models\Permission;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class MainController extends Controller
 {
@@ -12,10 +14,10 @@ class MainController extends Controller
         return view('dashboard');
     }
 
+
+
     public function test(User $user)
     {
-        foreach ($user->buses as $role) {
-            echo $role;
-        }
+        $user->buses->pluck('id');
     }
 }

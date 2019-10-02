@@ -5492,7 +5492,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -5550,7 +5549,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
   },
   data: function data() {
     return {
-      apiUrl: "/users/" + this.userId + "/buses/dataTables",
+      apiUrl: "/users/" + this.userId + "/buses/dataTables/defined",
       css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       fields: ['id', {
         name: 'code',
@@ -5572,7 +5571,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
         sortField: 'official_plate'
       }, {
         name: '__slot:defined-slot',
-        title: 'Tanımlanmış',
+        title: 'Olaylar',
         titleClass: 'center aligned',
         dataClass: 'center aligned',
         sortField: 'defined'
@@ -49522,41 +49521,23 @@ var render = function() {
                 key: "defined-slot",
                 fn: function(props) {
                   return _c("div", {}, [
-                    props.rowData.defined === 1
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-success",
-                            attrs: { type: "button", title: "Tanımla" },
-                            on: {
-                              click: function($event) {
-                                return _vm.onAction(
-                                  "stop",
-                                  props.rowData,
-                                  props.rowIndex
-                                )
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "icon-plus" })]
-                        )
-                      : _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { type: "button", title: "Kaldır" },
-                            on: {
-                              click: function($event) {
-                                return _vm.onAction(
-                                  "start",
-                                  props.rowData,
-                                  props.rowIndex
-                                )
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "icon-remove" })]
-                        )
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { type: "button", title: "Kaldır" },
+                        on: {
+                          click: function($event) {
+                            return _vm.onAction(
+                              "start",
+                              props.rowData,
+                              props.rowIndex
+                            )
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "icon-remove" })]
+                    )
                   ])
                 }
               }
