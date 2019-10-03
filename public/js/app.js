@@ -5597,11 +5597,19 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuetable-2/src/components/Vuetable */ "./node_modules/vuetable-2/src/components/Vuetable.vue");
-/* harmony import */ var vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetable-2/src/components/VuetablePagination */ "./node_modules/vuetable-2/src/components/VuetablePagination.vue");
-/* harmony import */ var _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vuetable-styles.js */ "./resources/js/components/vuetable-styles.js");
-/* harmony import */ var vue_events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-events */ "./node_modules/vue-events/dist/index.js");
-/* harmony import */ var vue_events__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_events__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetable-2/src/components/Vuetable */ "./node_modules/vuetable-2/src/components/Vuetable.vue");
+/* harmony import */ var vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetable-2/src/components/VuetablePagination */ "./node_modules/vuetable-2/src/components/VuetablePagination.vue");
+/* harmony import */ var _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vuetable-styles.js */ "./resources/js/components/vuetable-styles.js");
+/* harmony import */ var vue_events__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-events */ "./node_modules/vue-events/dist/index.js");
+/* harmony import */ var vue_events__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_events__WEBPACK_IMPORTED_MODULE_4__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -5643,7 +5651,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
+Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     userId: String,
@@ -5651,8 +5659,8 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
     type: String
   },
   components: {
-    Vuetable: vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_0__["default"],
-    VuetablePagination: vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Vuetable: vuetable_2_src_components_Vuetable__WEBPACK_IMPORTED_MODULE_1__["default"],
+    VuetablePagination: vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   mounted: function mounted() {
     var _this = this;
@@ -5662,6 +5670,9 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
     });
     this.$events.$on(this.type + '-filter-reset', function (e) {
       return _this.onFilterReset();
+    });
+    this.$events.$on('user-buses-reload', function (e) {
+      return _this.$refs.vuetable.reload();
     });
   },
   methods: {
@@ -5692,20 +5703,41 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_3___default.a);
     onChangePage: function onChangePage(page) {
       this.$refs.vuetable.changePage(page);
     },
-    onAction: function onAction(action, data, index) {
-      switch (action) {
-        case 'define':
-          break;
+    onAction: function () {
+      var _onAction = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(action, data, index) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return window.axios.put('/api/users/' + this.userId + '/buses/' + action, {
+                  bus_id: data.id
+                });
 
-        case 'undefine':
-          break;
+              case 2:
+                this.$events.fire('user-buses-reload');
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onAction(_x, _x2, _x3) {
+        return _onAction.apply(this, arguments);
       }
-    }
+
+      return onAction;
+    }()
   },
   data: function data() {
     return {
       apiUrl: "/users/" + this.userId + "/buses/dataTables/" + this.type,
-      css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+      css: _vuetable_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"],
       fields: ['id', {
         name: 'code',
         title: 'Kapı Kodu',

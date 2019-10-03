@@ -54,8 +54,9 @@
             VuetablePagination
         },
         mounted() {
-            this.$events.$on(this.type+'-filter-set', eventData => this.onFilterSet(eventData))
-            this.$events.$on(this.type+'-filter-reset', e => this.onFilterReset())
+            this.$events.$on(this.type+'-filter-set', eventData => this.onFilterSet(eventData));
+            this.$events.$on(this.type+'-filter-reset', e => this.onFilterReset());
+            this.$events.$on('user-buses-reload', e => this.$refs.vuetable.reload());
         },
         methods: {
             transform(data){
@@ -77,16 +78,9 @@
             onChangePage (page) {
                 this.$refs.vuetable.changePage(page)
             },
-            onAction (action, data, index) {
-                switch( action ){
-                    case 'define':
-
-                    break;
-
-                    case 'undefine':
-
-                    break;
-                }
+            async onAction (action, data, index) {
+                await window.axios.put('/api/users/'+this.userId+'/buses/'+action, { bus_id:data.id});
+                this.$events.fire('user-buses-reload');
             },
         },
         data(){
