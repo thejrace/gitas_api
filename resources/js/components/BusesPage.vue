@@ -24,11 +24,11 @@
                 >
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="ui basic button"
-                                    @click="onAction('edit-item', props.rowData, props.rowIndex)">
-                                <i class="icon-pencil"></i>
-                            </button>
-                            <button class="ui basic button"
+                            <a v-bind:href="'/buses/form/'+props.rowData.id" class="btn">
+                                <i class="icon-edit"></i>
+                            </a>
+
+                            <button class="btn btn-danger"
                                     @click="onAction('delete-item', props.rowData, props.rowIndex)">
                                 <i class="icon-remove"></i>
                             </button>
@@ -129,10 +129,6 @@
                         name: 'active_plate',
                         title:'Aktif Plaka',
                         sortField: 'official_plate'
-                    },
-                    {
-                        name: 'created_at',
-                        title:'Eklenme',
                     },
                     {
                         name: '__slot:actions',

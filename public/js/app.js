@@ -2406,9 +2406,6 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
         title: 'Aktif Plaka',
         sortField: 'official_plate'
       }, {
-        name: 'created_at',
-        title: 'Eklenme'
-      }, {
         name: '__slot:actions',
         title: 'İşlemler',
         titleClass: 'center aligned',
@@ -5647,6 +5644,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -5758,7 +5760,7 @@ Vue.use(vue_events__WEBPACK_IMPORTED_MODULE_4___default.a);
         sortField: 'official_plate'
       }, {
         name: '__slot:defined-slot',
-        title: 'Olaylar',
+        title: 'İşlemler',
         titleClass: 'center aligned',
         dataClass: 'center aligned',
         sortField: 'defined'
@@ -47423,26 +47425,18 @@ var render = function() {
                   return [
                     _c("div", { staticClass: "custom-actions" }, [
                       _c(
-                        "button",
+                        "a",
                         {
-                          staticClass: "ui basic button",
-                          on: {
-                            click: function($event) {
-                              return _vm.onAction(
-                                "edit-item",
-                                props.rowData,
-                                props.rowIndex
-                              )
-                            }
-                          }
+                          staticClass: "btn",
+                          attrs: { href: "/buses/form/" + props.rowData.id }
                         },
-                        [_c("i", { staticClass: "icon-pencil" })]
+                        [_c("i", { staticClass: "icon-edit" })]
                       ),
                       _vm._v(" "),
                       _c(
                         "button",
                         {
-                          staticClass: "ui basic button",
+                          staticClass: "btn btn-danger",
                           on: {
                             click: function($event) {
                               return _vm.onAction(
@@ -49809,6 +49803,36 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "widget-content" }, [
+      _c("div", { staticClass: "top-nav" }, [
+        _vm.type === "defined"
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button", title: "Tümünü Kaldır" },
+                on: {
+                  click: function($event) {
+                    return _vm.onAction("undefine", { id: "all" }, 0)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "icon-minus-sign" })]
+            )
+          : _c(
+              "button",
+              {
+                staticClass: "btn btn-success",
+                attrs: { type: "button", title: "Tümünü Ekle" },
+                on: {
+                  click: function($event) {
+                    return _vm.onAction("define", { id: "all" }, 0)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "icon-plus-sign" })]
+            )
+      ]),
+      _vm._v(" "),
       _c(
         "div",
         [

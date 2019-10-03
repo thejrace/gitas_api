@@ -38,6 +38,7 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
         Route::get('/{user}', [UserController::class, 'show']);
         Route::post('/', [UserController::class, 'store']);
         Route::put('/{user}', [UserController::class, 'update']);
+        Route::get('/{user}/buses', [UserBusController::class, 'index']);
         Route::put('/{user}/buses/define', [UserBusController::class, 'define']);
         Route::put('/{user}/buses/undefine', [UserBusController::class, 'undefine']);
         Route::delete('/{user}', [UserController::class, 'destroy']);

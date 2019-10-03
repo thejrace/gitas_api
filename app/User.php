@@ -94,14 +94,30 @@ class User extends Authenticatable
     /**
      * Define bus to the user.
      *
-     * @param $busId
+     * @param int|string $busId
      */
     public function defineBus($busId)
     {
-        UserBusDefinition::create([
-            'user_id' => $this->id,
-            'bus_id'  => $busId,
-        ]);
+        if ($busId === 'all') {
+            $defined = $this->buses
+                ->pluck('id')
+                ->toArray();
+
+            $query = Bus::query()
+                ->whereNotIn('id', $defined);
+
+            foreach ($query->get() as $bus) {
+                UserBusDefinition::create([
+                    'user_id' => $this->id,
+                    'bus_id'  => $bus->id,
+                ]);
+            }
+        } else {
+            UserBusDefinition::create([
+                'user_id' => $this->id,
+                'bus_id'  => $busId,
+            ]);
+        }
     }
 
     /**
@@ -111,13 +127,31 @@ class User extends Authenticatable
      */
     public function undefineBus($busId)
     {
-        /** @var UserBusDefinition $defintion */
-        $defintion = UserBusDefinition::query()
-            ->where('user_id', $this->id)
-            ->where('bus_id', $busId)
-            ->first();
+        if ($busId === 'all') {
+            $defined = $this->buses
+                ->pluck('id')
+                ->toArray();
 
-        UserBusDefinition::destroy($defintion->id);
+            $query = Bus::query()
+                ->whereIn('id', $defined);
+
+            foreach ($query->get() as $bus) {
+                /** @var UserBusDefinition $defintion */
+                $defintion = UserBusDefinition::query()
+                    ->where('user_id', $this->id)
+                    ->where('bus_id', $bus->id)
+                    ->first();
+                UserBusDefinition::destroy($defintion->id);
+            }
+        } else {
+            /** @var UserBusDefinition $defintion */
+            $defintion = UserBusDefinition::query()
+                ->where('user_id', $this->id)
+                ->where('bus_id', $busId)
+                ->first();
+
+            UserBusDefinition::destroy($defintion->id);
+        }
     }
 
     public function buses()

@@ -8,6 +8,11 @@
         <!-- /widget-header -->
         <div class="widget-content">
 
+            <div class="top-nav">
+                <button v-if="type === 'defined'" type="button" class="btn btn-danger" title="Tümünü Kaldır" @click="onAction('undefine', { id: 'all' }, 0)"><i class="icon-minus-sign"></i></button>
+                <button v-else type="button" class="btn btn-success" title="Tümünü Ekle" @click="onAction('define', { id: 'all' }, 0)"><i class="icon-plus-sign"></i></button>
+            </div>
+
             <div>
                 <vue-table-filter-bar :prefix="this.type"></vue-table-filter-bar>
                 <vuetable ref="vuetable"
@@ -112,7 +117,7 @@
                     },
                     {
                         name: '__slot:defined-slot',
-                        title:'Olaylar',
+                        title:'İşlemler',
                         titleClass: 'center aligned',
                         dataClass: 'center aligned',
                         sortField: 'defined'

@@ -3,12 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BusResource;
 use App\Http\Resources\SuccessJSONResponseResource;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserBusController extends Controller
 {
+    /**
+     * Get defined buses of the user.
+     *
+     * @param User $user
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function index(User $user)
+    {
+        return BusResource::collection($user->buses);
+    }
+
     /**
      * Define bus to the user.
      *
