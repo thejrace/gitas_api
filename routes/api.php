@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\RouteServiceController;
 use App\Http\Controllers\Api\RouteStopController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ServiceSettingsController;
+use App\Http\Controllers\Api\UserBusController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserPermissionController;
 
@@ -31,7 +32,17 @@ use App\Http\Controllers\Api\UserPermissionController;
 */
 
 Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
-    Route::resource('users', UserController::class);
+
+    Route::prefix('users')->group(function() {
+        Route::get('/', [UserController::class, 'index']);
+        Route::get('/{user}', [UserController::class, 'show']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::put('/{user}', [UserController::class, 'update']);
+        Route::put('/{user}/buses/define', [UserBusController::class, 'define']);
+        Route::put('/{user}/buses/undefine', [UserBusController::class, 'undefine']);
+        Route::delete('/{user}', [UserController::class, 'destroy']);
+    });
+
     Route::resource('ftsVersions', FtsVersionController::class);
     Route::resource('buses', BusController::class);
 

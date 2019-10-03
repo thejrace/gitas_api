@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bus;
 use App\Http\Resources\BusResource;
 use App\User;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Http\Request;
 
 class UserBusController extends Controller
@@ -20,7 +21,8 @@ class UserBusController extends Controller
     {
         return view('user_buses')
             ->with([
-                'userId' => $user->id,
+                'userId'   => $user->id,
+                'userName' => $user->name,
             ]);
     }
 
@@ -49,9 +51,12 @@ class UserBusController extends Controller
         }
 
         if ($req->filled('filter')) {
-            $query->orWhere('active_plate', 'LIKE', '%' . $req->get('filter') . '%')
-                ->orWhere('official_plate', 'LIKE', '%' . $req->get('filter') . '%')
-                ->orWhere('code', 'LIKE', '%' . $req->get('filter') . '%');
+            $query->where(function($query) use ($req) {
+                /* @var QueryBuilder $query */
+                $query->orWhere('active_plate', 'LIKE', '%' . $req->get('filter') . '%')
+                    ->orWhere('official_plate', 'LIKE', '%' . $req->get('filter') . '%')
+                    ->orWhere('code', 'LIKE', '%' . $req->get('filter') . '%');
+            });
         }
 
         return BusResource::collection($query->paginate(20));
@@ -82,12 +87,14 @@ class UserBusController extends Controller
         }
 
         if ($req->filled('filter')) {
-            $query->orWhere('active_plate', 'LIKE', '%' . $req->get('filter') . '%')
-                ->orWhere('official_plate', 'LIKE', '%' . $req->get('filter') . '%')
-                ->orWhere('code', 'LIKE', '%' . $req->get('filter') . '%');
+            $query->where(function($query) use ($req) {
+                /* @var QueryBuilder $query */
+                $query->orWhere('active_plate', 'LIKE', '%' . $req->get('filter') . '%')
+                    ->orWhere('official_plate', 'LIKE', '%' . $req->get('filter') . '%')
+                    ->orWhere('code', 'LIKE', '%' . $req->get('filter') . '%');
+            });
         }
 
         return BusResource::collection($query->paginate(20));
     }
-
 }

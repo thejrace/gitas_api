@@ -33,6 +33,8 @@ Vue.component('permission-type-form-page', require('./components/PermissionTypeF
 Vue.component('permissions-page', require('./components/PermissionsPage.vue').default);
 Vue.component('permission-form-page', require('./components/PermissionFormPage.vue').default);
 
+Vue.component('user-buses-table', require('./components/UserBusesTable.vue').default);
+
 // kahya pages
 Vue.component('route-scanners-page', require('./components/RouteScannersPage.vue').default);
 Vue.component('route-scanner-form-page', require('./components/RouteScannerFormPage.vue').default);
