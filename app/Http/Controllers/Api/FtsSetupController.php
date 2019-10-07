@@ -30,7 +30,7 @@ class FtsSetupController extends Controller
                 'data_download_frequency' => 60,
                 'alert_frequency'         => 60,
                 'alert_visible_delay'     => 30,
-                'bus_box_template'        => 1,  // 1, 2, 3
+                'bus_box_template'        => 0,  // 0, 1, 2
                 'alert_filters'           => [],
                 'filters'                 => [],
             ],
