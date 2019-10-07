@@ -12,11 +12,6 @@ class FtsSetupController extends Controller
      */
     public function getApplicationData()
     {
-        // get last version
-        /** @var FtsVersion $lastVersion */
-        $lastVersion = FtsVersion::latest()
-            ->first();
-
         return response()->json([
             'download_url'        => 'http://gitas_api.test/storage/fts_download/GFTS.json',
             'helper_download_url' => 'http://gitas_api.test/storage/fts_download/helpers/fts_update_helper.jar',
@@ -29,6 +24,15 @@ class FtsSetupController extends Controller
                     'http://192.168.2.177/filotakip/get_cookie?key=nJAHJjksd13',
                     'http://gitsistem.com/filotakip/get_cookie?key=nJAHJjksd13',
                 ],
+            ],
+            'settings' => [
+                'data_source'             => 0,  // 0 -> filo, 1 -> server
+                'data_download_frequency' => 60,
+                'alert_frequency'         => 60,
+                'alert_visible_delay'     => 30,
+                'bus_box_template'        => 1,  // 1, 2, 3
+                'alert_filters'           => [],
+                'filters'                 => [],
             ],
         ]);
     }
