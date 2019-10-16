@@ -13,11 +13,9 @@ class LoginController extends Controller
 {
     public function authenticate(LoginFormRequest $request)
     {
-        $credentials = $request->only('email', 'password');
-        if (Auth::once($credentials)) {
+        if (Auth::once(json_decode($request->input('data'), true))) {
             return new LoginResource(Auth::user());
         }
-
         return Response::json(['error' => true]);
     }
 }
