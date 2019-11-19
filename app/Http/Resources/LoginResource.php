@@ -22,6 +22,8 @@ class LoginResource extends JsonResource
         return [
             'api_token' => $this->resource->api_token,
             'user_id'   => $this->resource->id,
+            'email'     => $this->resource->email,
+            'name'      => $this->resource->name,
         ];
     }
 }
