@@ -32,7 +32,6 @@ use App\Http\Controllers\Api\UserPermissionController;
 */
 
 Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
-
     Route::prefix('users')->group(function() {
         Route::get('/', [UserController::class, 'index']);
         Route::get('/{user}', [UserController::class, 'show']);
@@ -97,6 +96,10 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
     });
 
     Route::get('downloadRouteScannerData/{route}', [RouteScannerDataController::class, 'download']);
+
+    Route::prefix('fts')->group(function() {
+        Route::post('rememberMe', [LoginController::class, 'rememberMe']);
+    });
 });
 
 Route::post('login', [LoginController::class, 'authenticate']); // retrieve api token
