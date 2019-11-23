@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $code
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Bus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Bus newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Bus query()
@@ -28,6 +29,9 @@ class Bus extends Model
 {
     protected $guarded = [];
 
-    protected $appends = ['defined']; //Make it available in the json response
+    protected $fillable = [
+        'active_plate', 'official_plate', 'code',
+    ];
 
+    //protected $appends = ['defined']; //Make it available in the json response
 }

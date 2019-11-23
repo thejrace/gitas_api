@@ -15,7 +15,7 @@ class CreateBusesTable extends Migration
             $table->bigIncrements('id');
             $table->string('active_plate');
             $table->string('official_plate');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }

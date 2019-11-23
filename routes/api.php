@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BusController;
+use App\Http\Controllers\Api\BusPlateController;
 use App\Http\Controllers\Api\FtsSetupController;
 use App\Http\Controllers\Api\FtsVersionController;
 use App\Http\Controllers\Api\LoginController;
@@ -44,7 +45,10 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
     });
 
     Route::resource('ftsVersions', FtsVersionController::class);
+
     Route::resource('buses', BusController::class);
+
+    Route::post('buses/{bus}/updatePlate', [BusPlateController::class, 'update']);
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('permission_types', PermissionTypeController::class);
