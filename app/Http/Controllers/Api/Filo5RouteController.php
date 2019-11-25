@@ -14,6 +14,7 @@ class Filo5RouteController extends Controller
             $data = json_decode(File::get(base_path() . '\database\filo5_routes.json'));
 
             return response()->json([
+                //'routes' => ['15BK', '14M', '11ÜS'],
                 'routes' => $data,
             ]);
         } catch (FileNotFoundException $e) {
