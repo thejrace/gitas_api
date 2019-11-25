@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BusController;
 use App\Http\Controllers\Api\BusPlateController;
+use App\Http\Controllers\Api\Filo5RouteController;
 use App\Http\Controllers\Api\FtsSetupController;
 use App\Http\Controllers\Api\FtsVersionController;
 use App\Http\Controllers\Api\LoginController;
@@ -85,6 +86,7 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
 
     Route::prefix('routes')->group(function() {
         Route::get('/', [RouteController::class, 'index']);
+        Route::get('filo5', [Filo5RouteController::class, 'index']);
         Route::get('{id}', [RouteController::class, 'show']);
         Route::post('/', [RouteController::class, 'store']);
         Route::put('{id}', [RouteController::class, 'update']);

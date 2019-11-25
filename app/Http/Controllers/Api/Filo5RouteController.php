@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Facades\File;
+
+class Filo5RouteController extends Controller
+{
+    public function index()
+    {
+        try {
+            $data = json_decode(File::get(base_path() . '\database\filo5_routes.json'));
+
+            return response()->json([
+                'routes' => $data,
+            ]);
+        } catch (FileNotFoundException $e) {
+            return response(['error' => true, 'meessage' => $e->getMessage()]);
+        }
+    }
+}
