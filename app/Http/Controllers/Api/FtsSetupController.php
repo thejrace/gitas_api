@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\FtsVersion;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Facades\File;
 
 class FtsSetupController extends Controller
 {
@@ -12,29 +14,14 @@ class FtsSetupController extends Controller
      */
     public function getApplicationData()
     {
-        return response()->json([
-            'download_url'        => 'http://gitas_api.test/storage/fts_download/GFTS.json',
-            'helper_download_url' => 'http://gitas_api.test/storage/fts_download/helpers/fts_update_helper.jar',
-            'app_config'          => [
-                'base_api' => [
-                    'http://gitas_api.test/api/',
-                    'http://gitfilo.com/api',
-                ],
-                'cookie_agent_urls' => [
-                    'http://192.168.2.177/filotakip/get_cookie?key=nJAHJjksd13',
-                    'http://gitsistem.com/filotakip/get_cookie?key=nJAHJjksd13',
-                ],
-            ],
-            'settings' => [
-                'data_source'             => 0,  // 0 -> filo, 1 -> server
-                'data_download_frequency' => 60,
-                'alert_frequency'         => 60,
-                'alert_visible_delay'     => 30,
-                'bus_box_template'        => 0,  // 0, 1, 2
-                'alert_filters'           => [],
-                'filters'                 => [],
-            ],
-        ]);
+        try {
+            $applicationDataConfig = json_decode(File::get(base_path() . '\database\fts_app_settings_template.json'), true);
+        } catch (FileNotFoundException $e) {
+            return response()->json([
+                'error' => true,
+            ]);
+        }
+        return response()->json($applicationDataConfig);
     }
 
     /**
