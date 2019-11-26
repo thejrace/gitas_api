@@ -102,7 +102,7 @@
                 const response = await window.axios.delete('/api/ftsVersions/'+dataId);
                 console.log(response);
                 if( response.data.data.hasOwnProperty('success') ){
-                    window.location.reload(true);
+                    this.$refs.vuetable.reload();
                 }
             }
         },

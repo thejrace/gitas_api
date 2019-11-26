@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="change_log"></label>
+                    <label class="control-label" for="change_log">Açıklama</label>
                     <div class="controls">
                         <textarea v-model="form.change_log" type="text" name="change_log" id="change_log"></textarea>
                         <div class="alert alert-danger" v-if="form.errors.has('change_log')">
@@ -45,6 +45,16 @@
                         </div>
                     </div>
                 </div>
+
+                <!--<div class="control-group">-->
+                    <!--<label class="control-label" for="file">Exe</label>-->
+                    <!--<div class="controls">-->
+                        <!--<input @change="selectFile" type="file"  id="file" name="file" />-->
+                        <!--<div class="alert alert-danger" v-if="form.errors.has('file')">-->
+                            <!--{{ form.errors.get('file') }}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <button :disabled="form.busy" type="submit">
                     Save
@@ -62,6 +72,7 @@
 <script>
     import Vue from 'vue'
     import { Form, HasError, AlertError } from 'vform'
+    import objectToFormData from 'object-to-formdata'
 
     Vue.component(HasError.name, HasError);
     Vue.component(AlertError.name, AlertError);
@@ -79,11 +90,17 @@
                     major: '',
                     minor: '',
                     patch: '',
-                    change_log: ''
+                    change_log: '',
+                    file: null,
                 })
             }
         },
         methods: {
+            selectFile (e) {
+                const file = e.target.files[0];
+                // Do some client side validation...
+                this.form.file = file;
+            },
             action () {
                 this.dataId
                     ? this.update()
@@ -92,6 +109,16 @@
             async store() {
                 const response = await this.form.post('/api/ftsVersions');
                 this.actionStatusCallback(response.data.data);
+
+                /*this.form.submit('post', '/api/ftsVersions', {
+                    // Transform form data to FormData
+                    transformRequest: [function (data, headers) {
+                        return objectToFormData(data)
+                    }]
+                })
+                .then(({ data }) => {
+                    this.actionStatusCallback(data.data);
+                });*/
             },
 
             async update() {

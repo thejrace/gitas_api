@@ -29,4 +29,18 @@ use Illuminate\Database\Eloquent\Model;
 class FtsVersion extends Model
 {
     protected $guarded = [];
+
+    public function fullVersion($sep = null)
+    {
+        if (isset($sep)) {
+            return $this->major . $sep . $this->minor . $sep . $this->patch;
+        } else {
+            return $this->major . '_' . $this->minor . '_' . $this->patch;
+        }
+    }
+
+    public function downloadUrl()
+    {
+        return 'http://gitas_api.test/storage/fts_download/gfts_' . $this->fullVersion();
+    }
 }

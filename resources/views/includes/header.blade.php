@@ -59,7 +59,6 @@
                     <ul class="mainnav">
                         <li><a href="{{route('users.index')}}"><i class="icon-group"></i><span>Kullanıcılar</span> </a> </li>
                         <li><a href="{{route('services')}}"><i class="icon-code"></i><span>Servisler</span> </a> </li>
-                        <li><a href="{{route('buses.index')}}"><i class="icon-truck"></i><span>Otobüsler</span> </a> </li>
 
                         <li><a href="{{route('permission_types.index')}}"><i class="icon-key"></i><span>İzinler</span> </a></li>
 
@@ -73,6 +72,7 @@
 
                         <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-flag"></i><span>Filo Takip</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <li><a href="{{route('buses.index')}}">Otobüsler</a> </li>
                                 <li><a href="">İzinler</a></li>
                                 <li><a href="{{route('ftsVersions.index')}}">Version Kontrol</a></li>
                             </ul>

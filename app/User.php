@@ -28,6 +28,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User permission($permissions)
@@ -50,9 +51,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ *
  * @property-read int|null $notifications_count
  * @property-read int|null $permissions_count
  * @property-read int|null $roles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Bus[] $buses
+ * @property-read int|null $buses_count
  */
 class User extends Authenticatable
 {
@@ -86,4 +90,72 @@ class User extends Authenticatable
     ];
 
     protected $guard_name = 'api';
+
+    /**
+     * Define bus to the user.
+     *
+     * @param int|string $busId
+     */
+    public function defineBus($busId)
+    {
+        if ($busId === 'all') {
+            $defined = $this->buses
+                ->pluck('id')
+                ->toArray();
+
+            $query = Bus::query()
+                ->whereNotIn('id', $defined);
+
+            foreach ($query->get() as $bus) {
+                UserBusDefinition::create([
+                    'user_id' => $this->id,
+                    'bus_id'  => $bus->id,
+                ]);
+            }
+        } else {
+            UserBusDefinition::create([
+                'user_id' => $this->id,
+                'bus_id'  => $busId,
+            ]);
+        }
+    }
+
+    /**
+     * Remove definition of a bus from user.
+     *
+     * @param $busId
+     */
+    public function undefineBus($busId)
+    {
+        if ($busId === 'all') {
+            $defined = $this->buses
+                ->pluck('id')
+                ->toArray();
+
+            $query = Bus::query()
+                ->whereIn('id', $defined);
+
+            foreach ($query->get() as $bus) {
+                /** @var UserBusDefinition $defintion */
+                $defintion = UserBusDefinition::query()
+                    ->where('user_id', $this->id)
+                    ->where('bus_id', $bus->id)
+                    ->first();
+                UserBusDefinition::destroy($defintion->id);
+            }
+        } else {
+            /** @var UserBusDefinition $defintion */
+            $defintion = UserBusDefinition::query()
+                ->where('user_id', $this->id)
+                ->where('bus_id', $busId)
+                ->first();
+
+            UserBusDefinition::destroy($defintion->id);
+        }
+    }
+
+    public function buses()
+    {
+        return $this->belongsToMany(Bus::class, 'user_bus_definitions');
+    }
 }

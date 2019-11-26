@@ -26,11 +26,14 @@ Vue.component('vue-table-filter-bar', require('./components/VueTableFilterBar.vu
 Vue.component('buses-page', require('./components/BusesPage.vue').default);
 Vue.component('bus-form-page', require('./components/BusFormPage.vue').default);
 Vue.component('users-page', require('./components/UsersPage.vue').default);
+Vue.component('user-buses-page', require('./components/UserBusesPage.vue').default);
 Vue.component('user-form-page', require('./components/UserFormPage.vue').default);
 Vue.component('permission-types-page', require('./components/PermissionTypesPage.vue').default);
 Vue.component('permission-type-form-page', require('./components/PermissionTypeFormPage.vue').default);
 Vue.component('permissions-page', require('./components/PermissionsPage.vue').default);
 Vue.component('permission-form-page', require('./components/PermissionFormPage.vue').default);
+
+Vue.component('user-buses-table', require('./components/UserBusesTable.vue').default);
 
 // kahya pages
 Vue.component('route-scanners-page', require('./components/RouteScannersPage.vue').default);

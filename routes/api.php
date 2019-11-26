@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\BusController;
+use App\Http\Controllers\Api\BusPlateController;
+use App\Http\Controllers\Api\Filo5RouteController;
+use App\Http\Controllers\Api\FtsSetupController;
 use App\Http\Controllers\Api\FtsVersionController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PermissionController;
@@ -15,6 +18,7 @@ use App\Http\Controllers\Api\RouteServiceController;
 use App\Http\Controllers\Api\RouteStopController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ServiceSettingsController;
+use App\Http\Controllers\Api\UserBusController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserPermissionController;
 
@@ -30,9 +34,22 @@ use App\Http\Controllers\Api\UserPermissionController;
 */
 
 Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
-    Route::resource('users', UserController::class);
+    Route::prefix('users')->group(function() {
+        Route::get('/', [UserController::class, 'index']);
+        Route::get('/{user}', [UserController::class, 'show']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::put('/{user}', [UserController::class, 'update']);
+        Route::get('/{user}/buses', [UserBusController::class, 'index']);
+        Route::put('/{user}/buses/define', [UserBusController::class, 'define']);
+        Route::put('/{user}/buses/undefine', [UserBusController::class, 'undefine']);
+        Route::delete('/{user}', [UserController::class, 'destroy']);
+    });
+
     Route::resource('ftsVersions', FtsVersionController::class);
+
     Route::resource('buses', BusController::class);
+
+    Route::post('buses/{bus}/updatePlate', [BusPlateController::class, 'update']);
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('permission_types', PermissionTypeController::class);
@@ -65,11 +82,11 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
         Route::put('/{routeScanner}/start', [RouteScannerController::class, 'start']);
         Route::put('/{routeScanner}/stop', [RouteScannerController::class, 'stop']);
         Route::delete('/{routeScanner}', [RouteScannerController::class, 'destroy']);
-
     });
 
     Route::prefix('routes')->group(function() {
         Route::get('/', [RouteController::class, 'index']);
+        Route::get('filo5', [Filo5RouteController::class, 'index']);
         Route::get('{id}', [RouteController::class, 'show']);
         Route::post('/', [RouteController::class, 'store']);
         Route::put('{id}', [RouteController::class, 'update']);
@@ -85,9 +102,16 @@ Route::middleware(['auth:api', 'permission:api.enabled'])->group(function() {
     });
 
     Route::get('downloadRouteScannerData/{route}', [RouteScannerDataController::class, 'download']);
+
+    Route::prefix('fts')->group(function() {
+        Route::post('rememberMe', [LoginController::class, 'rememberMe']);
+    });
 });
 
 Route::post('login', [LoginController::class, 'authenticate']); // retrieve api token
+
+Route::get('fts/setup', [FtsSetupController::class, 'getApplicationData']);
+Route::get('fts/version', [FtsSetupController::class, 'getLastVersion']);
 
 /*
 |--------------------------------------------------------------------------

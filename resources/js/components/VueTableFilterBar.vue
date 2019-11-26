@@ -13,6 +13,12 @@
 
 <script>
     export default {
+        props:{
+            prefix: {
+                type: String,
+                default: null,
+            }
+        },
         data () {
             return {
                 filterText: ''
@@ -20,11 +26,20 @@
         },
         methods: {
             doFilter () {
-                this.$events.fire('filter-set', this.filterText)
+                let eventName = 'filter-set';
+                if( this.prefix ){
+                    eventName = this.prefix + '-' + eventName;
+                }
+                this.$events.fire(eventName, this.filterText)
             },
             resetFilter () {
-                this.filterText = ''  // clear the text in text input
-                this.$events.fire('filter-reset')
+                this.filterText = '';  // clear the text in text input
+
+                let eventName = 'filter-reset';
+                if( this.prefix ){
+                    eventName = this.prefix + '-' + eventName;
+                }
+                this.$events.fire(eventName, this.filterText)
             }
         }
     }

@@ -1,0 +1,30 @@
+{
+  "download_url"        : "http://gitas_api.test/storage/fts_download/GFTS.json",
+  "helper_download_url" : "http://gitas_api.test/storage/fts_download/helpers/fts_update_helper.jar",
+  "app_config" : {
+      "base_api" : [
+          "http://gitas_api.test/api/",
+          "http://gitfilo.com/api"
+      ]
+  },
+  "settings" : {
+    "bus_box_template"        : 0,
+    "data_source"             : 0,
+    "fleet_cookie_url"        : "https://filotakip.iett.gov.tr/login.php",
+    "server_cookie_url"       : "http://gitsistem.com/filotakip/get_cookie?key=nJAHJjksd13",
+    "plan_download_freq"      : 60,
+    "pdks_download_freq"      : 60,
+    "plate_download_freq"     : 60,
+    "speed_download_freq"     : 30,
+    "plan_download_url"       : "https://filotakip.iett.gov.tr/_FYS/000/sorgu.php?konum=ana&konu=sefer&otobus=%%VAR%%",
+    "message_in_download_url" : "https://filotakip.iett.gov.tr/_FYS/000/sorgu.php?konu=mesaj&mtip=gelen&oto=%%VAR%%",
+    "message_out_download_url": "https://filotakip.iett.gov.tr/_FYS/000/sorgu.php?konu=mesaj&mtip=giden&oto=%%VAR%%",
+    "speed_download_url"      : "https://filotakip.iett.gov.tr/_FYS/000/harita.php?konu=oto&oto=%%VAR%%",
+    "pdks_download_url"       : "https://filotakip.iett.gov.tr/_FYS/000/sorgu.php?konu=mesaj&mtip=PDKS&oto=%%VAR%%",
+    "driver_details_url"      : "https://filotakip.iett.gov.tr/fysDosya/sofor/%%VAR%%.htm",
+    "paralel_downloader_limit": 10,
+    "enabled_alarms"          : "111",
+    "alarm_frequency"         : 60,
+    "alarm_visible_delay"     : 30
+  }
+}

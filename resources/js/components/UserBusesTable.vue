@@ -1,20 +1,22 @@
 <template>
-
     <div class="widget">
         <div class="widget-header"> <i class="icon-truck"></i>
-            <h3> Otobüsler</h3>
+            <h3 v-if="type === 'defined'"><i>'{{userName}}'</i> Tanımlı Otobüsler</h3>
+            <h3 v-else><i>'{{userName}}'</i> Otobüs Tanımla</h3>
         </div>
+
         <!-- /widget-header -->
         <div class="widget-content">
 
             <div class="top-nav">
-                <a v-bind:href="createUrl"><button type="button" class="ui basic button btn btn-info"><i class="icon-plus"></i></button></a>
+                <button v-if="type === 'defined'" type="button" class="btn btn-danger" title="Tümünü Kaldır" @click="onAction('undefine', { id: 'all' }, 0)"><i class="icon-minus-sign"></i></button>
+                <button v-else type="button" class="btn btn-success" title="Tümünü Ekle" @click="onAction('define', { id: 'all' }, 0)"><i class="icon-plus-sign"></i></button>
             </div>
 
             <div>
-                <vue-table-filter-bar></vue-table-filter-bar>
+                <vue-table-filter-bar :prefix="this.type"></vue-table-filter-bar>
                 <vuetable ref="vuetable"
-                          api-url="buses/dataTables"
+                          :api-url="apiUrl"
                           :fields="fields"
                           pagination-path="pagination"
                           :append-params="moreParams"
@@ -22,20 +24,14 @@
                           :http-options="httpOptions"
                           @vuetable:pagination-data="onPaginationData"
                 >
-                    <template slot="actions" scope="props">
-                        <div class="custom-actions">
-                            <a v-bind:href="'/buses/form/'+props.rowData.id" class="btn">
-                                <i class="icon-edit"></i>
-                            </a>
+                    <div slot="defined-slot" slot-scope="props">
 
-                            <button class="btn btn-danger"
-                                    @click="onAction('delete-item', props.rowData, props.rowIndex)">
-                                <i class="icon-remove"></i>
-                            </button>
-                        </div>
-                    </template>
+                        <button v-if="type === 'defined'" type="button" class="btn btn-danger" title="Kaldır" @click="onAction('undefine', props.rowData, props.rowIndex)"><i class="icon-remove"></i></button>
+                        <button v-else type="button" class="btn btn-success" title="Ekle" @click="onAction('define', props.rowData, props.rowIndex)"><i class="icon-plus"></i></button>
+                    </div>
+
                 </vuetable>
-                <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"  :css="css.pagination"></vuetable-pagination>
+                <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage" :css="css.pagination"></vuetable-pagination>
             </div>
 
         </div>
@@ -52,18 +48,20 @@
 
     Vue.use(VueEvents);
 
-
     export default {
         props:{
-            createUrl: String,
+            userId: String,
+            userName: String,
+            type:String,
         },
         components: {
             Vuetable,
             VuetablePagination
         },
         mounted() {
-            this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
-            this.$events.$on('filter-reset', e => this.onFilterReset())
+            this.$events.$on(this.type+'-filter-set', eventData => this.onFilterSet(eventData));
+            this.$events.$on(this.type+'-filter-reset', e => this.onFilterReset());
+            this.$events.$on('user-buses-reload', e => this.$refs.vuetable.reload());
         },
         methods: {
             transform(data){
@@ -85,29 +83,14 @@
             onChangePage (page) {
                 this.$refs.vuetable.changePage(page)
             },
-            onAction (action, data, index) {
-                switch( action ){
-                    case 'edit-item':
-                        location.href = "/buses/form/"+data.id;
-                        break;
-                    case 'delete-item':
-                        var c = confirm('Are you şur?');
-                        if( c ){
-                            this.deleteItem(data.id);
-                        }
-                        break;
-                }
+            async onAction (action, data, index) {
+                await window.axios.put('/api/users/'+this.userId+'/buses/'+action, { bus_id:data.id});
+                this.$events.fire('user-buses-reload');
             },
-            async deleteItem( dataId ){
-                const response = await window.axios.delete('/api/buses/'+dataId);
-                console.log(response);
-                if( response.data.data.hasOwnProperty('success') ){
-                    window.location.reload(true);
-                }
-            }
         },
         data(){
             return {
+                apiUrl:"/users/"+this.userId+"/buses/dataTables/"+this.type,
                 css: CssConfig,
                 fields:[
                     'id',
@@ -128,13 +111,16 @@
                     {
                         name: 'active_plate',
                         title:'Aktif Plaka',
+                        titleClass: 'center aligned',
+                        dataClass: 'center aligned',
                         sortField: 'official_plate'
                     },
                     {
-                        name: '__slot:actions',
-                        title: 'İşlemler',
+                        name: '__slot:defined-slot',
+                        title:'İşlemler',
                         titleClass: 'center aligned',
-                        dataClass: 'center aligned'
+                        dataClass: 'center aligned',
+                        sortField: 'defined'
                     },
                 ],
                 moreParams: {},

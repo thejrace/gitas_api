@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class LoginFormRequest extends FormRequest
+class BusPlateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +24,11 @@ class LoginFormRequest extends FormRequest
      */
     public function rules()
     {
+        $ignoreID = $this->route('bus')->id;
+
         return [
-//            'email'    => 'required|email',
-//            'password' => 'required',
+            /*'active_plate'   => ['required', Rule::unique('buses')->ignore($ignoreID)],
+            'official_plate' => ['required', Rule::unique('buses')->ignore($ignoreID)],*/
         ];
     }
 }
