@@ -1,6 +1,6 @@
 {
-  "download_url"        : "http://gitas_api.test/storage/fts_download/GFTS.json",
-  "helper_download_url" : "http://gitas_api.test/storage/fts_download/helpers/fts_update_helper.jar",
+  "download_url"        : "http://gitfilo.com/storage/fts_download/GFTS.json",
+  "helper_download_url" : "http://gitfilo.com/storage/fts_download/helpers/fts_update_helper.jar",
   "app_config" : {
       "base_api" : [
           "http://gitas_api.test/api/",
