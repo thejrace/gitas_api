@@ -25,6 +25,6 @@
     "paralel_downloader_limit": 10,
     "enabled_alarms"          : "111",
     "alarm_frequency"         : 60,
-    "alerm_visible_delay"     : 30
+    "alarm_visible_delay"     : 30
   }
 }
