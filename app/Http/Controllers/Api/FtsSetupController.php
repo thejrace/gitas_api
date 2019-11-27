@@ -15,12 +15,13 @@ class FtsSetupController extends Controller
     public function getApplicationData()
     {
         try {
-            $applicationDataConfig = json_decode(File::get(base_path() . '/database/fts_app_settings_template.json'), true);
+            $applicationDataConfig = json_decode(File::get(base_path() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'fts_app_settings_template.json'), true);
         } catch (FileNotFoundException $e) {
             return response()->json([
                 'error' => true,
             ]);
         }
+
         return response()->json($applicationDataConfig);
     }
 
