@@ -12,7 +12,7 @@ class ServicesTableSeeder extends Seeder
      */
     public function run()
     {
-        $routeScannerSettings = File::get('database/service_route_scanner_settings.json');
+        $routeScannerSettings = File::get('database' . DIRECTORY_SEPARATOR . 'service_route_scanner_settings.json');
         Service::create([
             'name'      => 'Kahya Instance',
             'type'      => ServiceType::CUSTOM_SERVICE,
@@ -21,7 +21,7 @@ class ServicesTableSeeder extends Seeder
             'api_token' => \Illuminate\Support\Str::random(60),
         ]);
 
-        $routeSyncBotSettings = File::get('database/service_route_bot_settings.json');
+        $routeSyncBotSettings = File::get('database' . DIRECTORY_SEPARATOR . 'service_route_bot_settings.json');
         Service::create([
             'name'      => 'Route Sync Bot',
             'type'      => ServiceType::BOT,
@@ -30,7 +30,7 @@ class ServicesTableSeeder extends Seeder
             'api_token' => \Illuminate\Support\Str::random(60),
         ]);
 
-        $ftsBotSettings = File::get('database/fts_bot_settings.json');
+        $ftsBotSettings = File::get('database' . DIRECTORY_SEPARATOR . 'fts_bot_settings.json');
         Service::create([
             'name'      => 'FTS Bot',
             'type'      => ServiceType::BOT,

@@ -10,7 +10,7 @@ class RouteIntersectionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = json_decode(File::get('database/route_intersections.json'));
+        $data = json_decode(File::get('database' . DIRECTORY_SEPARATOR . 'route_intersections.json'));
 
         foreach ($data as $stop) {
             RouteIntersection::create([

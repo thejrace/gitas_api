@@ -12,7 +12,7 @@ class RoutesTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = json_decode(File::get('database/routes.json'));
+        $data = json_decode(File::get('database'.DIRECTORY_SEPARATOR.'routes.json'));
 
         foreach ($data as $route) {
             Route::create([

@@ -11,7 +11,7 @@ class Filo5RouteController extends Controller
     public function index()
     {
         try {
-            $data = json_decode(File::get(base_path() . '\database\filo5_routes.json'));
+            $data = json_decode(File::get(base_path() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'filo5_routes.json'));
 
             return response()->json([
                 //'routes' => ['15BK', '14M', '11ÜS'],
