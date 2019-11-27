@@ -14,7 +14,7 @@ class RouteScannersTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = json_decode(File::get('database/filo5_routes.json'));
+        $data = json_decode(File::get('database' . DIRECTORY_SEPARATOR . 'filo5_routes.json'));
 
         foreach ($data as $route) {
             RouteScanner::create([

@@ -10,7 +10,7 @@ class RouteStopsTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = json_decode(File::get('database/route_stops.json'));
+        $data = json_decode(File::get('database' . DIRECTORY_SEPARATOR . 'route_stops.json'));
 
         foreach ($data as $stop) {
             RouteStop::create([
