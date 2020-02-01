@@ -9,7 +9,7 @@
   },
   "settings" : {
     "bus_box_template"        : 0,
-    "data_source"             : 0,
+    "data_source"             : 1,
     "fleet_cookie_url"        : "https://filotakip.iett.gov.tr/login.php",
     "server_cookie_url"       : "http://gitsistem.com/filotakip/get_cookie?key=nJAHJjksd13",
     "plan_download_freq"      : 60,
