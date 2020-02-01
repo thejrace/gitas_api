@@ -22,9 +22,16 @@
     "speed_download_url"      : "https://filotakip.iett.gov.tr/_FYS/000/harita.php?konu=oto&oto=%%VAR%%",
     "pdks_download_url"       : "https://filotakip.iett.gov.tr/_FYS/000/sorgu.php?konu=mesaj&mtip=PDKS&oto=%%VAR%%",
     "driver_details_url"      : "https://filotakip.iett.gov.tr/fysDosya/sofor/%%VAR%%.htm",
-    "paralel_downloader_limit": 10,
-    "enabled_alarms"          : "111",
-    "alarm_frequency"         : 60,
-    "alarm_visible_delay"     : 30
+
+    "plan_download_url_server"       : "http://gitsistem.com/filotakip/get_voyage/%%VAR%%?date=2020-01-19&key=nJAHJjksd13",
+    "message_in_download_url_server" : "",
+    "message_out_download_url_server": "",
+    "speed_download_url_server"      : "",
+    "pdks_download_url_server"       : "",
+    "driver_details_url_server"      : "",
+    "paralel_downloader_limit"       : 10,
+    "enabled_alarms"                 : "111",
+    "alarm_frequency"                : 60,
+    "alarm_visible_delay"            : 30
   }
 }
